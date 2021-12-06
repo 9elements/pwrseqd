@@ -1,0 +1,58 @@
+---
+
+power_sequencer:
+ 
+  - PCH_Off_Unit:
+      in:
+        and:
+          - name: "FM_SLPS4"
+          - name: "FM_SLPS3"
+      out:
+        name: "PCH_Off"
+
+  # Detect current ACPI state
+  - ACPI_STATE_IS_G3_Unit:
+      in:
+        and:
+          - name: "PCH_Off"
+          - name: "RSMRST"
+          - name: "DSW_PWROK"
+            invert: true
+      out:
+        name: "ACPI_STATE_IS_G3"
+
+  - ACPI_STATE_IS_S5_Unit:
+      in:
+        and:
+          - name: "DSW_PWROK"
+          - name: "RSMRST"
+            invert: true
+          - name: "PCH_Off"
+      out:
+        name: "ACPI_STATE_IS_S5"
+
+floating_signals:
+  - "ACPI_STATE_REQ_S5"
+
+# Special wake events
+wake:
+  # As PWRBTN is not supported, S5->S0 will actually be S5->G3->S0
+  - PWRBTN_N:
+    type: "PWRBTN"
+    supported: false
+
+# List of platform supported PCH ACPI states.
+# Only one state can be active at time. The state set here must not be the
+# same as advertised by the PCH.
+#
+# 'wait_for_valid' is a list of signals that must be asserted after
+# 'wait_timeout_msec' msec. If not valid then emit an error.
+#
+states:
+  - name: "G3"
+    initial: true
+  - name: "S5"
+    initial: false
+
+
+

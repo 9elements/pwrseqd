@@ -1,0 +1,10 @@
+Makefile
+CMakeFiles/
+CMakeCache.txt
+.vscode/
+*.cmake
+tests/test_all
+psd
+extern/inotify-cpp/*.cmake
+extern/inotify-cpp/**/*.cmake
+

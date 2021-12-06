@@ -1,0 +1,72 @@
+---
+
+power_sequencer:
+  # Enable PSU when Chassis is on or PCH is still powered
+  - BCM1_Unit:
+      in:
+        or:
+          - name: "STATE_REQ_CHASSIS_ON"
+          - name: "p3v3_pch_Enabled"
+      out:
+        name: "bcm1_On"
+
+  - BCM2_Unit:
+      in:
+        or:
+          - name: "STATE_REQ_CHASSIS_ON"
+          - name: "p3v3_pch_Enabled"
+      out:
+        name: "bcm2_On"
+
+  - BCM3_Unit:
+      in:
+        or:
+          - name: "STATE_REQ_CHASSIS_ON"
+          - name: "p3v3_pch_Enabled"
+      out:
+        name: "bcm3_On"
+
+  - M2_SSD1_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_CHASSIS_ON"
+      out:
+        name: "p3v3_m2_ssd1_On"
+
+  - M2_SSD2_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_CHASSIS_ON"
+      out:
+        name: "p3v3_m2_ssd2_On"
+
+  - PCIe_PWR_Stable_Unit:
+      in:
+        and:
+          - name: "p3v3_m2_ssd1_PowerGood"
+          - name: "p3v3_m2_ssd2_PowerGood"
+      out:
+        name: "PCIe_PWR_Stable"
+
+regulators:
+  - name: "bcm1"
+  - name: "bcm2"
+  - name: "bcm3"
+  - name: "p3v3_m2_ssd1"
+  - name: "p3v3_m2_ssd2"
+
+floating_signals:
+  - "bcm1_PowerGood"
+  - "bcm1_Enabled"
+  - "bcm1_Fault"
+  - "bcm2_PowerGood"
+  - "bcm2_Enabled"
+  - "bcm2_Fault"
+  - "bcm3_PowerGood"
+  - "bcm3_Enabled"
+  - "bcm3_Fault"
+  - "p3v3_m2_ssd1_Enabled"
+  - "p3v3_m2_ssd2_Enabled"
+  - "p3v3_m2_ssd1_Fault"
+  - "p3v3_m2_ssd2_Fault"
+

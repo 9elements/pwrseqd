@@ -1,0 +1,73 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: cimg/base:2021.05
+    steps:
+      - run:
+          name: Install packages
+          command: |
+            export DEBIAN_FRONTEND=noninteractive
+            export TZ=Europe/Berlin
+            sudo apt-get update -y && \
+            sudo apt-get install -y tzdata
+            sudo apt-get install -y --no-install-recommends \
+                    clang-10 \
+                    build-essential \
+                    cmake \
+                    libyaml-cpp-dev \
+                    libgpiod-dev \
+                    libboost-all-dev \
+                    ca-certificates
+      - checkout
+      - run:
+          name: Setup gtest child repo
+          command: |
+            git submodule init
+            git submodule update
+      - run:
+          name: Setup cmake and build artifacts
+          command: |
+            mkdir build
+            cd build
+            cmake ..
+            make
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build
+
+  test:
+    docker:
+      - image: cimg/base:2021.05
+    steps:
+      - run:
+          name: Install packages
+          command: |
+            export DEBIAN_FRONTEND=noninteractive
+            export TZ=Europe/Berlin
+            sudo apt-get update -y && \
+            sudo apt-get install -y tzdata
+            sudo apt-get install -y --no-install-recommends \
+                    libyaml-cpp0.6 \
+                    libgpiod2 \
+                    libboost-all-dev
+      - attach_workspace:
+          at: .
+      - run:
+          name: Execute Tests
+          command: |
+            cd build
+            ./tests/test_all --gtest_output=xml
+      - store_test_results:
+          path: build/tests
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+

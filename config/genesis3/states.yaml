@@ -1,0 +1,51 @@
+---
+
+power_sequencer:
+ 
+  - PCH_Off_Unit:
+      in:
+        and:
+          - name: "FM_SLPS4"
+          - name: "FM_SLPS3"
+      out:
+        name: "PCH_Off"
+
+  # Detect current ACPI state
+  - ACPI_STATE_IS_G3_Unit:
+      in:
+        and:
+          - name: "PCH_Off"
+          - name: "RSMRST"
+          - name: "DSW_PWROK"
+            invert: true
+      out:
+        name: "ACPI_STATE_IS_G3"
+
+  - ACPI_STATE_IS_S5_Unit:
+      in:
+        and:
+          - name: "DSW_PWROK"
+          - name: "RSMRST"
+            invert: true
+          - name: "PCH_Off"
+      out:
+        name: "ACPI_STATE_IS_S5"
+
+floating_signals:
+  - "STATE_REQ_HOST_ON"
+
+immutables:
+  - signal_name: "ACPI_STATE_IS_S0"
+    value: false
+  - signal_name: "ACPI_STATE_IS_S3"
+    value: false
+
+# Special wake events
+wake:
+  # As PWRBTN is not supported, S5->S0 will actually be S5->G3->S0
+  - PWRBTN_N:
+    type: "PWRBTN"
+    supported: false
+
+
+

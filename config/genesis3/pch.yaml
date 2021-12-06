@@ -1,0 +1,188 @@
+---
+
+# Contains a list of units. Every unit contains logic (similar to a LUT in a
+# CPLD).
+# Units contain AND gates and OR gates. The order of AND and OR gates is
+# controled by 'and_then_or' flag. Every input can be inverted.
+# If the inputs need to be stable and logical '1' for a specific amount of time
+# specify 'input_stable_usec'. If the input is not stable or logical '0' the
+# result is '0'.
+# If the first gate is AND and 'invert_first_gate' is set, it acts like a NAND
+# gate.
+# If the first gate is OR and 'invert_first_gate' is set, it acts like a NOR
+# gate.
+# Specify 'delay_usec' to delay the output signal by usec.
+
+inputs:
+  - name: "FM_SLPS3_N"
+    type: "gpio"
+    signal_name: "FM_SLPS3"
+    active_low: true
+    description: "Indicates that the PCH is in ACPI S3."
+  - name: "FM_SLPS4_N"
+    type: "gpio"
+    signal_name: "FM_SLPS4"
+    active_low: true
+    description: "Indicates that the PCH is in ACPI S4 or S5."
+  - name: "RST_RTCRST_N"
+    signal_name: "RTCRST"
+    type: "gpio"
+    active_low: true
+    description: >
+      RTC well reset. With RTC battery installed should never be asserted.
+      Without RTC battery asserted when in G3.
+
+outputs:
+  - name: "PWRGD_PCH_DPWROK"
+    type: "gpio"
+    signal_name: "DSW_PWROK"
+    description: >
+      PCH core power good for at least 10msec. Min 1 usec after RTCRST_N
+  - name: "PWRGD_PCH_PWROK"
+    type: "gpio"
+    signal_name: "PCH_PWROK"
+    description: "PCH core power good for at least 10msec."
+    comment: "!FM_SLPS3_N && PCH_PWR_EN && !FAULT"
+  - name: "RST_PCH_RSMRST_R_N"
+    type: "gpio"
+    signal_name: "RSMRST"
+    active_low: true
+    open_drain: true
+    description: >
+      All PCH primary power rails are stable for 10 msec.
+      Either assert after SLP_SUS_N or 100msec after DSW_PWROK assertion.
+    description: "PCH primary wells are stable, PCIe is out of reset and clocks are stable."
+  - name: "PWRGD_SYS_PWROK"
+    type: "gpio"
+    signal_name: "SYS_PWROK"
+    open_drain: true
+    description: "PCH primary wells are stable, PCIe is out of reset and clocks are stable."
+
+power_sequencer:
+  - DSW_PWRGD_Unit:
+      in:
+        and:
+          - name: "RTCRST"
+            invert: true
+            input_stable_usec: 1
+          - name: "p3v3_pch_PowerGood"
+            input_stable_usec: 10000 # EBG:BT2
+          - name: "p3v3_pch_PowerGood"
+      out:
+        name: "DSW_PWROK"
+
+  # P3V3 provides AUX power to PCH as well. Always drive it when not in G3
+  - P3V3_Unit:
+      in:
+        and:
+          - name: "RTCRST"
+            invert: true
+          - name: "STATE_REQ_CHASSIS_ON"
+            input_stable_usec: 100  # EGB: min 1 usec
+        or:
+          - name: "p1v8_pch_aux_PowerGood"
+            input_stable_usec: 100
+        and_then_or: true
+      out:
+        name: "p3v3_pch_On"
+
+  - p1v8_pch_aux_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_CHASSIS_ON"
+            input_stable_usec: 100  # EGB:BT22 min 1 usec
+          - name: "p3v3_pch_PowerGood"
+            input_stable_usec: 100  # EGB: min 2 usec
+          - name: "p3v3_pch_PowerGood"
+        or:
+          - name: "pvnn_pch_aux_PowerGood"
+            input_stable_usec: 100
+        and_then_or: true
+      out:
+        name: "p1v8_pch_aux_On"
+
+  - pvnn_pch_aux_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_CHASSIS_ON"
+            input_stable_usec: 100  # EGB:BT22 min 1 usec
+          - name: "p1v8_pch_aux_PowerGood"
+            input_stable_usec: 100  # EGB: min 2 usec
+          - name: "p1v8_pch_aux_PowerGood"
+        or:
+          - name: "p1v05_pch_aux_PowerGood"
+            input_stable_usec: 100
+        and_then_or: true
+      out:
+        name: "pvnn_pch_aux_On"
+
+  - p1v05_pch_aux_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_CHASSIS_ON"
+            input_stable_usec: 100  # EGB:BT22 min 1 usec
+          - name: "pvnn_pch_aux_PowerGood"
+            input_stable_usec: 100  # EGB: min 2 usec
+          - name: "pvnn_pch_aux_PowerGood"
+      out:
+        name: "p1v05_pch_aux_On"
+
+  - RSMRST_Unit:  # When not asserted then AUX power is on and system is in S5, else G3
+      in:
+        and:
+          - name: "STATE_REQ_CHASSIS_ON"
+          - name: "p3v3_pch_PowerGood"
+            input_stable_usec: 10000  # LBG:BT3 min 10 msec
+          - name: "p3v3_pch_PowerGood"
+          - name: "p1v8_pch_aux_PowerGood"
+            input_stable_usec: 10000  # LBG:BT3 min 10 msec
+          - name: "p1v8_pch_aux_PowerGood"
+          - name: "pvnn_pch_aux_PowerGood"
+            input_stable_usec: 10000  # LBG:BT3 min 10 msec
+          - name: "pvnn_pch_aux_PowerGood"
+          - name: "p1v05_pch_aux_PowerGood"
+            input_stable_usec: 10000  # LBG:BT3 min 10 msec
+          - name: "p1v05_pch_aux_PowerGood"
+          # As SLP_SUS# can't be read using a GPIO wait maximum timeout
+          - name: "DSW_PWROK"
+            input_stable_usec: 100000  # LBG:T25 max 100 msec
+          - name: "DSW_PWROK"
+      out:
+        active_low: true
+        name: "RSMRST"
+
+  # Wait 10msec after Vcc_main is stable.
+  # Vcc_main is the same as AUX. AUX is already powered if RSMRST is asserted.
+  # M.2 slots needs to be powered for at least 100msec
+  # Vcc_main must be stable for 100usec or longer after PCH_PWROK goes low.
+  - PCH_PWROK_Unit:
+      in:
+        and:
+          - name: "PCIe_PWR_Stable"
+            input_stable_usec: 100000  # PCIe Spec. 100msec
+          - name: "RSMRST"
+            invert: true
+      out:
+        name: "PCH_PWROK"
+      delay_us: 100
+
+#FIXME: SYS_PWROK
+immutables:
+  - signal_name: "SYS_PWROK"
+    value: false
+
+regulators:
+  - name: "p3v3_pch"
+  - name: "p1v8_pch_aux"
+  - name: "p1v05_pch_aux"
+  - name: "pvnn_pch_aux"
+
+floating_signals:
+  - "p1v05_pch_aux_Enabled"
+  - "p1v05_pch_aux_Fault"
+  - "p1v8_pch_aux_Enabled"
+  - "p1v8_pch_aux_Fault"
+  - "p3v3_pch_Enabled"
+  - "p3v3_pch_Fault"
+  - "pvnn_pch_aux_Enabled"
+  - "pvnn_pch_aux_Fault"
