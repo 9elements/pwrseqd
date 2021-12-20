@@ -17,12 +17,12 @@ cmake ..
 
 # External dependencies
 
-libyaml-cpp
-libgpiod
-libgpiodcxx
-libpthread
-libbsdbusplus
-libphosphor-logging
+- libyaml-cpp
+- libgpiod
+- libgpiodcxx
+- libpthread
+- libbsdbusplus
+- libphosphor-logging
 
 # Config files
 
