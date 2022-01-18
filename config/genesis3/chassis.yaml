@@ -29,16 +29,28 @@ power_sequencer:
   - M2_SSD1_Unit:
       in:
         and:
-          - name: "STATE_REQ_CHASSIS_ON"
+          - name: "FM_SLPS4"
+            invert: true
+        or:
+          - name: "FM_SLPS4"
+            invert: true
+            input_stable_usec: 100000
       out:
         name: "p3v3_m2_ssd1_On"
+      and_then_or: true
 
   - M2_SSD2_Unit:
       in:
         and:
-          - name: "STATE_REQ_CHASSIS_ON"
+          - name: "FM_SLPS4"
+            invert: true
+        or:
+          - name: "FM_SLPS4"
+            invert: true
+            input_stable_usec: 100000
       out:
         name: "p3v3_m2_ssd2_On"
+      and_then_or: true
 
   - PCIe_PWR_Stable_Unit:
       in:
