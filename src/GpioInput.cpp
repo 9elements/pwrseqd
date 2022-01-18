@@ -57,20 +57,8 @@ GpioInput::GpioInput(boost::asio::io_context& io, struct ConfigInput* cfg,
 
     if (cfg->GpioChipName == "")
     {
-        for (auto& it : ::gpiod::make_chip_iter())
-        {
-
-            try
-            {
-                this->line = it.find_line(cfg->Name);
-                this->chip = it;
-                break;
-            }
-            catch (const ::system_error& exc)
-            {
-                continue;
-            }
-        }
+        this->line = gpiod::find_line(cfg->Name);
+        this->chip = this->line.get_chip();
     }
     else
     {
