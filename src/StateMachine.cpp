@@ -106,7 +106,6 @@ void StateMachine::EvaluateState(void)
     bool dirty = false;
     int timeout = 10000;
 
-    log_debug("EvaluateState entering");
     if (_loglevel > 2)
         this->sp->PrintSignals();
 
@@ -131,7 +130,6 @@ void StateMachine::EvaluateState(void)
         signals = this->sp->GetDirtySignalsAndClearList();
         timeout--;
     }
-    log_debug("EvaluateState done");
     if (timeout == 0)
     {
         log_err("Failed to evaluate stable state, trying again...");
