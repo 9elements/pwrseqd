@@ -31,26 +31,29 @@ power_sequencer:
         and:
           - name: "FM_SLPS4"
             invert: true
+          - name: "RSMRST"
+            invert: true
         or:
           - name: "FM_SLPS4"
             invert: true
             input_stable_usec: 100000
+        and_then_or: true
       out:
         name: "p3v3_m2_ssd1_On"
-      and_then_or: true
 
   - M2_SSD2_Unit:
       in:
         and:
           - name: "FM_SLPS4"
             invert: true
+          # FIXME: Guard SLPS4 with RSMRST. It's not valid when PCH isn't powered
         or:
           - name: "FM_SLPS4"
             invert: true
             input_stable_usec: 100000
+        and_then_or: true
       out:
         name: "p3v3_m2_ssd2_On"
-      and_then_or: true
 
   - PCIe_PWR_Stable_Unit:
       in:

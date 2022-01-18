@@ -31,6 +31,17 @@ inputs:
     description: >
       RTC well reset. With RTC battery installed should never be asserted.
       Without RTC battery asserted when in G3.
+  - name: "RST_PLTRST_N"
+    signal_name: "PLTRST"
+    active_low: true
+    type: "gpio"
+    description: >
+      Global platform reset signal.
+      Not all PCIe devices might be affected by this signal.
+  - name: "PWRGD_CPUPWRGD"
+    type: "gpio"
+    signal_name: "PWRGD_CPUPWRGD"
+    description: "PROC_PWRGD. PCH informs the CPU that power is stable and clocks are running."
 
 outputs:
   - name: "PWRGD_PCH_DPWROK"
@@ -166,10 +177,76 @@ power_sequencer:
         name: "PCH_PWROK"
       delay_usec: 100
 
-#FIXME: SYS_PWROK
-immutables:
-  - signal_name: "SYS_PWROK"
-    value: false
+  # Enable DDR power when not in S5/S4
+  - DDR_Power_Internal_Unit:
+      in:
+        and:
+          - name: "RSMRST"
+            invert: true
+          - name: "FM_SLPS4"
+            invert: true
+          # TODO: Use CPU_VR_Fault_Shutdown
+          - name: "CPU0_VR_Fault_Shutdown"
+            input_stable_usec: 1000
+            invert: true
+      out:
+        name: "DDR_POWER_Internal"
+
+  - DDR_Power_Wait_CPUVR_Shutdown_Unit:
+      in:
+        or:
+          - name: "DDR_POWER_Internal"
+          - name: "DDR_POWER_Wait_for_CPUVR"
+        and:
+          - name: "CPU0_VR_Off"
+            invert: true
+          - name: "RSMRST"
+            invert: true
+      out:
+        name: "DDR_POWER_Wait_for_CPUVR"
+
+  - DDR_Power_Unit:
+      in:
+        or:
+          - name: "DDR_POWER_Internal"
+          - name: "DDR_POWER_Wait_for_CPUVR"
+        and:
+          - name: "STATE_REQ_CHASSIS_ON"
+      out:
+        name: "DDR_POWER"
+
+  - CPU_POWER_Unit:
+      in:
+        and:
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSMRST"
+            invert: true
+          # Cut CPU power if a regulator has a fault
+          # TODO: Use CPU_VR_Fault_Shutdown
+          - name: "CPU0_VR_Fault_Shutdown"
+            input_stable_usec: 1000
+            invert: true
+      out:
+        name: "CPU_POWER"
+
+  # SYS_PWROK is an indication that *ALL* VRs are running fault free.
+  # SYS_PWROK must latch after PWRGD_CPUPWRGD goes high.
+  # PWRGD_CPUPWRGD is not an input of SYS_PWROK!
+  - SYS_PWROK_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_CHASSIS_ON"
+          - name: "RSMRST"
+            invert: true
+          - name: "DSW_PWROK"
+          - name: "PCH_PWROK"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "CPU0_SYS_PWROK"
+            invert: true
+      out:
+        name: "SYS_PWROK"
 
 regulators:
   - name: "p3v3_pch"
