@@ -96,6 +96,9 @@ class VoltageRegulator :
     // ReadState reads /sys/class/regulator/.../state
     string ReadState(void);
 
+    // ReadConsumerState reads /sys/devices/platform/*_consumer/state
+    string ReadConsumerState(void);
+
     // DecodeStatus converts the value read from
     // /sys/class/regulator/.../status
     enum RegulatorStatus DecodeStatus(string);

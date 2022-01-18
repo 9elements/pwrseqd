@@ -157,6 +157,16 @@ string VoltageRegulator::ReadState()
     return line;
 }
 
+string VoltageRegulator::ReadConsumerState()
+{
+    string line;
+    ifstream infile(sysfsConsumerRoot / path("state"));
+    getline(infile, line);
+    infile.close();
+
+    return line;
+}
+
 enum RegulatorState VoltageRegulator::DecodeState(string state)
 {
     static const struct
@@ -272,7 +282,7 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
 
     // Set initial signal levels
     this->statusShadow = this->DecodeStatus(this->ReadStatus());
-    this->stateShadow = this->DecodeState(this->ReadState());
+    this->stateShadow = this->DecodeState(this->ReadConsumerState());
 
     this->DecodeStatesSysfs(this->stateShadow, this->statusShadow,
                             this->eventsShadow);
