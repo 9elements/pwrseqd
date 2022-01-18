@@ -3,6 +3,14 @@
 # Contains logic to power sequence an Intel Xeon CPU.
 
 inputs:
+  # FIVR_FAULT is not read as THERMTRIP_N is driven as well.
+  - name: "H_LVT3_CPLD0_THERMTRIP_N"
+    signal_name: "H_LVT3_CPLD0_THERMTRIP"
+    type: "gpio"
+    active_low: true
+    description: >
+      THERMTRIP_N is set on over tempertature condition or internal FIVR fault.
+
   - name: "FM_CPU0_SKTOCC_N"
     signal_name: "FM_CPU0_SKTOCC"
     type: "gpio"
@@ -238,11 +246,8 @@ power_sequencer:
           - name: "pvccio_cpu0_PowerGood"
           - name: "pvccin_cpu0_PowerGood"
             input_stable_usec: 1800  # CPUPWRGD must assert 1.8msec after PVCCIN
+          - name: "pvccin_cpu0_PowerGood"
           - name: "pvccsa_cpu0_PowerGood"
-        or:
-          - name: "FM_CPU0_SKTOCC"
-            invert: true
-        and_then_or: true
       out:
         name: "CPU0_VR_PWRGD"
 
@@ -250,6 +255,7 @@ power_sequencer:
       in:
         and:
           - name: "CPU0_DDR_PWRGD"
+            # PDG: 2usec max from VR failure to SYS_PWROK low
           - name: "CPU0_VR_PWRGD" # fast path
           - name: "PWRGD_CPUPWRGD" # signal from PCH (slow)
           - name: "FM_CPU0_SKTOCC"
@@ -337,6 +343,15 @@ power_sequencer:
             invert: true
       out:
         name: "RST_LVC3_CPU0_RESET"
+
+  - CPU0_THERMTRIP_Unit:
+      in:
+        and:
+          - name: "H_LVT3_CPLD0_THERMTRIP"
+          - name: "CPU0_VR_PWRGD" # PDG: Ignore THERMTRIP until power is good
+            input_stable_usec: 1500
+      out:
+        name: "CPU0_THERMTRIP"
 
 regulators:
   - name: "pvpp_abc"

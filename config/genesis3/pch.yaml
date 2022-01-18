@@ -68,7 +68,18 @@ outputs:
     signal_name: "SYS_PWROK"
     open_drain: true
     description: "PCH primary wells are stable, PCIe is out of reset and clocks are stable."
-
+  - name: "H_LVT1_THERMTRIP_N"
+    signal_name: "THRMTRIP"
+    type: "gpio"
+    active_low: true
+    open_drain: true
+    description: >
+      Signal from BMC to PCH indicating an overheat condition. PCH will got to S5
+      without following normal transition flow.
+    comment: >
+      PCH will immediately drive CPUPWRGD low and assert PLTRST_N, SLP_S3_N,
+      SLP_S4_N, SLP_S5_N.
+  
 power_sequencer:
   - DSW_PWRGD_Unit:
       in:
@@ -247,6 +258,14 @@ power_sequencer:
             invert: true
       out:
         name: "SYS_PWROK"
+
+  - CPU_THERMTRIP_Unit:
+      in:
+        or:
+          - name: "CPU0_THERMTRIP"
+          # TODO: Add other CPUs here
+      out:
+        name: "THRMTRIP"
 
 regulators:
   - name: "p3v3_pch"
