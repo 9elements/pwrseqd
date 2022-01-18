@@ -164,7 +164,7 @@ power_sequencer:
             invert: true
       out:
         name: "PCH_PWROK"
-      delay_us: 100
+      delay_usec: 100
 
 #FIXME: SYS_PWROK
 immutables:
