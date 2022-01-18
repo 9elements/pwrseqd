@@ -255,7 +255,6 @@ power_sequencer:
           - name: "FM_SLPS3"
             invert: true
           - name: "CPU0_SYS_PWROK"
-            invert: true
       out:
         name: "SYS_PWROK"
 
