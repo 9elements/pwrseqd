@@ -196,33 +196,11 @@ power_sequencer:
             invert: true
           - name: "FM_SLPS4"
             invert: true
+          - name: "STATE_REQ_HOST_ON"
           # TODO: Use CPU_VR_Fault_Shutdown
           - name: "CPU0_VR_Fault_Shutdown"
             input_stable_usec: 1000
             invert: true
-      out:
-        name: "DDR_POWER_Internal"
-
-  - DDR_Power_Wait_CPUVR_Shutdown_Unit:
-      in:
-        or:
-          - name: "DDR_POWER_Internal"
-          - name: "DDR_POWER_Wait_for_CPUVR"
-        and:
-          - name: "CPU0_VR_Off"
-            invert: true
-          - name: "RSMRST"
-            invert: true
-      out:
-        name: "DDR_POWER_Wait_for_CPUVR"
-
-  - DDR_Power_Unit:
-      in:
-        or:
-          - name: "DDR_POWER_Internal"
-          - name: "DDR_POWER_Wait_for_CPUVR"
-        and:
-          - name: "STATE_REQ_CHASSIS_ON"
       out:
         name: "DDR_POWER"
 
@@ -233,6 +211,7 @@ power_sequencer:
             invert: true
           - name: "RSMRST"
             invert: true
+          - name: "STATE_REQ_HOST_ON"
           # Cut CPU power if a regulator has a fault
           # TODO: Use CPU_VR_Fault_Shutdown
           - name: "CPU0_VR_Fault_Shutdown"
@@ -248,6 +227,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_CHASSIS_ON"
+          - name: "STATE_REQ_HOST_ON"
           - name: "RSMRST"
             invert: true
           - name: "DSW_PWROK"

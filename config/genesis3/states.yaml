@@ -46,9 +46,6 @@ power_sequencer:
       out:
         name: "ACPI_STATE_IS_S0"
 
-floating_signals:
-  - "STATE_REQ_HOST_ON"
-
 immutables:
   - signal_name: "ACPI_STATE_IS_S3"
     value: false

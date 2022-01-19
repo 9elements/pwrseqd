@@ -276,29 +276,24 @@ power_sequencer:
   
   - CPU0_VR_Off_Unit:
       in:
-        and:
+        or:
           - name: "pvccio_cpu0_Enabled"
-            invert: true
           - name: "pvccin_cpu0_Enabled"
-            invert: true
           - name: "pvccsa_cpu0_Enabled"
-            invert: true
       out:
         name: "CPU0_VR_Off"
+        active_low: true
 
   - CPU0_DDR_Off_Unit:
       in:
         and:
           - name: "pvddq_abc_Enabled"
-            invert: true
           - name: "pvpp_abc_Enabled"
-            invert: true
           - name: "pvddq_def_Enabled"
-            invert: true
           - name: "pvpp_def_Enabled"
-            invert: true
       out:
         name: "CPU0_DDR_Off"
+        active_low: true
   
   - CPU0_VR_Off_Unit:
       in:
