@@ -29,12 +29,13 @@ power_sequencer:
   - M2_SSD1_Unit:
       in:
         and:
-          - name: "FM_SLPS4"
+          - name: "FM_SLPS3"
             invert: true
           - name: "RSMRST"
             invert: true
+          - name: "STATE_REQ_CHASSIS_ON"
         or:
-          - name: "FM_SLPS4"
+          - name: "FM_SLPS3"
             invert: true
             input_stable_usec: 100000
         and_then_or: true
@@ -44,11 +45,14 @@ power_sequencer:
   - M2_SSD2_Unit:
       in:
         and:
-          - name: "FM_SLPS4"
+          - name: "FM_SLPS3"
             invert: true
+          - name: "RSMRST"
+            invert: true
+          - name: "STATE_REQ_CHASSIS_ON"
           # FIXME: Guard SLPS4 with RSMRST. It's not valid when PCH isn't powered
         or:
-          - name: "FM_SLPS4"
+          - name: "FM_SLPS3"
             invert: true
             input_stable_usec: 100000
         and_then_or: true
