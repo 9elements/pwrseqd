@@ -21,8 +21,8 @@ class SignalProvider
     // FindOrAdd returns a signal by name. If not found a new signal is added
     Signal* FindOrAdd(string name);
 
-    // DumpSignals writes the signal state to the folder
-    void DumpSignals(void);
+    // DumpSignal writes one signal state to the trace file
+    void DumpSignal(Signal*);
 
     // PrintSignals writes all signals to stdout
     void PrintSignals(void);
@@ -55,7 +55,7 @@ class SignalProvider
     // Add a new signal
     Signal* Add(string name);
 
-    ofstream outfile;
+    ofstream tracefile;
     string dumpFolder;
 
     map<string, Signal*> signals;

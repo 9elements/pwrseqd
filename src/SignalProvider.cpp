@@ -26,30 +26,16 @@ SignalProvider::SignalProvider(Config& cfg, string dumpFolder) :
     if (dumpFolder != "")
     {
         path f(dumpFolder / path("signals.txt"));
-        this->outfile.open(f.string(), ofstream::out | ofstream::app);
+        this->tracefile.open(f.string(), ofstream::out | ofstream::app);
     }
 }
 
 SignalProvider::~SignalProvider()
 {
-
-    if (this->outfile.is_open())
+    if (this->tracefile.is_open())
     {
-        this->outfile.close();
-
-        string cmd =
-            "gnuplot -e \"unset ytics; set grid x; set xtics rotate 1000; set yrange [-0.5:" +
-            to_string(this->signals.size() * 2 + 1) +
-            "]; set xlabel 'microseconds'; set term svg size 4096 " +
-            to_string(256 * this->signals.size()) +
-            " dynamic ; set output 'output.svg'; set key outside; ";
-        cmd += "plot for [col=2:" + to_string(this->signals.size() + 1) +
-               "] '" + this->dumpFolder +
-               "/signals.txt' using 1:col with lines title columnheader;";
-
-        cout << cmd << endl;
-        cmd += "\"";
-        system(cmd.c_str());
+        this->tracefile.flush();
+        this->tracefile.close();
     }
     for (auto it : this->signals)
     {
@@ -151,7 +137,7 @@ void SignalProvider::ClearDirty(void)
     }
 }
 
-// SetDirty adds the signal to the dirty listt
+// SetDirty adds the signal to the dirty list
 void SignalProvider::SetDirty(Signal* sig)
 {
     vector<Signal*>* vec;
@@ -169,6 +155,9 @@ void SignalProvider::SetDirty(Signal* sig)
         }
     }
     vec->push_back(sig);
+
+    if (this->tracefile.is_open())
+        this->DumpSignal(sig);
 
     // Invoke dirty bit listeners
     this->dirtyBitSignal();
@@ -225,15 +214,19 @@ void SignalProvider::Validate()
 
 void SignalProvider::PrintSignals(void)
 {
-    // Check if signal drives something
+    if (_loglevel > 2)
+        log_debug("Initial signal state:\n");
     for (auto it : this->signals)
     {
-        log_debug("signal " + it.first + " = " +
-                  to_string(it.second->GetLevel()));
+        if (_loglevel > 2)
+            log_debug("signal " + it.first + " = " +
+                      to_string(it.second->GetLevel()));
+        if (this->tracefile.is_open())
+            this->DumpSignal(it.second);
     }
 }
 
-void SignalProvider::DumpSignals(void)
+void SignalProvider::DumpSignal(Signal* sig)
 {
     static bool once;
     static long long start;
@@ -243,28 +236,16 @@ void SignalProvider::DumpSignals(void)
                     high_resolution_clock::now().time_since_epoch())
                     .count();
         once = true;
-
-        outfile << "time"
-                << " ";
-        // Print columns headers
-        for (auto it : this->signals)
-        {
-            outfile << it.first << " ";
-        }
-        outfile << endl;
     }
 
-    this->outfile << duration_cast<microseconds>(
-                         high_resolution_clock::now().time_since_epoch())
-                             .count() -
-                         start;
-    this->outfile << " ";
+    this->tracefile << duration_cast<microseconds>(
+                           high_resolution_clock::now().time_since_epoch())
+                               .count() -
+                           start;
+    this->tracefile << " ";
 
-    int i = 0;
-    for (auto it : this->signals)
-    {
-        outfile << (it.second->GetLevel() ? (i + 1) : i) << " ";
-        i += 2;
-    }
-    this->outfile << endl;
+    tracefile << (sig->GetLevel() ? "1 " : "0 ");
+    tracefile << sig->Name();
+
+    this->tracefile << endl;
 }

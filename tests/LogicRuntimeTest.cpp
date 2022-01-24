@@ -56,6 +56,7 @@ TEST(Waveform, GenerateTest1)
         Signal* o1_stable = sp.Find("o1_stable");
         EXPECT_NE(o1_stable, nullptr);
         sm.EvaluateState();
+        sp.PrintSignals();
 
         for (int i = 0; i < 256; i++)
         {
@@ -66,7 +67,6 @@ TEST(Waveform, GenerateTest1)
 
             sm.Poll();
             sm.EvaluateState();
-            sp.DumpSignals();
 
             nanoseconds ns;
 
@@ -75,8 +75,6 @@ TEST(Waveform, GenerateTest1)
                 ns = steady_clock::now() - start;
                 sm.Poll();
             }
-
-            sp.DumpSignals();
         }
     }
 

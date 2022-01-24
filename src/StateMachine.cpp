@@ -106,9 +106,6 @@ void StateMachine::EvaluateState(void)
     bool dirty = false;
     int timeout = 10000;
 
-    if (_loglevel > 2)
-        this->sp->PrintSignals();
-
     vector<Signal*>* signals = this->sp->GetDirtySignalsAndClearList();
     dirty = signals->size() > 0;
 
@@ -136,9 +133,6 @@ void StateMachine::EvaluateState(void)
         this->OnDirtySet();
     }
 
-    if (_loglevel > 2)
-        this->sp->PrintSignals();
-
     // State is stable
     if (dirty)
         this->ApplyOutputSignalLevel();
@@ -148,6 +142,7 @@ void StateMachine::EvaluateState(void)
 void StateMachine::Run(void)
 {
     this->io->post([&]() { this->EvaluateState(); });
+    this->io->post([&]() { this->sp->PrintSignals(); });
 
     this->io->run();
 }
