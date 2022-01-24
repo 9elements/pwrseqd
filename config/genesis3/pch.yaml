@@ -197,8 +197,16 @@ power_sequencer:
           - name: "FM_SLPS4"
             invert: true
           - name: "STATE_REQ_HOST_ON"
-          # TODO: Use CPU_VR_Fault_Shutdown
           - name: "CPU0_VR_Fault_Shutdown"
+            input_stable_usec: 1000
+            invert: true
+          - name: "CPU1_VR_Fault_Shutdown"
+            input_stable_usec: 1000
+            invert: true
+          - name: "CPU2_VR_Fault_Shutdown"
+            input_stable_usec: 1000
+            invert: true
+          - name: "CPU3_VR_Fault_Shutdown"
             input_stable_usec: 1000
             invert: true
       out:
@@ -212,9 +220,16 @@ power_sequencer:
           - name: "RSMRST"
             invert: true
           - name: "STATE_REQ_HOST_ON"
-          # Cut CPU power if a regulator has a fault
-          # TODO: Use CPU_VR_Fault_Shutdown
           - name: "CPU0_VR_Fault_Shutdown"
+            input_stable_usec: 1000
+            invert: true
+          - name: "CPU1_VR_Fault_Shutdown"
+            input_stable_usec: 1000
+            invert: true
+          - name: "CPU2_VR_Fault_Shutdown"
+            input_stable_usec: 1000
+            invert: true
+          - name: "CPU3_VR_Fault_Shutdown"
             input_stable_usec: 1000
             invert: true
       out:
@@ -235,6 +250,9 @@ power_sequencer:
           - name: "FM_SLPS3"
             invert: true
           - name: "CPU0_SYS_PWROK"
+          - name: "CPU1_SYS_PWROK"
+          - name: "CPU2_SYS_PWROK"
+          - name: "CPU3_SYS_PWROK"
       out:
         name: "SYS_PWROK"
 
@@ -242,7 +260,9 @@ power_sequencer:
       in:
         or:
           - name: "CPU0_THERMTRIP"
-          # TODO: Add other CPUs here
+          - name: "CPU1_THERMTRIP"
+          - name: "CPU2_THERMTRIP"
+          - name: "CPU3_THERMTRIP"
       out:
         name: "THRMTRIP"
 

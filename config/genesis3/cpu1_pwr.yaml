@@ -1,0 +1,358 @@
+---
+
+# Contains logic to power sequence an Intel Xeon CPU.
+
+inputs:
+  # FIVR_FAULT is not read as THERMTRIP_N is driven as well.
+  - name: "H_LVT3_CPLD1_THERMTRIP_N"
+    signal_name: "H_LVT3_CPLD1_THERMTRIP"
+    type: "gpio"
+    active_low: true
+    description: >
+      THERMTRIP_N is set on over tempertature condition or internal FIVR fault.
+
+  - name: "FM_CPU1_SKTOCC_N"
+    signal_name: "FM_CPU1_SKTOCC"
+    type: "gpio"
+    active_low: true
+    description: "CPU1 socket is occupied."
+
+  - name: "PWRGD_PVTT_GHJ_CPU1"
+    signal_name: "PWRGD_PVTT_GHJ_CPU1"
+    type: "gpio"
+    description: "VTT GHJ is stable"
+
+  - name: "PWRGD_PVTT_KLM_CPU1"
+    signal_name: "PWRGD_PVTT_KLM_CPU1"
+    type: "gpio"
+    description: "VTT KLM is stable"
+
+outputs:
+  - name: "H_LVT3_CPU1_PROCHOT_N"
+    type: "gpio"
+    signal_name: "H_LVT3_CPU1_PROCHOT"
+    active_low: true
+    open_drain: true
+    description: "CPU1 is hot and throttling. Open Drain."
+
+  - name: "H_LVT3_CPU1_MEM_GHJ_HOT_N"
+    type: "gpio"
+    signal_name: "H_LVT3_CPU1_MEM_GHJ_HOT"
+    active_low: true
+    open_drain: true
+    description: "CPU1 memory is hot and throttling. Open Drain."
+
+  - name: "H_LVT3_CPU1_MEM_KLM_HOT_N"
+    type: "gpio"
+    signal_name: "H_LVT3_CPU1_MEM_KLM_HOT"
+    active_low: true
+    open_drain: true
+    description: "CPU1 memory is hot and throttling. Open Drain."
+
+  - name: "PWRGD_LVC3_CPU1_GHJ_DRAM_G"
+    type: "gpio"
+    signal_name: "PWRGD_LVC3_CPU1_GHJ_DRAM_G"
+    description: "Tell CPU1 DRAM power good."
+
+  - name: "PWRGD_LVC3_CPU1_KLM_DRAM_G"
+    type: "gpio"
+    signal_name: "PWRGD_LVC3_CPU1_KLM_DRAM_G"
+    description: "Tell CPU1 DRAM power good."
+
+  - name: "RST_LVC3_CPU1_RESET_N"
+    type: "gpio"
+    signal_name: "RST_LVC3_CPU1_RESET"
+    active_low: true
+    description: "CPU1 RESET_N"
+
+  - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+    type: "gpio"
+    signal_name: "PWRGD_LVC3_CPU1_PWRGOOD"
+    description: "Tell CPU1 power good."
+
+immutables:
+  - signal_name: "H_LVT3_CPU1_MEM_GHJ_HOT"
+    value: false
+  - signal_name: "H_LVT3_CPU1_MEM_KLM_HOT"
+    value: false
+  - signal_name: "H_LVT3_CPU1_PROCHOT"
+    value: false
+
+power_sequencer:
+
+  # Vpp must be equal or higher than Vdd at all times.
+  - PVPP_GHJ_Unit:
+      in:
+        or:
+          - name: "pvddq_ghj_Enabled"
+            input_stable_usec: 30000 # JEDEC recommendation
+          - name: "pvddq_ghj_Enabled"
+        and:
+          - name: "DDR_POWER"
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_VR_Fault_Shutdown"
+            invert: true
+        and_then_or: true
+      out:
+        name: "pvpp_ghj_On"
+
+  - PVDDQ_GHJ_ReqOn_Unit:
+      in:
+        and:
+          - name: "DDR_POWER"
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_VR_Fault_Shutdown"
+            invert: true
+          - name: "pvpp_ghj_PowerGood"
+            input_stable_usec: 100
+      out:
+        name: "pvddq_ghj_ReqOn"
+  
+  # Ramp after DDR_VPP
+  - PVDDQ_GHJ_Unit:
+      in:
+        or:
+          - name: "pvddq_ghj_ReqOn"
+          - name: "CPU1_VR_Off"
+            invert: true
+      out:
+        name: "pvddq_ghj_On"
+
+  # Vpp must be equal or higher than Vdd at all times.
+  - PVPP_KLM_Unit:
+      in:
+        or:
+          - name: "pvddq_klm_Enabled"
+            input_stable_usec: 30000 # JEDEC recommendation
+          - name: "pvddq_klm_Enabled"
+        and:
+          - name: "DDR_POWER"
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_VR_Fault_Shutdown"
+            invert: true
+        and_then_or: true
+      out:
+        name: "pvpp_klm_On"
+
+  - PVDDQ_KLM_ReqOn_Unit:
+      in:
+        and:
+          - name: "DDR_POWER"
+          - name: "pvpp_klm_PowerGood"
+            input_stable_usec: 100
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_VR_Fault_Shutdown"
+            invert: true
+      out:
+        name: "pvddq_klm_ReqOn"
+
+  # Ramp after DDR_VPP
+  - PVDDQ_KLM_Unit:
+      in:
+        or:
+          - name: "pvddq_klm_ReqOn"
+          - name: "CPU1_VR_Off"
+            invert: true
+      out:
+        name: "pvddq_klm_On"
+
+  - PWRGD_LVC3_CPU1_GHJ_DRAM_G_Unit:
+      in:
+        and:
+          - name: "pvddq_ghj_PowerGood"
+          - name: "pvpp_ghj_PowerGood"
+          - name: "PWRGD_PVTT_GHJ_CPU1"
+      out:
+        name: "PWRGD_LVC3_CPU1_GHJ_DRAM_G"
+
+  - PWRGD_LVC3_CPU1_KLM_DRAM_G_Unit:
+      in:
+        and:
+          - name: "pvddq_klm_PowerGood"
+          - name: "pvpp_klm_PowerGood"
+          - name: "PWRGD_PVTT_KLM_CPU1"
+      out:
+        name: "PWRGD_LVC3_CPU1_KLM_DRAM_G"
+
+  - CPU1_DDR_PWRGD_Unit:
+      in:
+        and:
+          - name: "PWRGD_LVC3_CPU1_GHJ_DRAM_G"
+          - name: "PWRGD_LVC3_CPU1_KLM_DRAM_G"
+        or:
+          - name: "FM_CPU1_SKTOCC"
+            invert: true
+        and_then_or: true
+      out:
+        name: "CPU1_DDR_PWRGD"
+
+  # PVCCIO must ramp before PVCCIN and PVCCSA, must retain until after PVCCIN
+  # and PVCCSA goes low
+  # A fault on PVCCIO must shutdown PVCCIN and PVCCSA
+  - PVCCIO_CPU1_Unit:
+      in:
+        and:
+          - name: "CPU_POWER"
+          - name: "CPU1_DDR_PWRGD"
+            input_stable_usec: 100
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_VR_Fault_Shutdown"
+            invert: true
+        or:
+          - name: "PVCCIO_CPU1_DELAY"
+        and_then_or: true
+      out:
+        name: "pvccio_cpu1_On"
+
+  - PVCCIO_CPU1_Delay_Unit:
+      in:
+        or:
+          - name: "pvccin_cpu1_On"
+          - name: "pvccsa_cpu1_On"
+      out:
+        name: "PVCCIO_CPU1_DELAY"
+      delay_usec: 5000
+
+  - PVCCIN_CPU1_Unit:
+      in:
+        and:
+          - name: "CPU_POWER"
+          - name: "pvccio_cpu1_PowerGood" # Shutdown within 500usec if VCCIO is at fault
+            input_stable_usec: 100
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_VR_Fault_Shutdown"
+            invert: true
+      out:
+        name: "pvccin_cpu1_On"
+      delay_usec: 10 # Must retain for at least 10usec after shutdown
+
+  - PVCCSA_CPU1_Unit:
+      in:
+        and:
+          - name: "CPU_POWER"
+          - name: "pvccin_cpu1_PowerGood"
+            input_stable_usec: 100
+          - name: "pvccio_cpu1_PowerGood"
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_VR_Fault_Shutdown"
+            invert: true
+      out:
+        name: "pvccsa_cpu1_On"
+      delay_usec: 10 # Must retain for at least 10usec after shutdown
+
+  - CPU1_VR_PWRGD_Unit:
+      in:
+        and:
+          - name: "pvccio_cpu1_PowerGood"
+          - name: "pvccin_cpu1_PowerGood"
+            input_stable_usec: 1800  # CPUPWRGD must assert 1.8msec after PVCCIN
+          - name: "pvccin_cpu1_PowerGood"
+          - name: "pvccsa_cpu1_PowerGood"
+      out:
+        name: "CPU1_VR_PWRGD"
+
+  - PWRGD_LVC3_CPU1_PWRGOOD_Unit:
+      in:
+        and:
+          - name: "CPU1_DDR_PWRGD"
+            # PDG: 2usec max from VR failure to SYS_PWROK low
+          - name: "CPU1_VR_PWRGD" # fast path
+          - name: "PWRGD_CPUPWRGD" # signal from PCH (slow)
+          - name: "FM_CPU1_SKTOCC"
+      out:
+        name: "PWRGD_LVC3_CPU1_PWRGOOD"
+
+  - CPU1_SYS_PWROK_Unit:
+      in:
+        and:
+          - name: "CPU1_VR_PWRGD"
+          - name: "CPU1_DDR_PWRGD"
+        or:
+          - name: "FM_CPU1_SKTOCC"
+            invert: true
+        and_then_or: true
+      out:
+        name: "CPU1_SYS_PWROK"
+  
+  - CPU1_VR_Off_Unit:
+      in:
+        or:
+          - name: "pvccio_cpu1_Enabled"
+          - name: "pvccin_cpu1_Enabled"
+          - name: "pvccsa_cpu1_Enabled"
+      out:
+        name: "CPU1_VR_Off"
+        active_low: true
+
+  - CPU1_DDR_Off_Unit:
+      in:
+        and:
+          - name: "pvddq_ghj_Enabled"
+          - name: "pvpp_ghj_Enabled"
+          - name: "pvddq_klm_Enabled"
+          - name: "pvpp_klm_Enabled"
+      out:
+        name: "CPU1_DDR_Off"
+        active_low: true
+  
+  - CPU1_VR_Off_Unit:
+      in:
+        and:
+          - name: "CPU1_DDR_Off"
+          - name: "CPU1_VR_Off"
+      out:
+        name: "CPU1_Off"
+    
+  - CPU1_VR_Fault_Unit:
+      in:
+        or:
+          - name: "pvddq_ghj_Fault"
+          - name: "pvpp_ghj_Fault"
+          - name: "pvddq_klm_Fault"
+          - name: "pvpp_klm_Fault"
+          - name: "pvccio_cpu1_Fault"
+          - name: "pvccin_cpu1_Fault"
+          - name: "pvccsa_cpu1_Fault"
+        and:
+          - name: "FM_CPU1_SKTOCC"
+      out:
+        name: "CPU1_VR_Fault"
+
+  - CPU1_VR_Fault_Keep_Unit:
+      in:
+        or:
+          - name: "CPU1_VR_Fault"
+          - name: "CPU1_VR_Fault_Shutdown"
+        and:
+          - name: "CPU1_Off"
+            invert: true
+      out:
+        name: "CPU1_VR_Fault_Shutdown"
+
+  # The following violates multi-processor RESET_N spec
+  - RST_LVC3_CPU1_RESET_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+            invert: true
+      out:
+        name: "RST_LVC3_CPU1_RESET"
+
+  - CPU1_THERMTRIP_Unit:
+      in:
+        and:
+          - name: "H_LVT3_CPLD1_THERMTRIP"
+          - name: "CPU1_VR_PWRGD" # PDG: Ignore THERMTRIP until power is good
+            input_stable_usec: 1500
+      out:
+        name: "CPU1_THERMTRIP"
+
+regulators:
+  - name: "pvpp_ghj"
+  - name: "pvpp_klm"
+  - name: "pvddq_ghj"
+  - name: "pvddq_klm"
+  - name: "pvccsa_cpu1"
+  - name: "pvccin_cpu1"
+  - name: "pvccio_cpu1"

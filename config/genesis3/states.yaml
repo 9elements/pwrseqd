@@ -23,20 +23,17 @@ power_sequencer:
       out:
         name: "ACPI_STATE_IS_S5"
 
-  - CPU_DDR_PWRGD_Unit:
-      in:
-        and:
-          - name: "CPU0_DDR_PWRGD"
-      out:
-        name: "CPU_DDR_PWRGD"
-
   - ACPI_STATE_IS_S0_Unit:
       in:
         and:
-          - name: "DSW_PWROK"
           - name: "RSMRST"
             invert: true
-          - name: "CPU_DDR_PWRGD"
+          - name: "DSW_PWROK"
+          - name: "PCH_PWROK"
+          - name: "CPU0_SYS_PWROK"
+          - name: "CPU1_SYS_PWROK"
+          - name: "CPU2_SYS_PWROK"
+          - name: "CPU3_SYS_PWROK"
           - name: "PLTRST"
             invert: true
           - name: "FM_SLPS4"
