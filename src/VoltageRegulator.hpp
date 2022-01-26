@@ -108,6 +108,9 @@ class VoltageRegulator :
     // DecodeStatus converts the value read from
     // /sys/class/regulator/.../status
     enum RegulatorStatus DecodeStatus(string);
+#ifdef WITH_GOOGLE_TEST
+    FRIEND_TEST(Regulator, StatusParsing);
+#endif
 
     // ReadStatus reads /sys/class/regulator/.../status
     string ReadStatus(void);

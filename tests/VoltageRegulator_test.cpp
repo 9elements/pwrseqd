@@ -107,6 +107,44 @@ TEST(Regulator, EventParsing)
     remove_all(root);
 }
 
+TEST(Regulator, StatusParsing)
+{
+    boost::asio::io_context io;
+    int result;
+
+    struct Config cfg;
+    cfg.Regulators.push_back((struct ConfigRegulator){
+        .Name = "abcde",
+    });
+    SignalProvider sp(cfg);
+    path root = path(std::tmpnam(nullptr));
+    create_directories(root);
+    create_directories(root / path("consumer"));
+
+    WriteFile(root / path("name"), "abcde");
+    WriteFile(root / path("state"), "disabled");
+    WriteFile(root / path("status"), "off");
+    WriteFile(root / path("consumer") / path("modalias"),
+              "reg-userspace-consumer");
+    WriteFile(root / path("consumer") / path("state"), "disabled");
+
+    VoltageRegulator vr(io, &cfg.Regulators[0], sp, root.string());
+
+    EXPECT_EQ(vr.DecodeStatus(""), ERROR);
+    EXPECT_EQ(vr.DecodeStatus("on"), ON);
+    EXPECT_EQ(vr.DecodeStatus("on\n"), ON);
+    EXPECT_EQ(vr.DecodeStatus("off"), OFF);
+    EXPECT_EQ(vr.DecodeStatus("off\n"), OFF);
+    EXPECT_EQ(vr.DecodeStatus("error"), ERROR);
+    EXPECT_EQ(vr.DecodeStatus("error\n"), ERROR);
+    EXPECT_EQ(vr.DecodeStatus("fast"), FAST);
+    EXPECT_EQ(vr.DecodeStatus("normal"), NORMAL);
+    EXPECT_EQ(vr.DecodeStatus("idle"), IDLE);
+    EXPECT_EQ(vr.DecodeStatus("standby"), STANDBY);
+
+    remove_all(root);
+}
+
 TEST(Regulator, Inotify)
 {
     boost::asio::io_context io;
