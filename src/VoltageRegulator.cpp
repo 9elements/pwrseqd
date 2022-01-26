@@ -114,7 +114,10 @@ string VoltageRegulator::ReadStatus()
 
 unsigned long VoltageRegulator::DecodeRegulatorEvent(string state)
 {
-    return stoul(state);
+    if (!state.empty() && state[state.size() - 1] == '\n')
+        state.pop_back();
+
+    return stoul(state, 0, 0);
 }
 
 enum RegulatorStatus VoltageRegulator::DecodeStatus(string state)
