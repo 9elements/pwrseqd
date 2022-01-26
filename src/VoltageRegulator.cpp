@@ -45,48 +45,45 @@ void VoltageRegulator::Update(void)
     this->newLevel = this->in->GetLevel();
 }
 
-void VoltageRegulator::DecodeStatesSysfs(enum RegulatorStatus status,
-                                         unsigned long events)
+enum RegulatorStatus VoltageRegulator::DecodeEvents(unsigned long events)
 {
-    // First check events. They might be outdated already.
-    // By reading events they get cleared and will not be visible on the next
-    // call to this function.
-    if ((events & REGULATOR_EVENT_FAILURE) && this->powergood->GetLevel())
+    if (events & REGULATOR_EVENT_FAILURE)
     {
-        this->powergood->SetLevel(false);
-        this->fault->SetLevel(true);
+        return ERROR;
     }
     else if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_ENABLE)
     {
-        this->enabled->SetLevel(true);
-        this->powergood->SetLevel(true);
-        this->fault->SetLevel(false);
+        return ON;
     }
     else if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_DISABLE)
+    {
+        return OFF;
+    }
+
+    return NOCHANGE;
+}
+
+void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
+{
+    if (status == OFF)
     {
         this->enabled->SetLevel(false);
         this->powergood->SetLevel(false);
         this->fault->SetLevel(false);
     }
+    else if (status == ERROR)
+    {
+        // Errors might get cleared by interrupt handlers before we can
+        // read them...
+        this->enabled->SetLevel(true);
+        this->powergood->SetLevel(false);
+        this->fault->SetLevel(true);
+    }
     else
     {
-        if (status == OFF)
-        {
-            this->powergood->SetLevel(false);
-            this->fault->SetLevel(false);
-        }
-        else if (status == ERROR)
-        {
-            // Errors might get cleared by interrupt handlers before we can
-            // read them...
-            this->powergood->SetLevel(false);
-            this->fault->SetLevel(true);
-        }
-        else
-        {
-            this->powergood->SetLevel(true);
-            this->fault->SetLevel(false);
-        }
+        this->enabled->SetLevel(true);
+        this->powergood->SetLevel(true);
+        this->fault->SetLevel(false);
     }
 }
 
@@ -261,7 +258,6 @@ static string SysFsConsumerDir(path root)
 VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
                                    struct ConfigRegulator* cfg,
                                    SignalProvider& prov, string root) :
-    eventsShadow(0),
     name(cfg->Name)
 {
     string consumerRoot;
@@ -294,7 +290,7 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
     this->statusShadow = this->DecodeStatus(this->ReadStatus());
     this->stateShadow = this->DecodeState(this->ReadConsumerState());
 
-    this->DecodeStatesSysfs(this->statusShadow, this->eventsShadow);
+    this->ApplyStatus(this->statusShadow);
 
     // Register sysfs watcher
     SysFsWatcher* sysw = GetSysFsWatcher(io);
@@ -306,14 +302,14 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
                 this->statusShadow = this->DecodeStatus(this->ReadStatus());
                 log_debug(this->name + ": sysfsnotify on 'status': " +
                           to_string(this->statusShadow));
-                this->DecodeStatesSysfs(this->statusShadow, this->eventsShadow);
+                this->ApplyStatus(this->statusShadow);
             });
             return;
         }
         this->statusShadow = this->DecodeStatus(string(data));
         log_debug(this->name + ": sysfsnotify on 'status': " +
                   to_string(this->statusShadow));
-        this->DecodeStatesSysfs(this->statusShadow, this->eventsShadow);
+        this->ApplyStatus(this->statusShadow);
     });
 
     sysw->Register(this->sysfsConsumerRoot / path("state"),
@@ -326,14 +322,15 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
 
     if (filesystem::exists(this->sysfsConsumerRoot / path("events")))
     {
-        this->eventsShadow = this->DecodeRegulatorEvent(this->ReadEvents());
         sysw->Register(
             this->sysfsConsumerRoot / path("events"),
             [&](filesystem::path p, const char* data) {
-                this->eventsShadow = this->DecodeRegulatorEvent(string(data));
-                log_debug(this->name + ": sysfsnotify on 'events': " +
-                          to_string(this->eventsShadow));
-                this->DecodeStatesSysfs(this->statusShadow, this->eventsShadow);
+                unsigned long events = this->DecodeRegulatorEvent(string(data));
+                log_debug(this->name +
+                          ": sysfsnotify on 'events': " + string(data));
+
+                this->statusShadow = this->DecodeEvents(events);
+                this->ApplyStatus(this->statusShadow);
             });
     }
 }

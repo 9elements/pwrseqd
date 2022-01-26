@@ -39,6 +39,7 @@ enum RegulatorStatus
     NORMAL = 4,
     IDLE = 5,
     STANDBY = 6,
+    NOCHANGE = 7,
 };
 
 #define REGULATOR_EVENT_UNDER_VOLTAGE 0x01
@@ -87,6 +88,9 @@ class VoltageRegulator :
     // SignalReceiver's Update method for signal changes
     void Update(void);
 
+    // DecodeEvents turns an bitmask to status
+    enum RegulatorStatus DecodeEvents(unsigned long events);
+
     // Signals returns the list of signals that are feed with data
     vector<Signal*> Signals(void);
 
@@ -115,8 +119,9 @@ class VoltageRegulator :
     // ReadStatus reads /sys/class/regulator/.../status
     string ReadStatus(void);
 
-    // DecodeStatesSysfs updates the signals from sysfs attributes
-    void DecodeStatesSysfs(enum RegulatorStatus, unsigned long);
+    // ApplyStatus updates the signals from the regulator status
+    // Regulator status can be set from sysfs or events
+    void ApplyStatus(enum RegulatorStatus);
 
     // DecodeRegulatorEvent converts the value read from
     // /sys/devices/platform/*_consumer/events
@@ -132,7 +137,6 @@ class VoltageRegulator :
 
     enum RegulatorState stateShadow;
     enum RegulatorStatus statusShadow;
-    unsigned long eventsShadow;
 
     string name;
     path sysfsRoot;
