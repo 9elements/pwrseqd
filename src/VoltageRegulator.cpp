@@ -22,7 +22,11 @@ void VoltageRegulator::Apply(void)
     const enum RegulatorState s = this->newLevel ? ENABLED : DISABLED;
 
     if (s != this->stateShadow)
+    {
+        this->stateShadow = s;
         this->SetState(s);
+        this->enabled->SetLevel(s == ENABLED);
+    }
 }
 
 vector<Signal*> VoltageRegulator::Signals(void)
@@ -41,42 +45,45 @@ void VoltageRegulator::Update(void)
     this->newLevel = this->in->GetLevel();
 }
 
-void VoltageRegulator::DecodeStatesSysfs(enum RegulatorState state,
-                                         enum RegulatorStatus status,
+void VoltageRegulator::DecodeStatesSysfs(enum RegulatorStatus status,
                                          unsigned long events)
 {
     // First check events. They might be outdated already.
     // By reading events they get cleared and will not be visible on the next
     // call to this function.
-    if (events & REGULATOR_EVENT_FAILURE)
+    if ((events & REGULATOR_EVENT_FAILURE) && this->powergood->GetLevel())
     {
         this->powergood->SetLevel(false);
         this->fault->SetLevel(true);
     }
-    if (state == DISABLED)
+    else if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_ENABLE)
+    {
+        this->enabled->SetLevel(true);
+        this->powergood->SetLevel(true);
+        this->fault->SetLevel(false);
+    }
+    else if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_DISABLE)
     {
         this->enabled->SetLevel(false);
         this->powergood->SetLevel(false);
+        this->fault->SetLevel(false);
     }
     else
-    { /* Enabled or unknown */
+    {
         if (status == OFF)
         {
-            this->enabled->SetLevel(false);
             this->powergood->SetLevel(false);
             this->fault->SetLevel(false);
         }
         else if (status == ERROR)
         {
-            // Errors might get cleared by interrupt handlers before we can read
-            // them...
-            this->enabled->SetLevel(true);
+            // Errors might get cleared by interrupt handlers before we can
+            // read them...
             this->powergood->SetLevel(false);
             this->fault->SetLevel(true);
         }
         else
         {
-            this->enabled->SetLevel(true);
             this->powergood->SetLevel(true);
             this->fault->SetLevel(false);
         }
@@ -284,27 +291,36 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
     this->statusShadow = this->DecodeStatus(this->ReadStatus());
     this->stateShadow = this->DecodeState(this->ReadConsumerState());
 
-    this->DecodeStatesSysfs(this->stateShadow, this->statusShadow,
-                            this->eventsShadow);
+    this->DecodeStatesSysfs(this->statusShadow, this->eventsShadow);
 
     // Register sysfs watcher
     SysFsWatcher* sysw = GetSysFsWatcher(io);
-    sysw->Register(this->sysfsRoot / path("state"), [&](filesystem::path p,
-                                                        const char* data) {
-        this->stateShadow = this->DecodeState(string(data));
-        log_debug("sysfsnotify event on path " + p.string() + ", data " +
-                  string(data));
-        this->DecodeStatesSysfs(this->stateShadow, this->statusShadow,
-                                this->eventsShadow);
-    });
     sysw->Register(this->sysfsRoot / path("status"), [&](filesystem::path p,
                                                          const char* data) {
+        if (this->statusShadow == this->DecodeStatus(string(data)))
+        {
+            io.post([&]() {
+                this->statusShadow = this->DecodeStatus(this->ReadStatus());
+                log_debug(this->name + ": sysfsnotify on 'status': " +
+                          to_string(this->statusShadow));
+                this->DecodeStatesSysfs(this->statusShadow, this->eventsShadow);
+            });
+            return;
+        }
         this->statusShadow = this->DecodeStatus(string(data));
-        log_debug("sysfsnotify event on path " + p.string() + ", data " +
-                  string(data));
-        this->DecodeStatesSysfs(this->stateShadow, this->statusShadow,
-                                this->eventsShadow);
+        log_debug(this->name + ": sysfsnotify on 'status': " +
+                  to_string(this->statusShadow));
+        this->DecodeStatesSysfs(this->statusShadow, this->eventsShadow);
     });
+
+    sysw->Register(this->sysfsConsumerRoot / path("state"),
+                   [&](filesystem::path p, const char* data) {
+                       this->stateShadow = this->DecodeState(string(data));
+                       log_debug(this->name + ": sysfsnotify on 'state': " +
+                                 to_string(this->stateShadow));
+                       this->enabled->SetLevel(this->stateShadow == ENABLED);
+                   });
+
     if (filesystem::exists(this->sysfsConsumerRoot / path("events")))
     {
         this->eventsShadow = this->DecodeRegulatorEvent(this->ReadEvents());
@@ -312,10 +328,9 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
             this->sysfsConsumerRoot / path("events"),
             [&](filesystem::path p, const char* data) {
                 this->eventsShadow = this->DecodeRegulatorEvent(string(data));
-                log_debug("sysfsnotify event on path " + p.string() +
-                          ", data " + string(data));
-                this->DecodeStatesSysfs(this->stateShadow, this->statusShadow,
-                                        this->eventsShadow);
+                log_debug(this->name + ": sysfsnotify on 'events': " +
+                          to_string(this->eventsShadow));
+                this->DecodeStatesSysfs(this->statusShadow, this->eventsShadow);
             });
     }
 }

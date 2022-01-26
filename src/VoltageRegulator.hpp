@@ -61,6 +61,8 @@ enum RegulatorStatus
 #define REGULATOR_EVENT_OVER_TEMP_WARN 0x10000
 #define REGULATOR_EVENT_WARN_MASK 0x1E000
 
+#define REGULATOR_EVENT_EN_DIS                                                 \
+    (REGULATOR_EVENT_ENABLE | REGULATOR_EVENT_DISABLE)
 #define REGULATOR_EVENT_FAILURE                                                \
     (REGULATOR_EVENT_UNDER_VOLTAGE | REGULATOR_EVENT_OVER_CURRENT |            \
      REGULATOR_EVENT_REGULATION_OUT | REGULATOR_EVENT_FAIL |                   \
@@ -107,8 +109,7 @@ class VoltageRegulator :
     string ReadStatus(void);
 
     // DecodeStatesSysfs updates the signals from sysfs attributes
-    void DecodeStatesSysfs(enum RegulatorState, enum RegulatorStatus,
-                           unsigned long);
+    void DecodeStatesSysfs(enum RegulatorStatus, unsigned long);
 
     // DecodeRegulatorEvent converts the value read from
     // /sys/devices/platform/*_consumer/events
