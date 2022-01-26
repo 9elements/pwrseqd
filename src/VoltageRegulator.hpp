@@ -13,6 +13,10 @@
 #include <unordered_map>
 #include <vector>
 
+#ifdef WITH_GOOGLE_TEST
+#include <gtest/gtest.h>
+#endif
+
 using namespace std;
 using namespace std::filesystem;
 
@@ -114,7 +118,9 @@ class VoltageRegulator :
     // DecodeRegulatorEvent converts the value read from
     // /sys/devices/platform/*_consumer/events
     unsigned long DecodeRegulatorEvent(string);
-
+#ifdef WITH_GOOGLE_TEST
+    FRIEND_TEST(Regulator, EventParsing);
+#endif
     // DecodeRegulatorEvent reads /sys/devices/platform/*_consumer/events
     string ReadEvents(void);
 
