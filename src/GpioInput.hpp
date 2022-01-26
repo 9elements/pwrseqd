@@ -35,6 +35,8 @@ class GpioInput : public SignalDriver
     boost::asio::posix::stream_descriptor streamDesc;
 
     bool active;
+    bool ActiveLow;
+
     gpiod::line line;
     gpiod::chip chip;
     Signal* out;
