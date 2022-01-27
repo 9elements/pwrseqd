@@ -313,6 +313,7 @@ power_sequencer:
           - name: "pvccio_cpu1_Fault"
           - name: "pvccin_cpu1_Fault"
           - name: "pvccsa_cpu1_Fault"
+          - name: "CPU1_THERMTRIP"
         and:
           - name: "FM_CPU1_SKTOCC"
       out:
@@ -345,6 +346,7 @@ power_sequencer:
           - name: "H_LVT3_CPLD1_THERMTRIP"
           - name: "CPU1_VR_PWRGD" # PDG: Ignore THERMTRIP until power is good
             input_stable_usec: 1500
+          - name: "CPU1_VR_PWRGD"
       out:
         name: "CPU1_THERMTRIP"
 
