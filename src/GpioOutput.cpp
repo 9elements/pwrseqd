@@ -14,21 +14,22 @@ string GpioOutput::Name(void)
 
 void GpioOutput::Apply(void)
 {
-    if (this->newLevel != this->active)
+    if (this->newLevel != this->level)
     {
-        this->active = this->newLevel;
+        this->level = this->newLevel;
         log_debug("output gpio " + this->Name() + " changed to " +
-                  to_string(this->active ^ this->activeLow));
-        this->line.set_value(this->newLevel);
+                  to_string(this->level ^ this->activeLow));
+        this->line.set_value(this->level);
     }
 }
 
 void GpioOutput::Update(void)
 {
-    this->newLevel = this->in->GetLevel();
+    this->newLevel = this->in->GetLevel() ? 1 : 0;
 }
 
-GpioOutput::GpioOutput(struct ConfigOutput* cfg, SignalProvider& prov)
+GpioOutput::GpioOutput(struct ConfigOutput* cfg, SignalProvider& prov) :
+    level(-1), newLevel(-1), activeLow(cfg->ActiveLow)
 {
     ::std::bitset<32> flags = 0;
 
@@ -81,8 +82,7 @@ GpioOutput::GpioOutput(struct ConfigOutput* cfg, SignalProvider& prov)
         throw("Failed to request gpio line " + cfg->GpioChipName + " " +
               cfg->Name + ": " + e.what());
     }
-    this->active = this->line.get_value() > 0;
-    this->activeLow = cfg->ActiveLow;
+
     log_debug("using gpio " + this->Name() + " as output ");
 }
 
