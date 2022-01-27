@@ -175,14 +175,17 @@ power_sequencer:
 
   # Wait 10msec after Vcc_main is stable.
   # Vcc_main is the same as AUX. AUX is already powered if RSMRST is asserted.
-  # M.2 slots needs to be powered for at least 100msec
   # Vcc_main must be stable for 100usec or longer after PCH_PWROK goes low.
+  # PCH_PWROK is only read by PCH if SLP_S3# is not asserted.
+  # FIXME: M.2 slots needs to be powered for at least 100msec?
   - PCH_PWROK_Unit:
       in:
         and:
           - name: "PCIe_PWR_Stable"
             input_stable_usec: 100000  # PCIe Spec. 100msec
           - name: "RSMRST"
+            invert: true
+          - name: "FM_SLPS3"
             invert: true
       out:
         name: "PCH_PWROK"
