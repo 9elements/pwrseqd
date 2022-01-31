@@ -79,8 +79,8 @@ GpioOutput::GpioOutput(struct ConfigOutput* cfg, SignalProvider& prov) :
     }
     catch (exception& e)
     {
-        throw("Failed to request gpio line " + cfg->GpioChipName + " " +
-              cfg->Name + ": " + e.what());
+        throw runtime_error("Failed to request gpio line " + cfg->GpioChipName +
+                            " " + cfg->Name + ": " + e.what());
     }
 
     log_debug("using gpio " + this->Name() + " as output ");

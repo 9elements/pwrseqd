@@ -101,8 +101,8 @@ GpioInput::GpioInput(boost::asio::io_context& io, struct ConfigInput* cfg,
     }
     catch (exception& e)
     {
-        throw("Failed to request gpio line " + cfg->GpioChipName + " " +
-              cfg->Name + ": " + e.what());
+        throw runtime_error("Failed to request gpio line " + cfg->GpioChipName +
+                            " " + cfg->Name + ": " + e.what());
     }
     int gpioLineFd = this->line.event_get_fd();
     if (gpioLineFd < 0)
