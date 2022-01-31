@@ -33,7 +33,7 @@ power_sequencer:
             invert: true
           - name: "RSMRST"
             invert: true
-          - name: "STATE_REQ_CHASSIS_ON"
+          - name: "STATE_REQ_HOST_ON"
         or:
           - name: "FM_SLPS3"
             invert: true
@@ -49,7 +49,7 @@ power_sequencer:
             invert: true
           - name: "RSMRST"
             invert: true
-          - name: "STATE_REQ_CHASSIS_ON"
+          - name: "STATE_REQ_HOST_ON"
           # FIXME: Guard SLPS4 with RSMRST. It's not valid when PCH isn't powered
         or:
           - name: "FM_SLPS3"
