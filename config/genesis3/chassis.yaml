@@ -34,13 +34,9 @@ power_sequencer:
           - name: "RSMRST"
             invert: true
           - name: "STATE_REQ_HOST_ON"
-        or:
-          - name: "FM_SLPS3"
-            invert: true
-            input_stable_usec: 100000
-        and_then_or: true
       out:
         name: "p3v3_m2_ssd1_On"
+      delay_usec: 100000
 
   - M2_SSD2_Unit:
       in:
@@ -50,14 +46,10 @@ power_sequencer:
           - name: "RSMRST"
             invert: true
           - name: "STATE_REQ_HOST_ON"
-          # FIXME: Guard SLPS4 with RSMRST. It's not valid when PCH isn't powered
-        or:
-          - name: "FM_SLPS3"
-            invert: true
-            input_stable_usec: 100000
         and_then_or: true
       out:
         name: "p3v3_m2_ssd2_On"
+      delay_usec: 100000
 
   - PCIe_PWR_Stable_Unit:
       in:
