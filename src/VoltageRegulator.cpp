@@ -274,7 +274,7 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
     {
         throw runtime_error("Regulator " + cfg->Name + " not found in sysfs");
     }
-    log_debug("Sysfs path of regulator" + cfg->Name + " is " + root);
+    log_debug("Sysfs path of regulator " + cfg->Name + " is " + root);
     this->sysfsRoot = path(root);
     consumerRoot = SysFsConsumerDir(root);
     if (consumerRoot == "")
@@ -282,7 +282,7 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
         throw runtime_error("reg-userspace-consumer for regulator " +
                             cfg->Name + " not found in sysfs");
     }
-    log_debug("Consumer sysfs path of regulator" + cfg->Name + " is " +
+    log_debug("Consumer sysfs path of regulator " + cfg->Name + " is " +
               consumerRoot);
     this->sysfsConsumerRoot = path(consumerRoot);
 
