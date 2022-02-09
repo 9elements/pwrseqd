@@ -20,7 +20,7 @@ find_package(PkgConfig REQUIRED)
 find_package(yaml-cpp)
 FIND_PACKAGE( Boost 1.55 COMPONENTS  REQUIRED )
 
-pkg_check_modules(LIBGPIODCXX libgpiodcxx>=1.7)
+pkg_check_modules(LIBGPIODCXX libgpiodcxx>=1.5)
 if(LIBGPIODCXX_FOUND)
         add_definitions(-DWITH_GPIOD_PULLUPS)
 endif()
