@@ -146,6 +146,10 @@ power_sequencer:
           - name: "pvnn_pch_aux_PowerGood"
             input_stable_usec: 100  # EGB: min 2 usec
           - name: "pvnn_pch_aux_PowerGood"
+        or:
+          - name: "PCH_PWROK"
+            input_stable_usec: 100  # min 100usec
+        and_then_or: true
       out:
         name: "p1v05_pch_aux_On"
 
@@ -177,19 +181,20 @@ power_sequencer:
   # Vcc_main is the same as AUX. AUX is already powered if RSMRST is asserted.
   # Vcc_main must be stable for 100usec or longer after PCH_PWROK goes low.
   # PCH_PWROK is only read by PCH if SLP_S3# is not asserted.
-  # FIXME: M.2 slots needs to be powered for at least 100msec?
   - PCH_PWROK_Unit:
       in:
         and:
-          - name: "PCIe_PWR_Stable"
-            input_stable_usec: 100000  # PCIe Spec. 100msec
+          - name: "RSMRST"
+            input_stable_usec: 10000  # PCH Spec. 10msec
+            invert: true
           - name: "RSMRST"
             invert: true
           - name: "FM_SLPS3"
             invert: true
+          - name: "STATE_REQ_HOST_ON"
+          - name: "STATE_REQ_CHASSIS_ON"
       out:
         name: "PCH_PWROK"
-      delay_usec: 100
 
   # Enable DDR power when not in S5/S4
   - DDR_Power_Internal_Unit:
