@@ -1,0 +1,284 @@
+---
+
+# Controls power to the two NICs
+power_sequencer:
+  - pvcore_nic1_Unit:
+      in:
+        and:
+          - name: "p3v3_PowerGood"
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+        or:
+          - name: "p1v2_nic_Enabled"
+            input_stable_usec: 1000 # FIXME
+          - name: "p1v8_nic_Enabled"
+            input_stable_usec: 1000 # FIXME
+        and_then_or: true
+      out:
+        name: "pvcore_nic1_On"
+
+  - pvcore_nic2_Unit:
+      in:
+        and:
+          - name: "p3v3_PowerGood"
+            input_stable_usec: 10000 # FIXME
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+        or:
+          - name: "p1v2_nic_Enabled"
+            input_stable_usec: 1000 # FIXME
+          - name: "p1v8_nic_Enabled"
+            input_stable_usec: 1000 # FIXME
+        and_then_or: true
+      out:
+        name: "pvcore_nic2_On"
+
+  - p1v2_nic_Unit:
+      in:
+        and:
+          - name: "pvcore_nic1_PowerGood"
+            input_stable_usec: 10000 # FIXME
+          - name: "pvcore_nic2_PowerGood"
+            input_stable_usec: 10000 # FIXME
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+        or:
+          - name: "p1v8_nic_Enabled"
+            input_stable_usec: 1000 # FIXME
+        and_then_or: true
+      out:
+        name: "p1v2_nic_On"
+
+  - p1v8_nic_Unit:
+      in:
+        and:
+          - name: "p1v2_nic_PowerGood"
+            input_stable_usec: 10000 # FIXME
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+      out:
+        name: "p1v8_nic_On"
+
+  - p3v3_nic_Unit:
+      in:
+        or:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "pvcore_nic1_Enabled"
+            input_stable_usec: 1000 # FIXME
+          - name: "pvcore_nic2_Enabled"
+            input_stable_usec: 1000 # FIXME
+          - name: "p1v2_nic_Enabled"
+            input_stable_usec: 1000 # FIXME
+          - name: "p1v8_nic_Enabled"
+            input_stable_usec: 1000 # FIXME
+      out:
+        name: "p3v3_nic_On"
+
+  - FM_NIC1_ALLSTANDBY_Unit:
+      in:
+        and:
+          - name: "FM_NIC1_PERST0"
+          - name: "FM_NIC1_PERST1"
+          - name: "FM_NIC1_PERST2"
+          - name: "FM_NIC1_PERST3"
+      out:
+        name: "FM_NIC1_ALLSTANDBY"
+
+  - FM_NIC2_ALLSTANDBY_Unit:
+      in:
+        and:
+          - name: "FM_NIC2_PERST0"
+          - name: "FM_NIC2_PERST1"
+          - name: "FM_NIC2_PERST2"
+          - name: "FM_NIC2_PERST3"
+      out:
+        name: "FM_NIC2_ALLSTANDBY"
+
+  - FM_NIC1_Globalreset_Unit:
+      in:
+        or:
+          - name: "STATE_REQ_HOST_ON"
+            invert: true
+          - name: "FM_SLPS3"
+          - name: "pvcore_nic1_PowerGood"
+            invert: true
+          - name: "p1v2_nic_PowerGood"
+            invert: true
+          - name: "p1v8_nic_PowerGood"
+            invert: true
+          - name: "p3v3_nic_PowerGood"
+            invert: true
+      out:
+        name: "FM_NIC1_RST"
+
+  - FM_NIC2_Globalreset_Unit:
+      in:
+        or:
+          - name: "STATE_REQ_HOST_ON"
+            invert: true
+          - name: "FM_SLPS3"
+          - name: "pvcore_nic2_PowerGood"
+            invert: true
+          - name: "p1v2_nic_PowerGood"
+            invert: true
+          - name: "p1v8_nic_PowerGood"
+            invert: true
+          - name: "p3v3_nic_PowerGood"
+            invert: true
+      out:
+        name: "FM_NIC2_RST"
+
+regulators:
+  - name: "p3v3_nic"
+  - name: "pvcore_nic1"
+  - name: "pvcore_nic2"
+  - name: "p1v2_nic"
+  - name: "p1v8_nic"
+
+floating_signals:
+  - "pvcore_nic1_Fault"
+  - "pvcore_nic2_Fault"
+  - "p3v3_nic_Enabled"
+  - "p3v3_nic_Fault"
+  - "p1v2_nic_Fault"
+  - "p1v8_nic_Fault"
+
+outputs:
+  - name: "FM_NIC1_PERST0_N"
+    type: "gpio"
+    signal_name: "FM_NIC1_PERST0"
+    active_low: true
+    pullup: true
+    description: "PCIe0 reset"
+  - name: "FM_NIC1_PERST1_N"
+    type: "gpio"
+    signal_name: "FM_NIC1_PERST1"
+    active_low: true
+    pullup: true
+    description: "PCIe1 reset"
+  - name: "FM_NIC1_PERST2_N"
+    type: "gpio"
+    signal_name: "FM_NIC1_PERST2"
+    active_low: true
+    pullup: true
+    description: "PCIe2 reset"
+  - name: "FM_NIC1_PERST3_N"
+    type: "gpio"
+    signal_name: "FM_NIC1_PERST3"
+    active_low: true
+    pullup: true
+    description: "PCIe3 reset"
+  - name: "FM_NIC1_ALLSTANDBY_N"
+    type: "gpio"
+    signal_name: "FM_NIC1_ALLSTANDBY"
+    active_low: true
+    pullup: true
+    description: "All PCIe lanes in reset"
+  - name: "FM_NIC1_FLASH_PRSNT"
+    type: "gpio"
+    signal_name: "FM_NIC1_FLASH_PRSNT"
+    description: "Security override."
+    open_drain: true
+  - name: "FM_NIC2_PERST0_N"
+    type: "gpio"
+    signal_name: "FM_NIC2_PERST0"
+    active_low: true
+    pullup: true
+    description: "PCIe0 reset"
+  - name: "FM_NIC2_PERST1_N"
+    type: "gpio"
+    signal_name: "FM_NIC2_PERST1"
+    active_low: true
+    pullup: true
+    description: "PCIe1 reset"
+  - name: "FM_NIC2_PERST2_N"
+    type: "gpio"
+    signal_name: "FM_NIC2_PERST2"
+    active_low: true
+    pullup: true
+    description: "PCIe2 reset"
+  - name: "FM_NIC2_PERST3_N"
+    type: "gpio"
+    signal_name: "FM_NIC2_PERST3"
+    active_low: true
+    pullup: true
+    description: "PCIe3 reset"
+  - name: "FM_NIC2_ALLSTANDBY_N"
+    type: "gpio"
+    signal_name: "FM_NIC2_ALLSTANDBY"
+    active_low: true
+    pullup: true
+    description: "All PCIe lanes in reset"
+  - name: "FM_NIC2_FLASH_PRSNT"
+    type: "gpio"
+    signal_name: "FM_NIC2_FLASH_PRSNT"
+    description: "Security override."
+    open_drain: true
+  - name: "FM_NIC1_RST_N"
+    type: "gpio"
+    signal_name: "FM_NIC1_RST"
+    description: "global reset"
+    active_low: true
+    pullup: true
+  - name: "FM_NIC2_RST_N"
+    type: "gpio"
+    signal_name: "FM_NIC2_RST"
+    description: "global reset"
+    active_low: true
+    pullup: true
+
+inputs:
+  - name: "IRQ_NIC1_OVT_WRNG"
+    type: "gpio"
+    signal_name: "IRQ_NIC1_OVT_WRNG"
+    description: "overtemperature warning"
+    disablebias: true
+  - name: "IRQ_NIC2_OVT_WRNG"
+    type: "gpio"
+    signal_name: "IRQ_NIC2_OVT_WRNG"
+    description: "overtemperature warning"
+    disablebias: true
+  - name: "IRQ_NIC1_OVT_SHTDN"
+    type: "gpio"
+    signal_name: "IRQ_NIC1_OVT_SHTDN"
+    description: "overtemperature shutdown"
+    disablebias: true
+  - name: "IRQ_NIC2_OVT_SHTDN"
+    type: "gpio"
+    signal_name: "IRQ_NIC2_OVT_SHTDN"
+    description: "overtemperature shutdown"
+    disablebias: true
+
+floating_signals:
+  - "IRQ_NIC1_OVT_WRNG"
+  - "IRQ_NIC2_OVT_WRNG"
+  - "IRQ_NIC1_OVT_SHTDN"
+  - "IRQ_NIC2_OVT_SHTDN"
+
+immutables:
+  - signal_name: "FM_NIC1_FLASH_PRSNT"
+    value: true
+  - signal_name: "FM_NIC2_FLASH_PRSNT"
+    value: true
+  - signal_name: "FM_NIC1_PERST0"
+    value: true
+  - signal_name: "FM_NIC1_PERST1"
+    value: true
+  - signal_name: "FM_NIC1_PERST2"
+    value: true
+  - signal_name: "FM_NIC1_PERST3"
+    value: true
+  - signal_name: "FM_NIC2_PERST0"
+    value: true
+  - signal_name: "FM_NIC2_PERST1"
+    value: true
+  - signal_name: "FM_NIC2_PERST2"
+    value: true
+  - signal_name: "FM_NIC2_PERST3"
+    value: true

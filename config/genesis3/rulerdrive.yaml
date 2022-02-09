@@ -1,0 +1,554 @@
+---
+
+# Controls power to the two NICs
+power_sequencer:
+  - RSSD01_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD01_PRESENT"
+      out:
+        name: "rssd01_3v3_On"
+  - RSSD02_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD02_PRESENT"
+      out:
+        name: "rssd02_3v3_On"
+  - RSSD03_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD03_PRESENT"
+      out:
+        name: "rssd03_3v3_On"
+  - RSSD04_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD04_PRESENT"
+      out:
+        name: "rssd04_3v3_On"
+  - RSSD05_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD05_PRESENT"
+      out:
+        name: "rssd05_3v3_On"
+  - RSSD06_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD06_PRESENT"
+      out:
+        name: "rssd06_3v3_On"
+  - RSSD07_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD07_PRESENT"
+      out:
+        name: "rssd07_3v3_On"
+  - RSSD08_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD08_PRESENT"
+      out:
+        name: "rssd08_3v3_On"
+  - RSSD09_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD09_PRESENT"
+      out:
+        name: "rssd09_3v3_On"
+  - RSSD10_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD10_PRESENT"
+      out:
+        name: "rssd10_3v3_On"
+  - RSSD11_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD11_PRESENT"
+      out:
+        name: "rssd11_3v3_On"
+  - RSSD12_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD12_PRESENT"
+      out:
+        name: "rssd12_3v3_On"
+  - RSSD13_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD13_PRESENT"
+      out:
+        name: "rssd13_3v3_On"
+  - RSSD14_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD14_PRESENT"
+      out:
+        name: "rssd14_3v3_On"
+  - RSSD15_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD15_PRESENT"
+      out:
+        name: "rssd15_3v3_On"
+  - RSSD16_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD16_PRESENT"
+      out:
+        name: "rssd16_3v3_On"
+  - RSSD17_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD17_PRESENT"
+      out:
+        name: "rssd17_3v3_On"
+  - RSSD18_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD18_PRESENT"
+      out:
+        name: "rssd18_3v3_On"
+  - RSSD19_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD19_PRESENT"
+      out:
+        name: "rssd19_3v3_On"
+  - RSSD20_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD20_PRESENT"
+      out:
+        name: "rssd20_3v3_On"
+  - RSSD21_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD21_PRESENT"
+      out:
+        name: "rssd21_3v3_On"
+  - RSSD22_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD22_PRESENT"
+      out:
+        name: "rssd22_3v3_On"
+  - RSSD23_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD23_PRESENT"
+      out:
+        name: "rssd23_3v3_On"
+  - RSSD24_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD24_PRESENT"
+      out:
+        name: "rssd24_3v3_On"
+  - RSSD25_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD25_PRESENT"
+      out:
+        name: "rssd25_3v3_On"
+  - RSSD26_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD26_PRESENT"
+      out:
+        name: "rssd26_3v3_On"
+  - RSSD27_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD27_PRESENT"
+      out:
+        name: "rssd27_3v3_On"
+  - RSSD28_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD28_PRESENT"
+      out:
+        name: "rssd28_3v3_On"
+  - RSSD29_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD29_PRESENT"
+      out:
+        name: "rssd29_3v3_On"
+  - RSSD30_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD30_PRESENT"
+      out:
+        name: "rssd30_3v3_On"
+  - RSSD31_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD31_PRESENT"
+      out:
+        name: "rssd31_3v3_On"
+  - RSSD32_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD32_PRESENT"
+      out:
+        name: "rssd32_3v3_On"
+
+regulators:
+  - name: "rssd01_3v3"
+  - name: "rssd02_3v3"
+  - name: "rssd03_3v3"
+  - name: "rssd04_3v3"
+  - name: "rssd05_3v3"
+  - name: "rssd06_3v3"
+  - name: "rssd07_3v3"
+  - name: "rssd08_3v3"
+  - name: "rssd09_3v3"
+  - name: "rssd10_3v3"
+  - name: "rssd11_3v3"
+  - name: "rssd12_3v3"
+  - name: "rssd13_3v3"
+  - name: "rssd14_3v3"
+  - name: "rssd15_3v3"
+  - name: "rssd16_3v3"
+  - name: "rssd17_3v3"
+  - name: "rssd18_3v3"
+  - name: "rssd19_3v3"
+  - name: "rssd20_3v3"
+  - name: "rssd21_3v3"
+  - name: "rssd22_3v3"
+  - name: "rssd23_3v3"
+  - name: "rssd24_3v3"
+  - name: "rssd25_3v3"
+  - name: "rssd26_3v3"
+  - name: "rssd27_3v3"
+  - name: "rssd28_3v3"
+  - name: "rssd29_3v3"
+  - name: "rssd30_3v3"
+  - name: "rssd31_3v3"
+  - name: "rssd32_3v3"
+
+inputs:
+  - name: "RSSD01_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD01_PRESENT"
+    active_low: true
+  - name: "RSSD02_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD02_PRESENT"
+    active_low: true
+  - name: "RSSD03_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD03_PRESENT"
+    active_low: true
+  - name: "RSSD04_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD04_PRESENT"
+    active_low: true
+  - name: "RSSD05_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD05_PRESENT"
+    active_low: true
+  - name: "RSSD06_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD06_PRESENT"
+    active_low: true
+  - name: "RSSD07_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD07_PRESENT"
+    active_low: true
+  - name: "RSSD08_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD08_PRESENT"
+    active_low: true
+  - name: "RSSD09_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD09_PRESENT"
+    active_low: true
+  - name: "RSSD10_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD10_PRESENT"
+    active_low: true
+  - name: "RSSD11_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD11_PRESENT"
+    active_low: true
+  - name: "RSSD12_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD12_PRESENT"
+    active_low: true
+  - name: "RSSD13_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD13_PRESENT"
+    active_low: true
+  - name: "RSSD14_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD14_PRESENT"
+    active_low: true
+  - name: "RSSD15_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD15_PRESENT"
+    active_low: true
+  - name: "RSSD16_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD16_PRESENT"
+    active_low: true
+  - name: "RSSD17_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD17_PRESENT"
+    active_low: true
+  - name: "RSSD18_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD18_PRESENT"
+    active_low: true
+  - name: "RSSD19_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD19_PRESENT"
+    active_low: true
+  - name: "RSSD20_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD20_PRESENT"
+    active_low: true
+  - name: "RSSD21_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD21_PRESENT"
+    active_low: true
+  - name: "RSSD22_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD22_PRESENT"
+    active_low: true
+  - name: "RSSD23_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD23_PRESENT"
+    active_low: true
+  - name: "RSSD24_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD24_PRESENT"
+    active_low: true
+  - name: "RSSD25_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD25_PRESENT"
+    active_low: true
+  - name: "RSSD26_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD26_PRESENT"
+    active_low: true
+  - name: "RSSD27_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD27_PRESENT"
+    active_low: true
+  - name: "RSSD28_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD28_PRESENT"
+    active_low: true
+  - name: "RSSD29_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD29_PRESENT"
+    active_low: true
+  - name: "RSSD30_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD30_PRESENT"
+    active_low: true
+  - name: "RSSD31_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD31_PRESENT"
+    active_low: true
+  - name: "RSSD32_PRESENT_N"
+    type: "gpio"
+    signal_name: "RSSD32_PRESENT"
+    active_low: true
+
+floating_signals:
+  - "rssd01_3v3_Enabled"
+  - "rssd02_3v3_Enabled"
+  - "rssd03_3v3_Enabled"
+  - "rssd04_3v3_Enabled"
+  - "rssd05_3v3_Enabled"
+  - "rssd06_3v3_Enabled"
+  - "rssd07_3v3_Enabled"
+  - "rssd08_3v3_Enabled"
+  - "rssd09_3v3_Enabled"
+  - "rssd10_3v3_Enabled"
+  - "rssd11_3v3_Enabled"
+  - "rssd12_3v3_Enabled"
+  - "rssd13_3v3_Enabled"
+  - "rssd14_3v3_Enabled"
+  - "rssd15_3v3_Enabled"
+  - "rssd16_3v3_Enabled"
+  - "rssd17_3v3_Enabled"
+  - "rssd18_3v3_Enabled"
+  - "rssd19_3v3_Enabled"
+  - "rssd20_3v3_Enabled"
+  - "rssd21_3v3_Enabled"
+  - "rssd22_3v3_Enabled"
+  - "rssd23_3v3_Enabled"
+  - "rssd24_3v3_Enabled"
+  - "rssd25_3v3_Enabled"
+  - "rssd26_3v3_Enabled"
+  - "rssd27_3v3_Enabled"
+  - "rssd28_3v3_Enabled"
+  - "rssd29_3v3_Enabled"
+  - "rssd30_3v3_Enabled"
+  - "rssd31_3v3_Enabled"
+  - "rssd32_3v3_Enabled"
+  - "rssd01_3v3_PowerGood"
+  - "rssd02_3v3_PowerGood"
+  - "rssd03_3v3_PowerGood"
+  - "rssd04_3v3_PowerGood"
+  - "rssd05_3v3_PowerGood"
+  - "rssd06_3v3_PowerGood"
+  - "rssd07_3v3_PowerGood"
+  - "rssd08_3v3_PowerGood"
+  - "rssd09_3v3_PowerGood"
+  - "rssd10_3v3_PowerGood"
+  - "rssd11_3v3_PowerGood"
+  - "rssd12_3v3_PowerGood"
+  - "rssd13_3v3_PowerGood"
+  - "rssd14_3v3_PowerGood"
+  - "rssd15_3v3_PowerGood"
+  - "rssd16_3v3_PowerGood"
+  - "rssd17_3v3_PowerGood"
+  - "rssd18_3v3_PowerGood"
+  - "rssd19_3v3_PowerGood"
+  - "rssd20_3v3_PowerGood"
+  - "rssd21_3v3_PowerGood"
+  - "rssd22_3v3_PowerGood"
+  - "rssd23_3v3_PowerGood"
+  - "rssd24_3v3_PowerGood"
+  - "rssd25_3v3_PowerGood"
+  - "rssd26_3v3_PowerGood"
+  - "rssd27_3v3_PowerGood"
+  - "rssd28_3v3_PowerGood"
+  - "rssd29_3v3_PowerGood"
+  - "rssd30_3v3_PowerGood"
+  - "rssd31_3v3_PowerGood"
+  - "rssd32_3v3_PowerGood"
+  - "rssd01_3v3_Fault"
+  - "rssd02_3v3_Fault"
+  - "rssd03_3v3_Fault"
+  - "rssd04_3v3_Fault"
+  - "rssd05_3v3_Fault"
+  - "rssd06_3v3_Fault"
+  - "rssd07_3v3_Fault"
+  - "rssd08_3v3_Fault"
+  - "rssd09_3v3_Fault"
+  - "rssd10_3v3_Fault"
+  - "rssd11_3v3_Fault"
+  - "rssd12_3v3_Fault"
+  - "rssd13_3v3_Fault"
+  - "rssd14_3v3_Fault"
+  - "rssd15_3v3_Fault"
+  - "rssd16_3v3_Fault"
+  - "rssd17_3v3_Fault"
+  - "rssd18_3v3_Fault"
+  - "rssd19_3v3_Fault"
+  - "rssd20_3v3_Fault"
+  - "rssd21_3v3_Fault"
+  - "rssd22_3v3_Fault"
+  - "rssd23_3v3_Fault"
+  - "rssd24_3v3_Fault"
+  - "rssd25_3v3_Fault"
+  - "rssd26_3v3_Fault"
+  - "rssd27_3v3_Fault"
+  - "rssd28_3v3_Fault"
+  - "rssd29_3v3_Fault"
+  - "rssd30_3v3_Fault"
+  - "rssd31_3v3_Fault"
+  - "rssd32_3v3_Fault"
