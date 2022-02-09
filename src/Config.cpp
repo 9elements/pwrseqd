@@ -34,6 +34,7 @@ struct convert<ConfigOutput>
         c.OpenSource = false;
         c.PullUp = false;
         c.PullDown = false;
+        c.DisableBias = false;
         for (auto it : node)
         {
             string key = it.first.as<string>();
@@ -74,6 +75,10 @@ struct convert<ConfigOutput>
             {
                 c.PullDown = it.second.as<bool>();
             }
+            else if (key == "disablebias")
+            {
+                c.DisableBias = it.second.as<bool>();
+            }
             else if (key == "type")
             {
                 string nameOfType = it.second.as<string>();
@@ -106,8 +111,14 @@ struct convert<ConfigOutput>
             log_err("Specified both, pull-up and pull-down on the same GPIO");
             return false;
         }
+        if ((c.PullDown || c.PullUp) && c.DisableBias)
+        {
+            log_err(
+                "Specified both, pull-up/pull-down and disable bias on the same GPIO");
+            return false;
+        }
 #else
-        if (c.PullDown || c.PullUp)
+        if (c.PullDown || c.PullUp || c.DisableBias)
         {
             log_err(
                 "libgpiod has no pull-up and pull-down support. Please upgrade");
@@ -137,6 +148,7 @@ struct convert<ConfigInput>
         c.ActiveLow = false;
         c.PullUp = false;
         c.PullDown = false;
+        c.DisableBias = false;
         for (auto it : node)
         {
             string key = it.first.as<string>();
@@ -169,6 +181,10 @@ struct convert<ConfigInput>
             {
                 c.PullDown = it.second.as<bool>();
             }
+            else if (key == "disablebias")
+            {
+                c.DisableBias = it.second.as<bool>();
+            }
             else if (key == "type")
             {
                 string nameOfType = it.second.as<string>();
@@ -193,8 +209,14 @@ struct convert<ConfigInput>
             log_err("Specified both, pull-up and pull-down on the same GPIO");
             return false;
         }
+        if ((c.PullDown || c.PullUp) && c.DisableBias)
+        {
+            log_err(
+                "Specified both, pull-up/pull-down and disable bias on the same GPIO");
+            return false;
+        }
 #else
-        if (c.PullDown || c.PullUp)
+        if (c.PullDown || c.PullUp || c.DisableBias)
         {
             log_err(
                 "libgpiod has no pull-up and pull-down support. Please upgrade");

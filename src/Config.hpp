@@ -80,6 +80,8 @@ struct ConfigInput
     bool PullUp;
     // PullDown configures GPIO to use internal pull down bias
     bool PullDown;
+    // BiasDisable configures GPIO to use no internal bias
+    bool DisableBias;
     // Description is just for debugging purposes
     string Description;
     // Type specifies the input backend to use
@@ -104,6 +106,8 @@ struct ConfigOutput
     bool PullUp;
     // PullDown configures GPIO to use internal pull down bias
     bool PullDown;
+    // BiasDisable configures GPIO to use no internal bias
+    bool DisableBias;
     // Description is just for debugging purposes
     string Description;
     // Type specifies the output backend to use

@@ -91,6 +91,8 @@ GpioInput::GpioInput(boost::asio::io_context& io, struct ConfigInput* cfg,
         flags |= gpiod::line_request::FLAG_BIAS_PULL_DOWN;
     if (cfg->PullUp)
         flags |= gpiod::line_request::FLAG_BIAS_PULL_UP;
+    if (cfg->DisableBias)
+        flags |= gpiod::line_request::FLAG_BIAS_DISABLE;
 #endif
 
     ::gpiod::line_request requestInput = {

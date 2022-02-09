@@ -70,6 +70,8 @@ GpioOutput::GpioOutput(struct ConfigOutput* cfg, SignalProvider& prov) :
         flags |= gpiod::line_request::FLAG_BIAS_PULL_DOWN;
     if (cfg->PullUp)
         flags |= gpiod::line_request::FLAG_BIAS_PULL_UP;
+    if (cfg->DisableBias)
+        flags |= gpiod::line_request::FLAG_BIAS_DISABLE;
 #endif
     ::gpiod::line_request requestOutput = {
         "pwrseqd", gpiod::line_request::DIRECTION_OUTPUT, flags};
