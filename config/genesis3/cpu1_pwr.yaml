@@ -341,7 +341,7 @@ power_sequencer:
   - RST_LVC3_CPU1_RESET_Unit:
       in:
         or:
-          - name: "PLTRST"
+          - name: "PLTRST_BUF"
           - name: "PWRGD_LVC3_CPU1_PWRGOOD"
             invert: true
       out:

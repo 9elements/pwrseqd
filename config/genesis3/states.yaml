@@ -34,7 +34,7 @@ power_sequencer:
           - name: "CPU1_SYS_PWROK"
           - name: "CPU2_SYS_PWROK"
           - name: "CPU3_SYS_PWROK"
-          - name: "PLTRST"
+          - name: "PLTRST_BUF"
             invert: true
           - name: "FM_SLPS4"
             invert: true

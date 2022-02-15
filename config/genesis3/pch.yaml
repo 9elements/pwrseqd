@@ -264,6 +264,14 @@ power_sequencer:
       out:
         name: "SYS_PWROK"
 
+  - PLTRST_Buf_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "RSMRST"
+      out:
+        name: "PLTRST_BUF"
+
   - CPU_THERMTRIP_Unit:
       in:
         or:
