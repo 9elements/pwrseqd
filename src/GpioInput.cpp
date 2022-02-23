@@ -120,13 +120,26 @@ void GpioInput::WaitForGPIOEvent(void)
     this->streamDesc.async_wait(
         boost::asio::posix::stream_descriptor::wait_read,
         [&](const boost::system::error_code ec) {
+            gpiod::line_event line_event;
             if (ec)
             {
                 return;
             }
-            gpiod::line_event line_event = this->line.event_read();
+            try
+            {
+                // Reading might fail if line was closed by Release()
+                line_event = this->line.event_read();
+            }
+            catch (system_error& exc)
+            {
+                log_debug("GPIO line " + this->Name() + ": " + exc.what());
+                return;
+            }
             this->OnEvent(line_event);
-            this->WaitForGPIOEvent();
+            if (!this->gated)
+            {
+                this->WaitForGPIOEvent();
+            }
         });
 }
 
