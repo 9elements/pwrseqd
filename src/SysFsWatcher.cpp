@@ -119,8 +119,6 @@ int SysFsWatcher::Main(int ctrlFd, int statusFd)
     SysFsEvent event;
     char notify = 0;
 
-    log_debug("Starting SysFS watcher thread");
-
     ufds[0].fd = ctrlFd;
     ufds[0].events = POLLIN;
     ufds[0].revents = 0;
@@ -178,7 +176,6 @@ int SysFsWatcher::Main(int ctrlFd, int statusFd)
 
     delete ufds;
     close(ctrlFd);
-    log_debug("Terminating SysFS watcher thread");
 
     return 0;
 }
