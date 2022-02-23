@@ -562,21 +562,21 @@ static bool load(Config& cfg, string p)
          boost::algorithm::ends_with(p, string(".yml"))) &&
         fs::is_regular_file(p))
     {
-        log_info("Loading YAML config " + p + "\n");
+        log_info("Loading YAML config " + p);
         YAML::Node root = YAML::LoadFile(p);
 
         Config newConfig = root.as<Config>();
         if (newConfig.Logic.size() > 0)
         {
             log_debug("merging " + to_string(newConfig.Logic.size()) +
-                      " logic units into config\n");
+                      " logic units into config");
             cfg.Logic.insert(cfg.Logic.end(), newConfig.Logic.begin(),
                              newConfig.Logic.end());
         }
         if (newConfig.Inputs.size() > 0)
         {
             log_debug("merging " + to_string(newConfig.Inputs.size()) +
-                      " input units into config\n");
+                      " input units into config");
             cfg.Inputs.insert(cfg.Inputs.end(), newConfig.Inputs.begin(),
                               newConfig.Inputs.end());
         }
@@ -585,7 +585,7 @@ static bool load(Config& cfg, string p)
             cfg.Outputs.insert(cfg.Outputs.end(), newConfig.Outputs.begin(),
                                newConfig.Outputs.end());
             log_debug("merging " + to_string(newConfig.Outputs.size()) +
-                      " output units into config\n");
+                      " output units into config");
         }
         if (newConfig.Regulators.size() > 0)
         {
@@ -593,7 +593,7 @@ static bool load(Config& cfg, string p)
                                   newConfig.Regulators.begin(),
                                   newConfig.Regulators.end());
             log_debug("merging " + to_string(newConfig.Regulators.size()) +
-                      " regulator units into config\n");
+                      " regulator units into config");
         }
         if (newConfig.Immutables.size() > 0)
         {
@@ -601,7 +601,7 @@ static bool load(Config& cfg, string p)
                                   newConfig.Immutables.begin(),
                                   newConfig.Immutables.end());
             log_debug("merging " + to_string(newConfig.Immutables.size()) +
-                      " immutables units into config\n");
+                      " immutables units into config");
         }
         if (newConfig.ACPIStates.size() > 0)
         {
@@ -609,7 +609,7 @@ static bool load(Config& cfg, string p)
                                   newConfig.ACPIStates.begin(),
                                   newConfig.ACPIStates.end());
             log_debug("merging " + to_string(newConfig.ACPIStates.size()) +
-                      " ACPI state units into config\n");
+                      " ACPI state units into config");
         }
         if (newConfig.FloatingSignals.size() > 0)
         {
@@ -617,7 +617,7 @@ static bool load(Config& cfg, string p)
                                        newConfig.FloatingSignals.begin(),
                                        newConfig.FloatingSignals.end());
             log_debug("merging " + to_string(newConfig.FloatingSignals.size()) +
-                      " floating signals into config\n");
+                      " floating signals into config");
         }
         return true;
     }
