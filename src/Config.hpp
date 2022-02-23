@@ -82,6 +82,20 @@ struct ConfigInput
     bool PullDown;
     // BiasDisable configures GPIO to use no internal bias
     bool DisableBias;
+    // GateInput adds an "On" input signal to the input driver
+    // When low the input gpio isn't read any more and the GatedIdleHigh
+    // or GatedIdleLow is used instead
+    bool GateInput;
+    // When set and GateInput is set and On input signal
+    // of the driver is low then a high signal is driven.
+    // The ActiveLow setting will invert this signal if set.
+    // You cannot select GatedIdleHigh and GatedIdleLow at the same time
+    bool GatedIdleHigh;
+    // When set and GateInput is set and On input signal
+    // of the driver is low then a low signal is driven.
+    // The ActiveLow setting will invert this signal if set.
+    // You cannot select GatedIdleHigh and GatedIdleLow at the same time.
+    bool GatedIdleLow;
     // Description is just for debugging purposes
     string Description;
     // Type specifies the input backend to use

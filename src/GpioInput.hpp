@@ -14,7 +14,7 @@ using namespace std;
 class Signal;
 class Signalprovider;
 
-class GpioInput : public SignalDriver
+class GpioInput : SignalReceiver, public SignalDriver
 {
   public:
     // Name returns the instance name
@@ -26,18 +26,37 @@ class GpioInput : public SignalDriver
               SignalProvider& prov);
 
     ~GpioInput();
+    // SignalDrivers's Signals method to report all driven signals
     vector<Signal*> Signals(void);
 
+    // SignalReceiver's Update method for signal changes
+    void Update(void);
+
   private:
+    boost::asio::io_context* io;
     void OnEvent(gpiod::line_event line_event);
     void WaitForGPIOEvent(void);
+    void Release(void);
+    void Acquire(void);
 
     boost::asio::posix::stream_descriptor streamDesc;
 
     bool active;
     bool ActiveLow;
+    // Gate input settings
+    bool GatedIdleHigh;
+    bool GatedIdleLow;
+    bool gated;
 
+    // Signal out is set to the GPIO input value if not gated
+    Signal* out;
+    // Signal enable tells wether to gate the input (drive a constant level)
+    // Only used when cfg->GateInput is set
+    Signal* enable;
+
+    // gpiod config
     gpiod::line line;
     gpiod::chip chip;
-    Signal* out;
+    ::gpiod::line_request gpiodRequestInput;
+    ::std::bitset<32> gpiodFlags;
 };

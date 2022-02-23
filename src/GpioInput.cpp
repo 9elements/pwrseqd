@@ -32,6 +32,88 @@ void GpioInput::OnEvent(gpiod::line_event line_event)
                         gpiod::line_event::RISING_EDGE);
 }
 
+// Acquire removes the interrupt from the GPIO
+void GpioInput::Acquire(void)
+{
+    if (!this->gated)
+    {
+        return;
+    }
+    this->gpiodRequestInput = {"pwrseqd", gpiod::line_request::EVENT_BOTH_EDGES,
+                               this->gpiodFlags};
+    try
+    {
+        this->line.request(this->gpiodRequestInput);
+    }
+    catch (exception& e)
+    {
+        throw runtime_error("Failed to request gpio line " + this->chip.name() +
+                            " " + this->line.name() + ": " + e.what());
+    }
+    int gpioLineFd = this->line.event_get_fd();
+    if (gpioLineFd < 0)
+    {
+        string errMsg = "Failed to get fd for gpio line " + this->Name();
+        throw runtime_error(errMsg);
+    }
+
+    this->streamDesc.assign(gpioLineFd);
+
+    this->WaitForGPIOEvent();
+
+    log_debug("using gpio " + this->Name() + " as input");
+
+    // Read initial level once ready
+    this->io->post([&] { this->out->SetLevel(this->line.get_value() != 0); });
+
+    this->gated = false;
+}
+
+// Release removes the interrupt from the GPIO
+void GpioInput::Release(void)
+{
+    bool newLevel;
+
+    if (this->gated)
+    {
+        return;
+    }
+    this->streamDesc.cancel();
+    this->streamDesc.release();
+    log_debug("ignoring gpio " + this->Name() + " input");
+
+    this->line.release();
+    this->gated = true;
+
+    if (this->GatedIdleHigh)
+    {
+        newLevel = true;
+    }
+    else if (this->GatedIdleLow)
+    {
+        newLevel = false;
+    }
+
+    newLevel ^= this->ActiveLow;
+
+    log_debug("input gpio " + this->Name() + " reads as " +
+              to_string(newLevel ? 1 : 0));
+
+    this->out->SetLevel(newLevel);
+}
+
+void GpioInput::Update(void)
+{
+    if (this->enable->GetLevel() && this->gated)
+    {
+        this->Acquire();
+    }
+    else if (!this->enable->GetLevel() && !this->gated)
+    {
+        this->Release();
+    }
+}
+
 // WaitForGPIOEvent async waits for an event on the open gpiod fd
 void GpioInput::WaitForGPIOEvent(void)
 {
@@ -40,10 +122,6 @@ void GpioInput::WaitForGPIOEvent(void)
         [&](const boost::system::error_code ec) {
             if (ec)
             {
-                string errMsg =
-                    this->Name() + " fd handler error: " + ec.message();
-                cout << errMsg << endl;
-                // TODO: throw here to force power-control to restart?
                 return;
             }
             gpiod::line_event line_event = this->line.event_read();
@@ -54,10 +132,11 @@ void GpioInput::WaitForGPIOEvent(void)
 
 GpioInput::GpioInput(boost::asio::io_context& io, struct ConfigInput* cfg,
                      SignalProvider& prov) :
-    streamDesc(io),
-    ActiveLow(cfg->ActiveLow)
+    io(&io),
+    GatedIdleHigh(cfg->GatedIdleHigh), GatedIdleLow(cfg->GatedIdleLow),
+    out(NULL), enable(NULL), streamDesc(io), ActiveLow(cfg->ActiveLow),
+    gpiodFlags(0), gated(true)
 {
-    ::std::bitset<32> flags = 0;
 
     if (cfg->GpioChipName == "")
     {
@@ -85,42 +164,49 @@ GpioInput::GpioInput(boost::asio::io_context& io, struct ConfigInput* cfg,
     this->out = prov.FindOrAdd(cfg->SignalName);
 
     if (cfg->ActiveLow)
-        flags |= gpiod::line_request::FLAG_ACTIVE_LOW;
+        this->gpiodFlags |= gpiod::line_request::FLAG_ACTIVE_LOW;
 #ifdef WITH_GPIOD_PULLUPS
     if (cfg->PullDown)
-        flags |= gpiod::line_request::FLAG_BIAS_PULL_DOWN;
+        this->gpiodFlags |= gpiod::line_request::FLAG_BIAS_PULL_DOWN;
     if (cfg->PullUp)
-        flags |= gpiod::line_request::FLAG_BIAS_PULL_UP;
+        this->gpiodFlags |= gpiod::line_request::FLAG_BIAS_PULL_UP;
     if (cfg->DisableBias)
-        flags |= gpiod::line_request::FLAG_BIAS_DISABLE;
+        this->gpiodFlags |= gpiod::line_request::FLAG_BIAS_DISABLE;
 #endif
 
-    ::gpiod::line_request requestInput = {
-        "pwrseqd", gpiod::line_request::EVENT_BOTH_EDGES, flags};
+    this->gpiodRequestInput = {"pwrseqd", gpiod::line_request::EVENT_BOTH_EDGES,
+                               this->gpiodFlags};
+
+    // Test if line can be acquired
     try
     {
-        this->line.request(requestInput);
+        this->line.request(this->gpiodRequestInput);
     }
     catch (exception& e)
     {
         throw runtime_error("Failed to request gpio line " + cfg->GpioChipName +
                             " " + cfg->Name + ": " + e.what());
     }
-    int gpioLineFd = this->line.event_get_fd();
-    if (gpioLineFd < 0)
+    this->line.release();
+
+    if (!cfg->GateInput)
     {
-        string errMsg = "Failed to get fd for gpio line " + cfg->Name;
-        throw runtime_error(errMsg);
+        this->Acquire();
     }
+    else
+    {
+        this->enable = prov.FindOrAdd(cfg->Name + "_On");
+        this->enable->AddReceiver(this);
 
-    this->streamDesc.assign(gpioLineFd);
-
-    this->WaitForGPIOEvent();
-
-    log_debug("using gpio " + this->Name() + " as input ");
-
-    // Read initial level once ready
-    io.post([&] { this->out->SetLevel(this->line.get_value() != 0); });
+        if (this->GatedIdleHigh)
+        {
+            this->out->SetLevel(1);
+        }
+        else if (this->GatedIdleLow)
+        {
+            this->out->SetLevel(0);
+        }
+    }
 }
 
 vector<Signal*> GpioInput::Signals(void)

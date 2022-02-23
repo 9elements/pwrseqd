@@ -13,6 +13,7 @@ using namespace std::chrono;
 class StateMachine;
 class SignalProvider;
 class GpioOutput;
+class GpioInput;
 class NullOutput;
 class LogicInput;
 class VoltageRegulator;
@@ -65,6 +66,7 @@ class Signal
     // AddReceiver adds a signal receiver
     void AddReceiver(SignalReceiver* rec);
     friend GpioOutput;
+    friend GpioInput;
     friend NullOutput;
     friend LogicInput;
     friend VoltageRegulator;

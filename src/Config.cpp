@@ -149,6 +149,9 @@ struct convert<ConfigInput>
         c.PullUp = false;
         c.PullDown = false;
         c.DisableBias = false;
+        c.GateInput = false;
+        c.GatedIdleHigh = false;
+        c.GatedIdleLow = false;
         for (auto it : node)
         {
             string key = it.first.as<string>();
@@ -184,6 +187,18 @@ struct convert<ConfigInput>
             else if (key == "disablebias")
             {
                 c.DisableBias = it.second.as<bool>();
+            }
+            else if (key == "gate_input")
+            {
+                c.GateInput = it.second.as<bool>();
+            }
+            else if (key == "gated_idle_high")
+            {
+                c.GatedIdleHigh = it.second.as<bool>();
+            }
+            else if (key == "gated_idle_low")
+            {
+                c.GatedIdleLow = it.second.as<bool>();
             }
             else if (key == "type")
             {
@@ -223,6 +238,19 @@ struct convert<ConfigInput>
             return false;
         }
 #endif
+        if (c.GatedIdleHigh && c.GatedIdleLow)
+        {
+            log_err(
+                "Cannot set gated_idle_low and gated_idle_high at the same time.");
+            return false;
+        }
+        if (c.GateInput && !(c.GatedIdleHigh || c.GatedIdleLow))
+        {
+            log_err(
+                "gated_input set, but none of gated_idle_low and gated_idle_high is set.");
+            return false;
+        }
+
         return true;
     }
 };
