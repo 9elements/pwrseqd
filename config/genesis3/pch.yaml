@@ -19,10 +19,14 @@ inputs:
     signal_name: "FM_SLPS3"
     active_low: true
     description: "Indicates that the PCH is in ACPI S3."
+    gate_input: true
+    gated_idle_low: true
   - name: "FM_SLPS4_N"
     type: "gpio"
     signal_name: "FM_SLPS4"
     active_low: true
+    gate_input: true
+    gated_idle_low: true
     description: "Indicates that the PCH is in ACPI S4 or S5."
   - name: "RST_RTCRST_N"
     signal_name: "RTCRST"
@@ -34,12 +38,16 @@ inputs:
   - name: "RST_PLTRST_N"
     signal_name: "PLTRST"
     active_low: true
+    gate_input: true
+    gated_idle_low: true
     type: "gpio"
     description: >
       Global platform reset signal.
       Not all PCIe devices might be affected by this signal.
   - name: "PWRGD_CPUPWRGD"
     type: "gpio"
+    gate_input: true
+    gated_idle_low: true
     signal_name: "PWRGD_CPUPWRGD"
     description: "PROC_PWRGD. PCH informs the CPU that power is stable and clocks are running."
 
@@ -264,13 +272,37 @@ power_sequencer:
       out:
         name: "SYS_PWROK"
 
-  - PLTRST_Buf_Unit:
+  - PLTRST_Enable_Unit:
       in:
-        or:
-          - name: "PLTRST"
+        and:
           - name: "RSMRST"
+            invert: true
       out:
-        name: "PLTRST_BUF"
+        name: "RST_PLTRST_N_On"
+
+  - FM_SLPS3_N_Enable_Unit:
+      in:
+        and:
+          - name: "RSMRST"
+            invert: true
+      out:
+        name: "FM_SLPS3_N_On"
+
+  - FM_SLPS4_N_Enable_Unit:
+      in:
+        and:
+          - name: "RSMRST"
+            invert: true
+      out:
+        name: "FM_SLPS4_N_On"
+
+  - PWRGD_CPUPWRGD_Enable_Unit:
+      in:
+        and:
+          - name: "RSMRST"
+            invert: true
+      out:
+        name: "PWRGD_CPUPWRGD_On"
 
   - CPU_THERMTRIP_Unit:
       in:
