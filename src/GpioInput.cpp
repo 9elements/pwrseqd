@@ -64,7 +64,19 @@ void GpioInput::Acquire(void)
     log_debug("using gpio " + this->Name() + " as input");
 
     // Read initial level once ready
-    this->io->post([&] { this->out->SetLevel(this->line.get_value() != 0); });
+    this->io->post([&] {
+        int val;
+        try
+        {
+            val = this->line.get_value();
+        }
+        catch (system_error& exc)
+        {
+            log_debug("GPIO line " + this->Name() + ": " + exc.what());
+            return;
+        }
+        this->out->SetLevel(val != 0);
+    });
 
     this->gated = false;
 }
