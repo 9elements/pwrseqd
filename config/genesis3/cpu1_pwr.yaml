@@ -362,6 +362,7 @@ power_sequencer:
   - H_LVT3_CPLD1_THERMTRIP_N_Enable_Unit:
       in:
         and:
+          - name: "pvccio_cpu0_On"
           - name: "pvccio_cpu0_PowerGood"
       out:
         name: "H_LVT3_CPLD1_THERMTRIP_N_On"
