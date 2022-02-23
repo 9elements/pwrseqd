@@ -25,6 +25,7 @@ void VoltageRegulator::Apply(void)
     {
         this->stateShadow = s;
         this->SetState(s);
+        // This might glitch if regulator needs some time to disable
         this->enabled->SetLevel(s == ENABLED);
     }
 }
@@ -79,7 +80,7 @@ void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
         this->powergood->SetLevel(false);
         this->fault->SetLevel(true);
     }
-    else
+    else if (status == ON)
     {
         this->enabled->SetLevel(true);
         this->powergood->SetLevel(true);
