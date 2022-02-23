@@ -63,9 +63,16 @@ void GpioInput::Acquire(void)
 
     log_debug("using gpio " + this->Name() + " as input");
 
-    // Read initial level once ready
+    // Read initial level once ready.
+    // If Release() is called before initial level could be read this will throw
+    // an exception.
     this->io->post([&] {
         int val;
+        if (this->gated)
+        {
+            return;
+        }
+
         try
         {
             val = this->line.get_value();
