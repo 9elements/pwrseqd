@@ -10,6 +10,8 @@ inputs:
     active_low: true
     description: >
       THERMTRIP_N is set on over tempertature condition or internal FIVR fault.
+    gate_input: true
+    gated_idle_high: true
 
   - name: "FM_CPU0_SKTOCC_N"
     signal_name: "FM_CPU0_SKTOCC"
@@ -349,6 +351,14 @@ power_sequencer:
           - name: "CPU0_VR_PWRGD"
       out:
         name: "CPU0_THERMTRIP"
+
+  - H_LVT3_CPLD0_THERMTRIP_N_Enable_Unit:
+      in:
+        and:
+          - name: "pvccio_cpu0_PowerGood"
+      out:
+        name: "H_LVT3_CPLD0_THERMTRIP_N_On"
+
 
 regulators:
   - name: "pvpp_abc"
