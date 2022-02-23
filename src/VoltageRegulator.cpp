@@ -23,8 +23,15 @@ void VoltageRegulator::Apply(void)
 
     if (s != this->stateShadow)
     {
-        this->stateShadow = s;
         this->SetState(s);
+        // Setting the state might fail. Read current value from consumer.
+        this->stateShadow = this->DecodeState(this->ReadConsumerState());
+        if (s != this->stateShadow)
+        {
+            // Try again.
+            this->SetState(s);
+        }
+
         // This might glitch if regulator needs some time to disable
         this->enabled->SetLevel(s == ENABLED);
     }
