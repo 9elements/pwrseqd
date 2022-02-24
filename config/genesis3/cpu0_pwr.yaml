@@ -197,6 +197,7 @@ power_sequencer:
           - name: "CPU_POWER"
           - name: "CPU0_DDR_PWRGD"
             input_stable_usec: 100
+          - name: "CPU0_DDR_PWRGD"
           - name: "FM_CPU0_SKTOCC"
           - name: "CPU0_VR_Fault_Shutdown"
             invert: true
@@ -219,6 +220,7 @@ power_sequencer:
       in:
         and:
           - name: "CPU_POWER"
+          - name: "CPU0_DDR_PWRGD"
           - name: "pvccio_cpu0_PowerGood" # Shutdown within 500usec if VCCIO is at fault
             input_stable_usec: 100
           - name: "FM_CPU0_SKTOCC"
@@ -232,6 +234,7 @@ power_sequencer:
       in:
         and:
           - name: "CPU_POWER"
+          - name: "CPU0_DDR_PWRGD"
           - name: "pvccin_cpu0_PowerGood"
             input_stable_usec: 100
           - name: "pvccio_cpu0_PowerGood"
