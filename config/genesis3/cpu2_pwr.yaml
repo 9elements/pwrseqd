@@ -298,11 +298,13 @@ power_sequencer:
 
   - CPU2_DDR_Off_Unit:
       in:
-        and:
+        or:
           - name: "pvddq_npq_Enabled"
           - name: "pvpp_npq_Enabled"
           - name: "pvddq_rst_Enabled"
           - name: "pvpp_rst_Enabled"
+          - name: "PWRGD_PVTT_NPQ_CPU2"
+          - name: "PWRGD_PVTT_RST_CPU2"
       out:
         name: "CPU2_DDR_Off"
         active_low: true

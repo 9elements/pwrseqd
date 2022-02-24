@@ -298,11 +298,13 @@ power_sequencer:
 
   - CPU3_DDR_Off_Unit:
       in:
-        and:
+        or:
           - name: "pvddq_uvw_Enabled"
           - name: "pvpp_uvw_Enabled"
           - name: "pvddq_xyz_Enabled"
           - name: "pvpp_xyz_Enabled"
+          - name: "PWRGD_PVTT_UVW_CPU3"
+          - name: "PWRGD_PVTT_XYZ_CPU3"
       out:
         name: "CPU3_DDR_Off"
         active_low: true

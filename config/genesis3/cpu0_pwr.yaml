@@ -291,11 +291,13 @@ power_sequencer:
 
   - CPU0_DDR_Off_Unit:
       in:
-        and:
+        or:
           - name: "pvddq_abc_Enabled"
           - name: "pvpp_abc_Enabled"
           - name: "pvddq_def_Enabled"
           - name: "pvpp_def_Enabled"
+          - name: "PWRGD_PVTT_ABC_CPU0"
+          - name: "PWRGD_PVTT_DEF_CPU0"
       out:
         name: "CPU0_DDR_Off"
         active_low: true

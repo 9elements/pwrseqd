@@ -298,11 +298,13 @@ power_sequencer:
 
   - CPU1_DDR_Off_Unit:
       in:
-        and:
+        or:
           - name: "pvddq_ghj_Enabled"
           - name: "pvpp_ghj_Enabled"
           - name: "pvddq_klm_Enabled"
           - name: "pvpp_klm_Enabled"
+          - name: "PWRGD_PVTT_GHJ_CPU1"
+          - name: "PWRGD_PVTT_KLM_CPU1"
       out:
         name: "CPU1_DDR_Off"
         active_low: true
