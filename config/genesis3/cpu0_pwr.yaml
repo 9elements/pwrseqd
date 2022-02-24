@@ -221,8 +221,9 @@ power_sequencer:
         and:
           - name: "CPU_POWER"
           - name: "CPU0_DDR_PWRGD"
+          - name: "pvccio_cpu0_PowerGood" # Wait for PVCCIO_CPU0_DELAY to not glitch
+            input_stable_usec: 10000
           - name: "pvccio_cpu0_PowerGood" # Shutdown within 500usec if VCCIO is at fault
-            input_stable_usec: 100
           - name: "FM_CPU0_SKTOCC"
           - name: "CPU0_VR_Fault_Shutdown"
             invert: true
@@ -235,9 +236,11 @@ power_sequencer:
         and:
           - name: "CPU_POWER"
           - name: "CPU0_DDR_PWRGD"
+          - name: "pvccio_cpu0_PowerGood" # Wait for PVCCIO_CPU0_DELAY to not glitch
+            input_stable_usec: 10000
+          - name: "pvccio_cpu0_PowerGood"
           - name: "pvccin_cpu0_PowerGood"
             input_stable_usec: 100
-          - name: "pvccio_cpu0_PowerGood"
           - name: "FM_CPU0_SKTOCC"
           - name: "CPU0_VR_Fault_Shutdown"
             invert: true
