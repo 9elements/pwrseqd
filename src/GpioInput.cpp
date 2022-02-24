@@ -232,11 +232,11 @@ GpioInput::GpioInput(boost::asio::io_context& io, struct ConfigInput* cfg,
 
         if (this->GatedIdleHigh)
         {
-            this->out->SetLevel(1);
+            this->out->SetLevel(this->ActiveLow ? false : true);
         }
         else if (this->GatedIdleLow)
         {
-            this->out->SetLevel(0);
+            this->out->SetLevel(this->ActiveLow ? true : false);
         }
     }
 }
