@@ -112,15 +112,23 @@ inputs:
   - name: "PLUG_DETECT_M2_SSD_CARRIER1"
     type: "gpio"
     signal_name: "PLUG_DETECT_M2_SSD_CARRIER1"
+    active_low: true
+    pullup: true
   - name: "PLUG_DETECT_M2_SSD_CARRIER2"
     type: "gpio"
     signal_name: "PLUG_DETECT_M2_SSD_CARRIER2"
+    active_low: true
+    pullup: true
   - name: "PLUG_DETECT_M2_SSD1"
     type: "gpio"
     signal_name: "PLUG_DETECT_M2_SSD1"
+    active_low: true
+    pullup: true
   - name: "PLUG_DETECT_M2_SSD2"
     type: "gpio"
     signal_name: "PLUG_DETECT_M2_SSD2"
+    active_low: true
+    pullup: true
 
 outputs:
   - name: "RST_M2_SSD1_PERST_N"
