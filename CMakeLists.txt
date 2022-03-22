@@ -101,6 +101,7 @@ set(
   ${PROJECT_SOURCE_DIR}/config/genesis3/cpu2_pwr.yaml
   ${PROJECT_SOURCE_DIR}/config/genesis3/cpu3_pwr.yaml
   ${PROJECT_SOURCE_DIR}/config/genesis3/rulerdrive.yaml
+  ${PROJECT_SOURCE_DIR}/config/genesis3/nic.yaml
   )
 
 install(FILES ${SERVICE_FILES} DESTINATION /lib/systemd/system/)

@@ -5,10 +5,10 @@ power_sequencer:
   - pvcore_nic1_Unit:
       in:
         and:
-          - name: "p3v3_PowerGood"
-          - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
+          - name: "p3v3_nic_PowerGood"
+            input_stable_usec: 10000 # FIXME
+          - name: "p3v3_nic_PowerGood"
         or:
           - name: "p1v2_nic_Enabled"
             input_stable_usec: 1000 # FIXME
@@ -21,11 +21,10 @@ power_sequencer:
   - pvcore_nic2_Unit:
       in:
         and:
-          - name: "p3v3_PowerGood"
+          - name: "PCH_PWROK"
+          - name: "p3v3_nic_PowerGood"
             input_stable_usec: 10000 # FIXME
-          - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "p3v3_nic_PowerGood"
         or:
           - name: "p1v2_nic_Enabled"
             input_stable_usec: 1000 # FIXME
@@ -40,11 +39,14 @@ power_sequencer:
         and:
           - name: "pvcore_nic1_PowerGood"
             input_stable_usec: 10000 # FIXME
+          - name: "pvcore_nic1_PowerGood"
           - name: "pvcore_nic2_PowerGood"
             input_stable_usec: 10000 # FIXME
-          - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "pvcore_nic2_PowerGood"
+          - name: "p3v3_nic_PowerGood"
+            input_stable_usec: 10000 # FIXME
+          - name: "p3v3_nic_PowerGood"
+          - name: "PCH_PWROK"
         or:
           - name: "p1v8_nic_Enabled"
             input_stable_usec: 1000 # FIXME
@@ -55,20 +57,27 @@ power_sequencer:
   - p1v8_nic_Unit:
       in:
         and:
+          - name: "pvcore_nic1_PowerGood"
+            input_stable_usec: 10000 # FIXME
+          - name: "pvcore_nic1_PowerGood"
+          - name: "pvcore_nic2_PowerGood"
+            input_stable_usec: 10000 # FIXME
+          - name: "pvcore_nic2_PowerGood"
           - name: "p1v2_nic_PowerGood"
             input_stable_usec: 10000 # FIXME
-          - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "p1v2_nic_PowerGood"
+          - name: "p3v3_nic_PowerGood"
+            input_stable_usec: 10000 # FIXME
+          - name: "p3v3_nic_PowerGood"
+          - name: "PCH_PWROK"
       out:
         name: "p1v8_nic_On"
 
   - p3v3_nic_Unit:
       in:
+        and:
+          - name: "PCH_PWROK"
         or:
-          - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
           - name: "pvcore_nic1_Enabled"
             input_stable_usec: 1000 # FIXME
           - name: "pvcore_nic2_Enabled"
@@ -77,6 +86,7 @@ power_sequencer:
             input_stable_usec: 1000 # FIXME
           - name: "p1v8_nic_Enabled"
             input_stable_usec: 1000 # FIXME
+        and_then_or: true
       out:
         name: "p3v3_nic_On"
 
@@ -100,18 +110,35 @@ power_sequencer:
       out:
         name: "FM_NIC2_ALLSTANDBY"
 
+  # Keep NIC in reset when
+  #  - PCH is in reset
+  #  - Platform is in S5/S4
+  #  - Platform is in reset
+  #  - Power rails aren't stable
   - FM_NIC1_Globalreset_Unit:
       in:
         or:
-          - name: "STATE_REQ_HOST_ON"
-            invert: true
+          - name: "RSMRST"
           - name: "FM_SLPS3"
+          - name: "PLTRST"
           - name: "pvcore_nic1_PowerGood"
+            invert: true
+          - name: "pvcore_nic1_PowerGood"
+            invert: true
+            input_stable_usec: 10000 # FIXME
+          - name: "p1v2_nic_PowerGood"
             invert: true
           - name: "p1v2_nic_PowerGood"
             invert: true
+            input_stable_usec: 10000 # FIXME
           - name: "p1v8_nic_PowerGood"
             invert: true
+          - name: "p1v8_nic_PowerGood"
+            invert: true
+            input_stable_usec: 10000 # FIXME
+          - name: "p3v3_nic_PowerGood"
+            invert: true
+            input_stable_usec: 10000 # FIXME
           - name: "p3v3_nic_PowerGood"
             invert: true
       out:
@@ -120,19 +147,63 @@ power_sequencer:
   - FM_NIC2_Globalreset_Unit:
       in:
         or:
-          - name: "STATE_REQ_HOST_ON"
-            invert: true
+          - name: "RSMRST"
           - name: "FM_SLPS3"
+          - name: "PLTRST"
+          - name: "pvcore_nic2_PowerGood"
+            invert: true
+            input_stable_usec: 10000 # FIXME
           - name: "pvcore_nic2_PowerGood"
             invert: true
           - name: "p1v2_nic_PowerGood"
             invert: true
+            input_stable_usec: 10000 # FIXME
+          - name: "p1v2_nic_PowerGood"
+            invert: true
+          - name: "p1v8_nic_PowerGood"
+            invert: true
+            input_stable_usec: 10000 # FIXME
           - name: "p1v8_nic_PowerGood"
             invert: true
           - name: "p3v3_nic_PowerGood"
             invert: true
+            input_stable_usec: 10000 # FIXME
+          - name: "p3v3_nic_PowerGood"
+            invert: true
       out:
         name: "FM_NIC2_RST"
+
+  - IRQ_NIC2_OVT_SHTDN_Unit:
+      in:
+        and:
+          - name: "FM_NIC2_RST"
+            invert: true
+      out:
+        name: "IRQ_NIC2_OVT_SHTDN_On"
+
+  - IRQ_NIC1_OVT_SHTDN_Unit:
+      in:
+        and:
+          - name: "FM_NIC1_RST"
+            invert: true
+      out:
+        name: "IRQ_NIC1_OVT_SHTDN_On"
+
+  - IRQ_NIC2_OVT_WRNG_Unit:
+      in:
+        and:
+          - name: "FM_NIC2_RST"
+            invert: true
+      out:
+        name: "IRQ_NIC2_OVT_WRNG_On"
+
+  - IRQ_NIC1_OVT_WRNG_Unit:
+      in:
+        and:
+          - name: "FM_NIC1_RST"
+            invert: true
+      out:
+        name: "IRQ_NIC1_OVT_WRNG_On"
 
 regulators:
   - name: "p3v3_nic"
@@ -239,21 +310,29 @@ inputs:
     signal_name: "IRQ_NIC1_OVT_WRNG"
     description: "overtemperature warning"
     disablebias: true
+    gate_input: true
+    gated_idle_low: true
   - name: "IRQ_NIC2_OVT_WRNG"
     type: "gpio"
     signal_name: "IRQ_NIC2_OVT_WRNG"
     description: "overtemperature warning"
     disablebias: true
+    gate_input: true
+    gated_idle_low: true
   - name: "IRQ_NIC1_OVT_SHTDN"
     type: "gpio"
     signal_name: "IRQ_NIC1_OVT_SHTDN"
     description: "overtemperature shutdown"
     disablebias: true
+    gate_input: true
+    gated_idle_low: true
   - name: "IRQ_NIC2_OVT_SHTDN"
     type: "gpio"
     signal_name: "IRQ_NIC2_OVT_SHTDN"
     description: "overtemperature shutdown"
     disablebias: true
+    gate_input: true
+    gated_idle_low: true
 
 floating_signals:
   - "IRQ_NIC1_OVT_WRNG"
