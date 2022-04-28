@@ -76,7 +76,7 @@ add_executable(${CMAKE_PROJECT_NAME} src/Main.cpp src/Config.cpp src/StateMachin
 	src/SignalProvider.cpp src/Logic.cpp src/LogicInput.cpp src/NullInput.cpp src/NullOutput.cpp src/VoltageRegulator.cpp
 	src/ACPIStates.cpp src/SysFsWatcher.cpp src/Dbus.cpp)
 
-target_link_libraries(${CMAKE_PROJECT_NAME} ${YAML_CPP_LIBRARIES})
+target_link_libraries(${CMAKE_PROJECT_NAME} yaml-cpp )
 target_link_libraries(${CMAKE_PROJECT_NAME} ${GPIODCXX_LIBRARY})
 target_link_libraries(${CMAKE_PROJECT_NAME} Threads::Threads)
 if(SDBUSPLUSPLUS_FOUND)
