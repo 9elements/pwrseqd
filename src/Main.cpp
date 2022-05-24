@@ -6,113 +6,118 @@
 #include "StateMachine.hpp"
 #include "SysFsWatcher.hpp"
 
-#include <popl.hpp>
-
+#include <getopt.h>
 #include <iostream>
 
 using namespace std;
-using namespace popl;
 
 int _loglevel;
 
-int main(int argc, const char* argv[])
+static struct option long_options[] =
+{
+        /* These options set a flag. */
+        {"extra_verbose", no_argument,       &_loglevel, 3},
+        {"verbose",       no_argument,       &_loglevel, 2},
+        {"quiet",         no_argument,       &_loglevel, 0},
+        /* These options don’t set a flag.
+        We distinguish them by their indices. */
+        {"help",                 no_argument,       0, 'h'},
+        {"config",               required_argument, 0, 'c'},
+        {"dump_signals_folder",  required_argument, 0, 'd'},
+        {0, 0, 0, 0}
+};
+
+void help(void)
+{
+    int i;
+    string args = "Allowed options:\n";
+    for (i = 0; long_options[i].name; i++) {
+        if (!long_options[i].flag && long_options[i].val) {
+            args += "-";
+            args += long_options[i].val;
+        } else {
+            args += "  ";
+        }
+        args += " --" + string(long_options[i].name) + " ";
+        for (int j = string(long_options[i].name).length(); j < 30; j++)
+           args += " ";
+
+        if (long_options[i].name == "extra_verbose")
+            args += "Enable extra verbose logging [DEBUGGING ONLY]";
+        else if (long_options[i].name == "verbose")
+            args += "Enable verbose logging [DEBUGGING ONLY]";
+        else if (long_options[i].name == "quiet")
+            args += "Disable logging";
+        else if (long_options[i].name == "config")
+            args += "Path to configuration file/folder.";
+        else if (long_options[i].name == "dump_signals_folder")
+            args += "Path to dump signal.txt [DEBUGGING ONLY]";
+        else if (long_options[i].name == "help")
+            args += "Produce this help message";
+
+        args += "\n";
+    }
+    log_err(args);
+}
+
+int main(int argc, char * const argv[])
 {
     Config cfg;
     string dumpSignalsFolder;
     boost::asio::io_service io;
     SysFsWatcher* sysw;
-
-    OptionParser op("Allowed options");
-    auto help_option = op.add<Switch>("h", "help", "produce help message");
-    auto config_option = op.add<Value<string>>(
-        "c", "config", "Path to configuration file/folder.");
-    auto dump_signals_option = op.add<Value<string>>(
-        "d", "dump_signals_folder", "Path to dump signal.txt [DEBUGGING ONLY]");
-    auto verbose = op.add<Switch>("v", "verbose",
-                                  "Enable verbose logging [DEBUGGING ONLY]");
-    auto extra = op.add<Switch>(
-        "e", "extra_verbose", "Enable extra verbose logging [DEBUGGING ONLY]");
-    auto quiet =
-        op.add<Switch>("q", "quiet", "Be quiet and don't log any errors");
+    int opt;
+    int option_index = 0;
+    string config_option;
 
     _loglevel = 1;
+
+    if (argc <= 1) {
+        log_err("No argument given.");
+        help();
+        return 1;
+    }
 
     log_info("Starting " + string(argv[0]) + " ....");
 
     try
     {
-        op.parse(argc, argv);
+        opterr = 0;
 
-        // print auto-generated help message
-        if (help_option->count() == 1)
-        {
-            cout << op.help() << endl;
-            return 0;
+        while ((opt = getopt_long(argc, argv, "hc:d:eq", long_options, &option_index)) != -1 ) {
+            switch (opt) {
+                case 0:
+                    break;
+                case 'h':
+                    help();
+                    return 0;
+                case 'c':
+                    config_option = string(optarg);
+                    break;
+                case 'd':
+                    dumpSignalsFolder = string(optarg);
+                    break;
+                case '?':  // unknown option...
+                    log_err(string("Unknown option: '") + char(optopt) + string("'!"));
+                    help();
+                    return 1;
+            }
         }
-        else if (help_option->count() == 2)
-        {
-            cout << op.help(Attribute::advanced) << endl;
-            return 0;
-        }
-        else if (help_option->count() > 2)
-        {
-            cout << op.help(Attribute::expert) << endl;
-            return 0;
-        }
-
-        // Set loglevel
-        if (quiet->is_set())
-            _loglevel = 0;
-        else if (verbose->is_set())
-            _loglevel = 2;
-        else if (extra->is_set())
-            _loglevel = 3;
-
-        if (!config_option->is_set() || config_option->value() == "")
+        if (config_option == "")
         {
             log_err("Didn't specify a valid config file");
-            log_err(op.help());
+            help();
             return 1;
         }
-        if (dump_signals_option->is_set())
-            dumpSignalsFolder = dump_signals_option->value();
-
         try
         {
-            cfg = LoadConfig(config_option->value());
+            cfg = LoadConfig(config_option);
         }
         catch (const exception& ex)
         {
             log_err("Failed to load config: " + string(ex.what()));
             return 1;
         }
-    }
-    catch (const popl::invalid_option& e)
-    {
-        log_err("Invalid Option Exception: " + string(e.what()));
-        log_err("error:  ");
-        if (e.error() == invalid_option::Error::missing_argument)
-            log_err("missing_argument");
-        else if (e.error() == invalid_option::Error::invalid_argument)
-            log_err("invalid_argument");
-        else if (e.error() == invalid_option::Error::too_many_arguments)
-            log_err("too_many_arguments");
-        else if (e.error() == invalid_option::Error::missing_option)
-            log_err("missing_option");
-
-        if (e.error() == invalid_option::Error::missing_option)
-        {
-            string option_name(e.option()->name(OptionName::short_name, true));
-            if (option_name.empty())
-                option_name = e.option()->name(OptionName::long_name, true);
-            log_err("option: " + option_name);
-        }
-        else
-        {
-            log_err("option: " + e.option()->name(e.what_name()));
-            log_err("value:  " + e.value());
-        }
-        return EXIT_FAILURE;
     }
     catch (const exception& e)
     {
