@@ -90,6 +90,10 @@ power_sequencer:
       in:
         and:
           - name: "ACPI_STATE_IS_S0"
+          - name: "FM_NIC1_RST"
+            invert: true
+          - name: "FM_NIC2_RST"
+            invert: true
       out:
         name: "LED_PWR_DWR_FRNT"
 
@@ -97,6 +101,10 @@ power_sequencer:
       in:
         and:
           - name: "ACPI_STATE_IS_S0"
+          - name: "FM_NIC1_RST"
+            invert: true
+          - name: "FM_NIC2_RST"
+            invert: true
       out:
         name: "LED_PWR_DWR_BACK"
 
