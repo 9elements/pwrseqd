@@ -8,6 +8,7 @@
 #include <boost/asio.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/thread/lock_guard.hpp>
+#include <boost/asio/deadline_timer.hpp>
 
 #include <filesystem>
 #include <unordered_map>
@@ -73,6 +74,8 @@ enum RegulatorStatus
      REGULATOR_EVENT_REGULATION_OUT | REGULATOR_EVENT_FAIL |                   \
      REGULATOR_EVENT_OVER_TEMP | REGULATOR_EVENT_FORCE_DISABLE)
 
+#define DEFAULT_TIMEOUT_USEC 1000000
+
 class VoltageRegulator :
     SignalReceiver,
     public OutputDriver,
@@ -109,6 +112,9 @@ class VoltageRegulator :
     // ReadConsumerState reads /sys/devices/platform/*_consumer/state
     string ReadConsumerState(void);
 
+    string StatusToString(const enum RegulatorStatus);
+    string StateToString(const enum RegulatorState);
+
     // DecodeStatus converts the value read from
     // /sys/class/regulator/.../status
     enum RegulatorStatus DecodeStatus(string);
@@ -135,6 +141,9 @@ class VoltageRegulator :
     // SetState writes to /sys/class/regulator/.../state
     void SetState(const enum RegulatorState);
 
+    // Compare the requested state against the actual state. On mismatch the error signal is set.
+    void ConfirmStatusAfterTimeout(void);
+
     enum RegulatorState stateShadow;
     enum RegulatorStatus statusShadow;
 
@@ -142,8 +151,16 @@ class VoltageRegulator :
     path sysfsRoot;
     path sysfsConsumerRoot;
 
+    // Timeout in microseconds to wait for the regulator to change it's state
+    unsigned long stateChangeTimeoutUsec;
+    boost::asio::deadline_timer timer;
+
+    // The level to be applied on next Update() call.
     bool newLevel;
-    bool hasfault;
+    // A level change has been requested, but has not been processes yet.
+    bool pendingLevelChange;
+    // The level that was requested at the regulator.
+    enum RegulatorState pendingNewLevel;
 
     Signal* in;
     Signal* enabled;

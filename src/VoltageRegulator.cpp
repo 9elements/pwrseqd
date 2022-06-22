@@ -23,7 +23,10 @@ void VoltageRegulator::Apply(void)
 
     if (s != this->stateShadow)
     {
+        this->timer.cancel();
+
         this->SetState(s);
+
         // Setting the state might fail. Read current value from consumer.
         this->stateShadow = this->DecodeState(this->ReadConsumerState());
         if (s != this->stateShadow)
@@ -31,6 +34,14 @@ void VoltageRegulator::Apply(void)
             // Try again.
             this->SetState(s);
         }
+
+        this->timer.expires_from_now(boost::posix_time::microseconds(this->stateChangeTimeoutUsec));
+        this->timer.async_wait([&](const boost::system::error_code& err) {
+            if (err != boost::asio::error::operation_aborted)
+            {
+                this->ConfirmStatusAfterTimeout();
+            }
+        });
 
         // This might glitch if regulator needs some time to disable
         this->enabled->SetLevel(s == ENABLED);
@@ -71,8 +82,68 @@ enum RegulatorStatus VoltageRegulator::DecodeEvents(unsigned long events)
     return NOCHANGE;
 }
 
+string VoltageRegulator::StatusToString(const enum RegulatorStatus status)
+{
+	switch (status) {
+		case OFF: return "OFF";
+		case ON: return "ON";
+		case ERROR: return "ERROR";
+		case FAST: return "FAST";
+		case NORMAL: return "NORMAL";
+		case IDLE: return "IDLE";
+		case STANDBY: return "STANDBY";
+		case NOCHANGE: return "NOCHANGE";
+	}
+
+	return "unknown";
+}
+
+string VoltageRegulator::StateToString(const enum RegulatorState state)
+{
+	if (state == ENABLED)
+		return "ENABLED";
+	else
+		return "DISABLED";
+}
+
+
+void VoltageRegulator::ConfirmStatusAfterTimeout(void)
+{
+    bool failure = false;
+    if (this->stateShadow == ENABLED) {
+        if (!this->enabled->GetLevel() ||
+            !this->powergood->GetLevel() ||
+            this->fault->GetLevel()) {
+            failure = true;
+        }
+    } else if (this->stateShadow == DISABLED) {
+        if (this->enabled->GetLevel() ||
+            this->powergood->GetLevel()) {
+            failure = true;
+        }
+    }
+    if (failure) {
+        log_err(this->name + " state didn't change after " + to_string(this->stateChangeTimeoutUsec) + " usec.");
+        this->pendingLevelChange = false;
+        this->ApplyStatus(ERROR);
+        // Something is wrong. Turn off regulator.
+        this->SetState(DISABLED);
+    }
+}
+
 void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
 {
+    // If status haven't changed just return
+    // This can happen if a PRE_DISABLE or PRE_VOLTAGE_CHANGE is send
+    if (this->statusShadow == status)
+        return;
+    if (status == NOCHANGE)
+        return;
+
+    this->statusShadow = status;
+
+    log_debug(this->name + ": status changed to " + StatusToString(status));
+
     if (status == OFF)
     {
         this->enabled->SetLevel(false);
@@ -93,6 +164,20 @@ void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
         this->powergood->SetLevel(true);
         this->fault->SetLevel(false);
     }
+    if (this->pendingLevelChange) {
+        if (this->pendingNewLevel == ENABLED && status == ON)
+            this->pendingLevelChange = false;
+        else if (this->pendingNewLevel == DISABLED && status == OFF)
+            this->pendingLevelChange = false;
+        else {
+            log_err(this->name + ": Got unexpected regulator status! Requested state " +
+                StateToString(this->pendingNewLevel) + ", got status " + StatusToString(status));
+        }
+    } else {
+        log_err(this->name + ": Got unexpected regulator status! Requested no state change, got status " + StatusToString(status));
+        // Attempting to change it back is pointless.
+        // The power sequencing logic will likely shutdown the system anyways.
+    }
 }
 
 void VoltageRegulator::SetState(const enum RegulatorState state)
@@ -105,6 +190,8 @@ void VoltageRegulator::SetState(const enum RegulatorState state)
 
     outfile << (state == ENABLED ? "enabled" : "disabled");
     outfile.close();
+    this->pendingLevelChange = true;
+    this->pendingNewLevel = state;
 }
 
 string VoltageRegulator::ReadStatus()
@@ -266,7 +353,8 @@ static string SysFsConsumerDir(path root)
 VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
                                    struct ConfigRegulator* cfg,
                                    SignalProvider& prov, string root) :
-    name(cfg->Name)
+    statusShadow(NOCHANGE), name(cfg->Name) , stateChangeTimeoutUsec(cfg->TimeoutUsec), timer(io),
+    pendingLevelChange(false), pendingNewLevel(DISABLED)
 {
     string consumerRoot;
     this->in = prov.FindOrAdd(cfg->Name + "_On");
@@ -275,6 +363,9 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
     this->enabled = prov.FindOrAdd(cfg->Name + "_Enabled");
     this->fault = prov.FindOrAdd(cfg->Name + "_Fault");
     this->powergood = prov.FindOrAdd(cfg->Name + "_PowerGood");
+
+    if (this->stateChangeTimeoutUsec == 0)
+       this->stateChangeTimeoutUsec = DEFAULT_TIMEOUT_USEC;
 
     if (root == "")
         root = SysFsRootDirByName(cfg->Name);
@@ -295,29 +386,28 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
     this->sysfsConsumerRoot = path(consumerRoot);
 
     // Set initial signal levels
-    this->statusShadow = this->DecodeStatus(this->ReadStatus());
     this->stateShadow = this->DecodeState(this->ReadConsumerState());
 
-    this->ApplyStatus(this->statusShadow);
+    this->ApplyStatus(this->DecodeStatus(this->ReadStatus()));
 
     // Register sysfs watcher
     SysFsWatcher* sysw = GetSysFsWatcher(io);
     sysw->Register(this->sysfsRoot / path("status"), [&](filesystem::path p,
                                                          const char* data) {
-        if (this->statusShadow == this->DecodeStatus(string(data)))
+        enum RegulatorStatus status = this->DecodeStatus(string(data));
+        if (this->statusShadow == status)
         {
             io.post([&]() {
-                this->statusShadow = this->DecodeStatus(this->ReadStatus());
-                log_debug(this->name + ": sysfsnotify on 'status': " +
-                          to_string(this->statusShadow));
-                this->ApplyStatus(this->statusShadow);
+                enum RegulatorStatus status2 = this->DecodeStatus(this->ReadStatus());
+                if (this->statusShadow != status)
+                    log_debug(this->name + ": sysfsnotify on 'status'");
+
+                this->ApplyStatus(status2);
             });
-            return;
+        } else {
+            log_debug(this->name + ": sysfsnotify on 'status'");
+            this->ApplyStatus(status);
         }
-        this->statusShadow = this->DecodeStatus(string(data));
-        log_debug(this->name + ": sysfsnotify on 'status': " +
-                  to_string(this->statusShadow));
-        this->ApplyStatus(this->statusShadow);
     });
 
     sysw->Register(this->sysfsConsumerRoot / path("state"),
@@ -333,12 +423,13 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
         sysw->Register(
             this->sysfsConsumerRoot / path("events"),
             [&](filesystem::path p, const char* data) {
+                enum RegulatorStatus status;
                 unsigned long events = this->DecodeRegulatorEvent(string(data));
                 log_debug(this->name +
                           ": sysfsnotify on 'events': " + string(data));
 
-                this->statusShadow = this->DecodeEvents(events);
-                this->ApplyStatus(this->statusShadow);
+                status = this->DecodeEvents(events);
+                this->ApplyStatus(status);
             });
     }
 }

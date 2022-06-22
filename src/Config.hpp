@@ -134,6 +134,8 @@ struct ConfigRegulator
     string Name;
     // Description is just for debugging purposes
     string Description;
+    // Optional Timeout in microseconds to wait for regulator state to change
+    unsigned long TimeoutUsec;
 };
 
 struct ConfigImmutable

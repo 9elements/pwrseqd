@@ -472,6 +472,7 @@ struct convert<ConfigRegulator>
         }
 
         c.Name = "";
+	c.TimeoutUsec = 0;
 
         for (auto it : node)
         {
@@ -484,6 +485,9 @@ struct convert<ConfigRegulator>
             else if (key == "description")
             {
                 // FIXME
+            } else if (key == "timeout_usec")
+            {
+                c.TimeoutUsec = it.second.as<unsigned long>();
             }
         }
         if (c.Name == "")
