@@ -163,11 +163,17 @@ int SysFsWatcher::Main(int ctrlFd, int statusFd)
                 // condition
                 if (lseek(ufds[i].fd, 0, SEEK_SET) < 0)
                     break;
-                int n = read(ufds[i].fd, event.data, sizeof(event.data));
-                if (n > 0)
+                int n = read(ufds[i].fd, event.data, sizeof(event.data) - 1);
+                if (n > 0) {
+                    // Add trailing \0 for char strings
+                    if (n < sizeof(event.data)) {
+                        event.data[n] = 0;
+                        n++;
+                    }
+
                     this->io->post(
                         [event] { event.handler(event.path, event.data); });
-
+                }
                 ufds[i].revents = 0;
                 rv--;
             }
