@@ -116,7 +116,6 @@ int SysFsWatcher::Main(int ctrlFd, int statusFd)
     struct pollfd* ufds = new struct pollfd[n];
     char dummyData[1024] = {};
     int rv, i;
-    SysFsEvent event;
     char notify = 0;
 
     ufds[0].fd = ctrlFd;
@@ -157,7 +156,7 @@ int SysFsWatcher::Main(int ctrlFd, int statusFd)
         {
             if ((ufds[i].revents & (POLLPRI | POLLERR)) == (POLLPRI | POLLERR))
             {
-                event = this->events[ufds[i].fd];
+                SysFsEvent event = this->events[ufds[i].fd];
 
                 // lseek+read is required to clear the POLLPRI | POLLERR
                 // condition
