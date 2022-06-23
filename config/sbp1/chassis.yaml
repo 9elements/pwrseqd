@@ -1,0 +1,173 @@
+---
+
+power_sequencer:
+  # Enable PSU when Chassis is on or PCH is still powered
+  - BCM1_Unit:
+      in:
+        or:
+          - name: "STATE_REQ_CHASSIS_ON"
+          - name: "p3v3_pch_Enabled"
+      out:
+        name: "bcm1_On"
+
+  - BCM2_Unit:
+      in:
+        or:
+          - name: "STATE_REQ_CHASSIS_ON"
+          - name: "p3v3_pch_Enabled"
+      out:
+        name: "bcm2_On"
+
+  - BCM3_Unit:
+      in:
+        or:
+          - name: "STATE_REQ_CHASSIS_ON"
+          - name: "p3v3_pch_Enabled"
+      out:
+        name: "bcm3_On"
+
+  - M2_SSD1_Unit:
+      in:
+        and:
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSMRST"
+            invert: true
+          - name: "STATE_REQ_HOST_ON"
+        or:
+          - name: "PLUG_DETECT_M2_SSD_CARRIER1"
+          - name: "PLUG_DETECT_M2_SSD1"
+      out:
+        name: "p3v3_m2_ssd1_On"
+      delay_usec: 100000
+
+  - M2_SSD2_Unit:
+      in:
+        and:
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSMRST"
+            invert: true
+          - name: "STATE_REQ_HOST_ON"
+        or:
+          - name: "PLUG_DETECT_M2_SSD_CARRIER2"
+          - name: "PLUG_DETECT_M2_SSD2"
+      out:
+        name: "p3v3_m2_ssd2_On"
+      delay_usec: 100000
+
+  - M2_RST_M2_SSD1_PERST_Unit:
+      in:
+        or:
+          - name: "FM_SLPS3"
+          - name: "RSMRST"
+          - name: "STATE_REQ_HOST_ON"
+            invert: true
+          - name: "p3v3_m2_ssd1_PowerGood"
+            input_stable_usec: 100000  # PCIe spec: 100msec
+            invert: true
+          - name: "p3v3_m2_ssd1_PowerGood"
+            invert: true
+      out:
+        name: "RST_M2_SSD1_PERST"
+
+  - M2_RST_M2_SSD2_PERST_Unit:
+      in:
+        or:
+          - name: "FM_SLPS3"
+          - name: "RSMRST"
+          - name: "STATE_REQ_HOST_ON"
+            invert: true
+          - name: "p3v3_m2_ssd2_PowerGood"
+            input_stable_usec: 100000  # PCIe spec: 100msec
+            invert: true
+          - name: "p3v3_m2_ssd2_PowerGood"
+            invert: true
+      out:
+        name: "RST_M2_SSD2_PERST"
+
+  - LED_PWR_DWR_FRNT:
+      in:
+        and:
+          - name: "ACPI_STATE_IS_S0"
+          - name: "FM_NIC1_RST"
+            invert: true
+          - name: "FM_NIC2_RST"
+            invert: true
+      out:
+        name: "LED_PWR_DWR_FRNT"
+
+  - LED_PWR_DWR_BACK:
+      in:
+        and:
+          - name: "ACPI_STATE_IS_S0"
+          - name: "FM_NIC1_RST"
+            invert: true
+          - name: "FM_NIC2_RST"
+            invert: true
+      out:
+        name: "LED_PWR_DWR_BACK"
+
+regulators:
+  - name: "bcm1"
+  - name: "bcm2"
+  - name: "bcm3"
+  - name: "p3v3_m2_ssd1"
+  - name: "p3v3_m2_ssd2"
+
+floating_signals:
+  - "bcm1_PowerGood"
+  - "bcm1_Enabled"
+  - "bcm1_Fault"
+  - "bcm2_PowerGood"
+  - "bcm2_Enabled"
+  - "bcm2_Fault"
+  - "bcm3_PowerGood"
+  - "bcm3_Enabled"
+  - "bcm3_Fault"
+  - "p3v3_m2_ssd1_Enabled"
+  - "p3v3_m2_ssd2_Enabled"
+  - "p3v3_m2_ssd1_Fault"
+  - "p3v3_m2_ssd2_Fault"
+
+inputs:
+  - name: "PLUG_DETECT_M2_SSD_CARRIER1"
+    type: "gpio"
+    signal_name: "PLUG_DETECT_M2_SSD_CARRIER1"
+    active_low: true
+    pullup: true
+  - name: "PLUG_DETECT_M2_SSD_CARRIER2"
+    type: "gpio"
+    signal_name: "PLUG_DETECT_M2_SSD_CARRIER2"
+    active_low: true
+    pullup: true
+  - name: "PLUG_DETECT_M2_SSD1"
+    type: "gpio"
+    signal_name: "PLUG_DETECT_M2_SSD1"
+    active_low: true
+    pullup: true
+  - name: "PLUG_DETECT_M2_SSD2"
+    type: "gpio"
+    signal_name: "PLUG_DETECT_M2_SSD2"
+    active_low: true
+    pullup: true
+
+outputs:
+  - name: "RST_M2_SSD1_PERST_N"
+    type: "gpio"
+    signal_name: "RST_M2_SSD1_PERST"
+    active_low: true
+    description: "M.2 reset line"
+  - name: "RST_M2_SSD2_PERST_N"
+    type: "gpio"
+    signal_name: "RST_M2_SSD2_PERST"
+    active_low: true
+    description: "M.2 reset line"
+  - name: "LED_PWR_DWR_BACK"
+    type: "gpio"
+    signal_name: "LED_PWR_DWR_BACK"
+    active_low: true
+  - name: "LED_PWR_DWR_FRNT"
+    type: "gpio"
+    signal_name: "LED_PWR_DWR_FRNT"
+    active_low: true

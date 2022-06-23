@@ -98,6 +98,15 @@ set(
   ${PROJECT_SOURCE_DIR}/config/genesis3/cpu3_pwr.yaml
   ${PROJECT_SOURCE_DIR}/config/genesis3/rulerdrive.yaml
   ${PROJECT_SOURCE_DIR}/config/genesis3/nic.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/pch.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/states.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/chassis.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/cpu0_pwr.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/cpu1_pwr.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/cpu2_pwr.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/cpu3_pwr.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rulerdrive.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/nic.yaml 
   )
 
 install(FILES ${SERVICE_FILES} DESTINATION /lib/systemd/system/)

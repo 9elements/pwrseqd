@@ -1,0 +1,438 @@
+---
+
+# Contains logic to power sequence an Intel Xeon CPU.
+
+inputs:
+  # FIVR_FAULT is not read as THERMTRIP_N is driven as well.
+  - name: "H_LVT3_CPU1_THERMTRIP_OUT_N"
+    signal_name: "H_LVT3_CPU1_THERMTRIP"
+    type: "gpio"
+    active_low: true
+    description: >
+      THERMTRIP_N is set on over tempertature condition or internal FIVR fault.
+    gate_input: true
+    gated_idle_high: true
+
+  - name: "FM_CPU1_SKTOCC_N"
+    signal_name: "FM_CPU1_SKTOCC"
+    type: "gpio"
+    active_low: true
+    description: "CPU1 socket is occupied."
+
+  - name: "PWRGD_CHA_CPU1"
+    signal_name: "PWRGD_CHA_CPU1"
+    type: "gpio"
+    pullup: true
+    description: "CPU1 DDR Channel A power good."
+
+  - name: "PWRGD_CHB_CPU1"
+    signal_name: "PWRGD_CHB_CPU1"
+    type: "gpio"
+    pullup: true
+    description: "CPU1 DDR Channel B power good."
+
+  - name: "PWRGD_CHC_CPU1"
+    signal_name: "PWRGD_CHC_CPU1"
+    type: "gpio"
+    pullup: true
+    description: "CPU1 DDR Channel C power good."
+
+  - name: "PWRGD_CHD_CPU1"
+    signal_name: "PWRGD_CHD_CPU1"
+    type: "gpio"
+    pullup: true
+    description: "CPU1 DDR Channel D power good."
+
+  - name: "PWRGD_CHE_CPU1"
+    signal_name: "PWRGD_CHE_CPU1"
+    type: "gpio"
+    pullup: true
+    description: "CPU1 DDR Channel E power good."
+
+  - name: "PWRGD_CHF_CPU1"
+    signal_name: "PWRGD_CHF_CPU1"
+    type: "gpio"
+    pullup: true
+    description: "CPU1 DDR Channel F power good."
+
+  - name: "PWRGD_CHG_CPU1"
+    signal_name: "PWRGD_CHG_CPU1"
+    type: "gpio"
+    pullup: true
+    description: "CPU1 DDR Channel G power good."
+
+  - name: "PWRGD_CHH_CPU1"
+    signal_name: "PWRGD_CHH_CPU1"
+    type: "gpio"
+    pullup: true
+    description: "CPU1 DDR Channel H power good."
+
+  - name: "FM_CPU1_PKG_ID0"
+    signal_name: "FM_CPU1_PKG_ID0"
+    type: "gpio"
+    pullup: true
+    description: "CPU 0 PKGID"
+
+  - name: "FM_CPU1_PKG_ID1"
+    signal_name: "FM_CPU1_PKG_ID1"
+    type: "gpio"
+    pullup: true
+    description: "CPU 0 PKGID"
+
+
+outputs:
+  - name: "H_LVT3_CPU1_PROCHOT_N"
+    type: "gpio"
+    signal_name: "H_LVT3_CPU1_PROCHOT"
+    active_low: true
+    open_drain: true
+    description: "CPU1 is hot and throttling. Open Drain."
+
+  - name: "PWRGD_LVC3_CPU1_AB_DRAM_G"
+    type: "gpio"
+    signal_name: "PWRGD_LVC3_CPU1_AB_DRAM"
+    open_drain: true
+    description: "CPU1 memory channel AB power good."
+
+  - name: "PWRGD_LVC3_CPU1_CD_DRAM_G"
+    type: "gpio"
+    signal_name: "PWRGD_LVC3_CPU1_CD_DRAM"
+    open_drain: true
+    description: "CPU1 memory channel CD power good."
+
+  - name: "PWRGD_LVC3_CPU1_EF_DRAM_G"
+    type: "gpio"
+    open_drain: true
+    signal_name: "PWRGD_LVC3_CPU1_EF_DRAM"
+    description: "CPU1 memory channel EF power good."
+
+  - name: "PWRGD_LVC3_CPU1_GH_DRAM_G"
+    type: "gpio"
+    open_drain: true
+    signal_name: "PWRGD_LVC3_CPU1_GH_DRAM"
+    description: "CPU1 memory channel GH power good."
+
+  - name: "RST_LVC3_CPU1_RESET_N"
+    type: "gpio"
+    signal_name: "RST_LVC3_CPU1_RESET"
+    active_low: true
+    description: "CPU1 RESET_N"
+
+  - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+    type: "gpio"
+    signal_name: "PWRGD_LVC3_CPU1_PWRGOOD"
+    description: "Tell CPU1 power good."
+
+immutables:
+  - signal_name: "H_LVT3_CPU1_PROCHOT"
+    value: false
+
+power_sequencer:
+  - PWRGD_LVC3_CPU1_AB_DRAM_G_Unit:
+      in:
+        and:
+          - name: "PWRGD_CHA_CPU1"
+          - name: "PWRGD_CHB_CPU1"
+          - name: "pvccd_hv_cpu1_PowerGood"
+      out:
+        name: "PWRGD_LVC3_CPU1_AB_DRAM_G"
+
+  - PWRGD_LVC3_CPU1_CD_DRAM_G_Unit:
+      in:
+        and:
+          - name: "PWRGD_CHC_CPU1"
+          - name: "PWRGD_CHD_CPU1"
+          - name: "pvccd_hv_cpu1_PowerGood"
+      out:
+        name: "PWRGD_LVC3_CPU1_CD_DRAM_G"
+  
+  - PWRGD_LVC3_CPU1_EF_DRAM_G_Unit:
+      in:
+        and:
+          - name: "PWRGD_CHE_CPU1"
+          - name: "PWRGD_CHF_CPU1"
+          - name: "pvccd_hv_cpu1_PowerGood"
+      out:
+        name: "PWRGD_LVC3_CPU1_EF_DRAM_G"
+
+  - PWRGD_LVC3_CPU1_GH_DRAM_G_Unit:
+      in:
+        and:
+          - name: "PWRGD_CHG_CPU1"
+          - name: "PWRGD_CHH_CPU1"
+          - name: "pvccd_hv_cpu1_PowerGood"
+      out:
+        name: "PWRGD_LVC3_CPU1_GH_DRAM_G"
+  # DDR & CPU VRs
+
+  # PVCCD_HV must be equal or higher than Vdd at all times.
+  - PVCCD_HV_CPU1_Unit:
+      in:
+        or:
+          - name: "pvccfa_ehv_cpu1_Enabled"
+          - name: "pvccfa_ehv_fivra_cpu1_Enabled"
+          - name: "pvccinfaon_cpu1_Enabled"
+        and:
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_VR_Fault_Shutdown"
+            invert: true
+          - name: "DDR_POWER"
+        and_then_or: true
+      out:
+        name: "pvccd_hv_cpu1_On"
+
+  - CPU1_DDR_PWRGD_Unit:
+      in:
+        and:
+          - name: "pvccd_hv_cpu1_PowerGood"
+      out:
+        name: "CPU1_DDR_PWRGD"
+
+  - PVCCFA_EHV_CPU1_Unit:
+      in:
+        and:
+          - name: "CPU_POWER"
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_VR_Fault_Shutdown"
+            invert: true
+          - name: "pvccd_hv_cpu1_PowerGood"
+            input_stable_usec: 2
+        or:
+          - name: "pvccfa_ehv_fivra_cpu1_Enabled"
+          - name: "pvccfa_ehv_fivra_cpu1_Enabled"
+            input_stable_usec: 1000
+        and_then_or: true
+      out:
+        name: "pvccfa_ehv_cpu1_On"
+  
+  - PVCCFA_EHV_FIVRA_CPU1_Unit:
+      in:
+        and:
+          - name: "CPU_POWER"
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_VR_Fault_Shutdown"
+            invert: true
+          - name: "pvccd_hv_cpu1_PowerGood"
+            input_stable_usec: 2
+        or:
+          - name: "pvccinfaon_cpu1_Enabled"
+          - name: "pvccinfaon_cpu1_Enabled"
+            input_stable_usec: 1000
+        and_then_or: true
+      out:
+        name: "pvccfa_ehv_fivra_cpu1_On"
+
+    - PVCCINFAON_CPU1_Unit:
+      in:
+        and:
+          - name: "CPU_POWER"
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_VR_Fault_Shutdown"
+            invert: true
+          - name: "pvccfa_ehv_fivra_cpu1_PowerGood"
+            input_stable_usec: 2
+        or:
+          - name: "pvccinfaon_cpu1_Enabled"
+          - name: "pvccinfaon_cpu1_Enabled"
+            input_stable_usec: 10000
+        and_then_or: true
+      out:
+        name: "pvccinfaon_cpu1_On"
+
+    - PVNN_MAIN_CPU1_Unit:
+      in:
+        and:
+          - name: "CPU_POWER"
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_VR_Fault_Shutdown"
+            invert: true
+          - name: "pvccinfaon_cpu1_PowerGood"
+            input_stable_usec: 2
+        or:
+          - name: "pvccin_cpu1_Enabled"
+          - name: "pvccin_cpu1_Enabled"
+            input_stable_usec: 100
+        and_then_or: true
+      out:
+        name: "pvnn_main_cpu1_On"
+  
+    - PVCCIN_CPU1_Unit:
+      in:
+        and:
+          - name: "CPU_POWER"
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_VR_Fault_Shutdown"
+            invert: true
+          - name: "pvnn_main_cpu1_PowerGood"
+            input_stable_usec: 2
+        or:
+          - name: "pvpp_hbm_cpu1_Enabled"
+          - name: "pvpp_hbm_cpu1_Enabled"
+            input_stable_usec: 1000
+        and_then_or: true
+      out:
+        name: "pvccin_cpu1_On"
+
+    - PVPP_HBM_CPU1_Unit:
+      in:
+        and:
+          - name: "CPU_POWER"
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_HBM_PRESENT"
+          - name: "CPU1_VR_Fault_Shutdown"
+            invert: true
+          - name: "pvccin_cpu1_PowerGood"
+            input_stable_usec: 2
+      out:
+        name: "pvpp_hbm_cpu1_On"
+
+    - CPU1_HBM_PRESENT_Unit:
+      in:
+        and:
+          - name: "FM_CPU1_PKG_ID0"
+            invert: true
+          - name: "FM_CPU1_PKG_ID1"
+      out:
+        name: "CPU1_HBM_PRESENT"
+
+    - CPU1_HBM_Gated_PowerGood_Unit:
+      in:
+        or:
+          - name: "pvpp_hbm_cpu1_PowerGood"
+          - name: "CPU1_HBM_PRESENT"
+            invert: true
+      out:
+        name: "CPU1_HBM_Gated_PowerGood"
+
+  # All VRs except optional HBM
+  - CPU1_VR_PWRGD_Unit:
+      in:
+        and:
+          - name: "pvccfa_ehv_cpu1_PowerGood"
+          - name: "pvccfa_ehv_fivra_cpu1_PowerGood"
+          - name: "pvccinfaon_cpu1_PowerGood"
+          - name: "pvnn_main_cpu1_PowerGood"
+          - name: "pvccin_cpu1_PowerGood"
+      out:
+        name: "CPU1_VR_PWRGD"
+
+  # Power good & fault handling
+
+  - PWRGD_LVC3_CPU1_PWRGOOD_Unit:
+      in:
+        and:
+          - name: "CPU1_DDR_PWRGD"
+            # PDG: 2usec max from VR failure to SYS_PWROK low
+          - name: "CPU1_VR_PWRGD" # fast path
+          - name: "PWRGD_CPUPWRGD" # signal from PCH (slow)
+          - name: "FM_CPU1_SKTOCC"
+          - name: "CPU1_HBM_Gated_PowerGood"
+      out:
+        name: "PWRGD_LVC3_CPU1_PWRGOOD"
+
+  # All VRs except HBM
+  - CPU1_SYS_PWROK_Unit:
+      in:
+        and:
+          - name: "CPU1_VR_PWRGD"
+          - name: "CPU1_DDR_PWRGD"
+        or:
+          - name: "FM_CPU1_SKTOCC"
+            invert: true
+        and_then_or: true
+      out:
+        name: "CPU1_SYS_PWROK"
+  
+  - CPU1_VR_Off_Unit:
+      in:
+        or:
+          - name: "pvccfa_ehv_cpu1_Enabled"
+          - name: "pvccfa_ehv_fivra_cpu1_Enabled"
+          - name: "pvccinfaon_cpu1_Enabled"
+          - name: "pvnn_main_cpu1_Enabled"
+          - name: "pvccin_cpu1_Enabled"
+          - name: "pvpp_hbm_cpu1_Enabled"
+      out:
+        name: "CPU1_VR_Off"
+        active_low: true
+
+  - CPU1_DDR_Off_Unit:
+      in:
+        or:
+          - name: "pvccd_hv_cpu1_Enabled"
+      out:
+        name: "CPU1_DDR_Off"
+        active_low: true
+  
+  - CPU1_VR_Off_Unit:
+      in:
+        and:
+          - name: "CPU1_DDR_Off"
+          - name: "CPU1_VR_Off"
+      out:
+        name: "CPU1_Off"
+    
+  - CPU1_VR_Fault_Unit:
+      in:
+        or:
+          - name: "pvccfa_ehv_cpu1_Fault"
+          - name: "pvccfa_ehv_fivra_cpu1_Fault"
+          - name: "pvccinfaon_cpu1_Fault"
+          - name: "pvnn_main_cpu1_Fault"
+          - name: "pvccin_cpu1_Fault"
+          - name: "pvpp_hbm_cpu1_Fault"
+          - name: "pvccd_hv_cpu1_Fault"
+          - name: "CPU1_THERMTRIP"
+        and:
+          - name: "FM_CPU1_SKTOCC"
+      out:
+        name: "CPU1_VR_Fault"
+
+  - CPU1_VR_Fault_Keep_Unit:
+      in:
+        or:
+          - name: "CPU1_VR_Fault"
+          - name: "CPU1_VR_Fault_Shutdown"
+        and:
+          - name: "CPU1_Off"
+            invert: true
+      out:
+        name: "CPU1_VR_Fault_Shutdown"
+
+  # The following violates multi-processor RESET_N spec
+  - RST_LVC3_CPU1_RESET_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+            invert: true
+      out:
+        name: "RST_LVC3_CPU1_RESET"
+
+  - CPU1_THERMTRIP_Unit:
+      in:
+        and:
+          - name: "H_LVT3_CPU1_THERMTRIP"
+          - name: "CPU1_VR_PWRGD" # PDG: Ignore THERMTRIP until power is good
+            input_stable_usec: 1500
+          - name: "CPU1_VR_PWRGD"
+      out:
+        name: "CPU1_THERMTRIP"
+
+  - H_LVT3_CPU1_THERMTRIP_OUT_N_Enable_Unit:
+      in:
+        and:
+          - name: "pvnn_main_On"
+          - name: "pvnn_main_PowerGood"
+      out:
+        name: "H_LVT3_CPU1_THERMTRIP_OUT_N_On"
+
+regulators:
+  - name: "pvccd_hv_cpu1"
+  - name: "pvccfa_ehv_cpu1"
+  - name: "pvccfa_ehv_fivra_cpu1"
+  - name: "pvccinfaon_cpu1"
+  - name: "pvnn_main_cpu1"
+  - name: "pvccin_cpu1"
+  - name: "pvpp_hbm_cpu1"
+

@@ -1,0 +1,58 @@
+---
+
+power_sequencer:
+
+  # Detect current ACPI state
+  - ACPI_STATE_IS_G3_Unit:
+      in:
+        or:
+          - name: "RSMRST"
+          - name: "DSW_PWROK"
+            invert: true
+      out:
+        name: "ACPI_STATE_IS_G3"
+
+  - ACPI_STATE_IS_S5_Unit:
+      in:
+        and:
+          - name: "DSW_PWROK"
+          - name: "RSMRST"
+            invert: true
+          - name: "FM_SLPS4"
+          - name: "FM_SLPS3"
+      out:
+        name: "ACPI_STATE_IS_S5"
+
+  - ACPI_STATE_IS_S0_Unit:
+      in:
+        and:
+          - name: "RSMRST"
+            invert: true
+          - name: "DSW_PWROK"
+          - name: "PCH_PWROK"
+          - name: "CPU0_SYS_PWROK"
+          - name: "CPU1_SYS_PWROK"
+          - name: "CPU2_SYS_PWROK"
+          - name: "CPU3_SYS_PWROK"
+          - name: "PLTRST"
+            invert: true
+          - name: "FM_SLPS4"
+            invert: true
+          - name: "FM_SLPS3"
+            invert: true
+      out:
+        name: "ACPI_STATE_IS_S0"
+
+immutables:
+  - signal_name: "ACPI_STATE_IS_S3"
+    value: false
+
+# Special wake events
+wake:
+  # As PWRBTN is not supported, S5->S0 will actually be S5->G3->S0
+  - PWRBTN_N:
+    type: "PWRBTN"
+    supported: false
+
+
+
