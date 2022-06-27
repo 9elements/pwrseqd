@@ -11,6 +11,7 @@
 using namespace std;
 using namespace std::filesystem;
 
+
 // Name returns the instance name
 string VoltageRegulator::Name(void)
 {
@@ -64,6 +65,26 @@ void VoltageRegulator::Update(void)
     this->newLevel = this->in->GetLevel();
 }
 
+string VoltageRegulator::EventsToString(const unsigned long events)
+{
+    string msg = "";
+    if (events & REGULATOR_EVENT_UNDER_VOLTAGE)
+        msg += "under-voltage ";
+    if (events & REGULATOR_EVENT_OVER_CURRENT)
+        msg += "over-current ";
+    if (events & REGULATOR_EVENT_REGULATION_OUT)
+        msg += "out of regulation ";
+    if (events & REGULATOR_EVENT_OVER_TEMP)
+        msg += "over-temperature ";
+    if (events & REGULATOR_EVENT_FORCE_DISABLE)
+        msg += "force-disabled ";
+    if (events & REGULATOR_EVENT_DISABLE)
+        msg += "disabled ";
+    if (events & REGULATOR_EVENT_ENABLE)
+        msg += "enabled ";
+    return msg;
+}
+
 enum RegulatorStatus VoltageRegulator::DecodeEvents(unsigned long events)
 {
     if (events & REGULATOR_EVENT_FAILURE)
@@ -84,26 +105,27 @@ enum RegulatorStatus VoltageRegulator::DecodeEvents(unsigned long events)
 
 string VoltageRegulator::StatusToString(const enum RegulatorStatus status)
 {
-	switch (status) {
-		case OFF: return "OFF";
-		case ON: return "ON";
-		case ERROR: return "ERROR";
-		case FAST: return "FAST";
-		case NORMAL: return "NORMAL";
-		case IDLE: return "IDLE";
-		case STANDBY: return "STANDBY";
-		case NOCHANGE: return "NOCHANGE";
-	}
+    switch (status) {
+        case OFF: return "OFF";
+        case ON: return "ON";
+        case ERROR: return "ERROR";
+        case FAST: return "FAST";
+        case NORMAL: return "NORMAL";
+        case IDLE: return "IDLE";
+        case STANDBY: return "STANDBY";
+        case NOCHANGE: return "NOCHANGE";
+        case INVALID: return "INVALID";
+    }
 
-	return "unknown";
+    return "unknown";
 }
 
 string VoltageRegulator::StateToString(const enum RegulatorState state)
 {
-	if (state == ENABLED)
-		return "ENABLED";
-	else
-		return "DISABLED";
+    if (state == ENABLED)
+        return "ENABLED";
+    else
+        return "DISABLED";
 }
 
 
@@ -123,7 +145,9 @@ void VoltageRegulator::ConfirmStatusAfterTimeout(void)
         }
     }
     if (failure) {
-        log_err(this->name + " state didn't change after " + to_string(this->stateChangeTimeoutUsec) + " usec.");
+        log_err(this->name + ": State didn't change after " + to_string(this->stateChangeTimeoutUsec) + " usec.");
+        log_sel(this->name + ": State didn't change after " + to_string(this->stateChangeTimeoutUsec) + " usec.", this->sysfsRoot, true);
+
         this->pendingLevelChange = false;
         this->ApplyStatus(ERROR);
         // Something is wrong. Turn off regulator.
@@ -140,9 +164,12 @@ void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
     if (status == NOCHANGE)
         return;
 
+    log_debug(this->name + ": status changed to " + StatusToString(status) + ", was " + StatusToString(this->statusShadow));
+    if (this->statusShadow == ERROR && status != ERROR) {
+        log_err(this->name + ": Regulator recovered from error, new state is: " + StatusToString(status));
+        log_sel(this->name + ": Regulator recovered from error, new state is: " + StatusToString(status), "/xyz/openbmc_project/inventory/system/chassis/motherboard", false);
+    }
     this->statusShadow = status;
-
-    log_debug(this->name + ": status changed to " + StatusToString(status));
 
     if (status == OFF)
     {
@@ -175,6 +202,7 @@ void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
         }
     } else {
         log_err(this->name + ": Got unexpected regulator status! Requested no state change, got status " + StatusToString(status));
+        log_sel(this->name + ": Got unexpected regulator status! Requested no state change, got status: " + StatusToString(status), "/xyz/openbmc_project/inventory/system/chassis/motherboard", true);
         // Attempting to change it back is pointless.
         // The power sequencing logic will likely shutdown the system anyways.
     }
@@ -236,7 +264,7 @@ enum RegulatorStatus VoltageRegulator::DecodeStatus(string state)
     }
 
     // Invalid state. Error to shut down platform.
-    return ERROR;
+    return INVALID;
 }
 
 string VoltageRegulator::ReadEvents()
@@ -388,6 +416,14 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
     // Set initial signal levels
     this->stateShadow = this->DecodeState(this->ReadConsumerState());
 
+    // Silence warning when calling ApplyStatus
+    this->pendingLevelChange = true;
+    if (this->DecodeStatus(this->ReadStatus()) == OFF)
+       this->pendingNewLevel = DISABLED;
+    else if (this->DecodeStatus(this->ReadStatus()) == ON)
+       this->pendingNewLevel = ENABLED;
+
+    // Set current state
     this->ApplyStatus(this->DecodeStatus(this->ReadStatus()));
 
     // Register sysfs watcher
@@ -395,10 +431,17 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
     sysw->Register(this->sysfsRoot / path("status"), [&](filesystem::path p,
                                                          const char* data) {
         enum RegulatorStatus status = this->DecodeStatus(string(data));
+        if (status == INVALID) {
+            log_err(this->name + ": Got invalid status string '"+string(data)+"'");
+        }
         if (this->statusShadow == status)
         {
             io.post([&]() {
-                enum RegulatorStatus status2 = this->DecodeStatus(this->ReadStatus());
+                string statusText = this->ReadStatus();
+                enum RegulatorStatus status2 = this->DecodeStatus(statusText);
+                if (status2 == INVALID) {
+                    log_err(this->name + ": Got invalid status string '"+statusText+"'");
+                }
                 if (this->statusShadow != status)
                     log_debug(this->name + ": sysfsnotify on 'status'");
 
@@ -429,6 +472,9 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
                           ": sysfsnotify on 'events': " + string(data));
 
                 status = this->DecodeEvents(events);
+                if (status == ERROR)
+                    log_sel(this->name + ": Regulator signaled error state(s): " + EventsToString(events), "/xyz/openbmc_project/inventory/system/chassis/motherboard", true);
+
                 this->ApplyStatus(status);
             });
     }

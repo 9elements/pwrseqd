@@ -41,6 +41,7 @@ enum RegulatorStatus
     IDLE = 5,
     STANDBY = 6,
     NOCHANGE = 7,
+    INVALID = 8,
 };
 
 #define REGULATOR_EVENT_UNDER_VOLTAGE 0x01
@@ -114,6 +115,7 @@ class VoltageRegulator :
 
     string StatusToString(const enum RegulatorStatus);
     string StateToString(const enum RegulatorState);
+    string EventsToString(const unsigned long events);
 
     // DecodeStatus converts the value read from
     // /sys/class/regulator/.../status
