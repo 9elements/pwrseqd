@@ -79,6 +79,9 @@ if(SDBUSPLUSPLUS_FOUND)
 	target_link_libraries(${CMAKE_PROJECT_NAME} sdbusplus)
 	target_link_libraries(${CMAKE_PROJECT_NAME} -lsystemd)
 endif()
+if(PHOSPHOR_LOGGING_FOUND)
+	target_link_libraries(${CMAKE_PROJECT_NAME} phosphor_logging)
+endif()
 
 set(
   SERVICE_FILES
