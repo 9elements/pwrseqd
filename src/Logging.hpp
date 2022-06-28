@@ -50,9 +50,9 @@ static inline void log_sel(const string& data, const std::string& path, const bo
 #ifdef WITH_PHOSPHOR_LOGGING
     using namespace xyz::openbmc_project::Logging::SEL;
     using namespace xyz::openbmc_project::Logging;
-    // Generate System event record
+    // Generate System event record, BMC firmware
     report<SELCreated>(Entry::Level::Alert,
-        Created::RECORD_TYPE(2), Created::GENERATOR_ID(1),
+        Created::RECORD_TYPE(2), Created::GENERATOR_ID(0x41),
         Created::SENSOR_DATA(data.c_str()), Created::EVENT_DIR(assert),
         Created::SENSOR_PATH(path.c_str()));
 #endif
