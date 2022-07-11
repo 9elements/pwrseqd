@@ -2,6 +2,7 @@
 #include "Signal.hpp"
 #include "SignalProvider.hpp"
 #include "StateMachine.hpp"
+#include "Dbus.hpp"
 
 #include <iostream>
 
@@ -22,7 +23,8 @@ TEST(Signal, TestInputHasSignal)
         .InputType = INPUT_TYPE_NULL,
     });
 
-    StateMachine sm(cfg, sp, io);
+    Dbus d(cfg, io);
+    StateMachine sm(cfg, sp, io, d);
 
     Signal* in = sp.Find("in");
     EXPECT_NE(in, nullptr);
@@ -43,7 +45,8 @@ TEST(Signal, TestDirty)
         .InputType = INPUT_TYPE_NULL,
     });
 
-    StateMachine sm(cfg, sp, io);
+    Dbus d(cfg, io);
+    StateMachine sm(cfg, sp, io, d);
 
     Signal* in = sp.Find("in");
     // All signals start dirty
@@ -90,7 +93,8 @@ TEST(Signal, TestValidate)
         .OutputType = OUTPUT_TYPE_NULL,
     });
 
-    StateMachine sm(cfg, sp, io);
+    Dbus d(cfg, io);
+    StateMachine sm(cfg, sp, io, d);
 
     Signal* inout = sp.Find("inout");
     EXPECT_NE(inout, nullptr);
@@ -113,7 +117,8 @@ TEST(Signal, TestValidateThrow)
         .InputType = INPUT_TYPE_NULL,
     });
 
-    StateMachine sm(cfg, sp, io);
+    Dbus d(cfg, io);
+    StateMachine sm(cfg, sp, io, d);
 
     Signal* inout = sp.Find("inout");
     EXPECT_NE(inout, nullptr);
@@ -145,7 +150,8 @@ TEST(Signal, TestValidateThrow2)
         .OutputType = OUTPUT_TYPE_NULL,
     });
 
-    StateMachine sm(cfg, sp, io);
+    Dbus d(cfg, io);
+    StateMachine sm(cfg, sp, io, d);
 
     Signal* inout = sp.Find("inout");
     EXPECT_NE(inout, nullptr);
@@ -177,7 +183,8 @@ TEST(Signal, TestValidateFloatingWire)
     cfg.FloatingSignals.push_back("inout");
 
     SignalProvider sp(cfg);
-    StateMachine sm(cfg, sp, io);
+    Dbus d(cfg, io);
+    StateMachine sm(cfg, sp, io, d);
 
     Signal* inout = sp.Find("inout");
     EXPECT_NE(inout, nullptr);

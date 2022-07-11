@@ -43,7 +43,8 @@ TEST(Waveform, GenerateTest1)
         boost::asio::io_context io;
 
         SignalProvider sp(cfg, root.string());
-        StateMachine sm(cfg, sp, io);
+        Dbus d(cfg, io);
+        StateMachine sm(cfg, sp, io, d);
 
         Signal* a1 = sp.Find("a1");
         EXPECT_NE(a1, nullptr);

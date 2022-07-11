@@ -88,6 +88,7 @@ class Dbus
     ~Dbus();
     void SetHostState(const dbus::HostState);
     void SetChassisState(const bool IsOn);
+    void SetLEDState(string name, bool state);
 
     void RegisterRequestedHostTransition(
         const std::function<bool(const std::string& requested,

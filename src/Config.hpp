@@ -62,6 +62,7 @@ enum ConfigInputType
 enum ConfigOutputType
 {
     OUTPUT_TYPE_GPIO,
+    OUTPUT_TYPE_LED,
     OUTPUT_TYPE_NULL,
     OUTPUT_TYPE_UNKNOWN,
 };

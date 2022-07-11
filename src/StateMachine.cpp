@@ -11,7 +11,8 @@ using namespace placeholders;
 
 // Create statemachine from config
 StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
-                           boost::asio::io_service& io) :
+                           boost::asio::io_service& io,
+                           Dbus& dbus) :
     io{&io},
     work_guard{io.get_executor()}
 {
@@ -51,6 +52,13 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
             this->gpioOutputs.push_back(g);
             this->outputDrivers.push_back(g);
             log_debug("using gpio output " + cfg.Outputs[i].SignalName);
+        }
+        else if (cfg.Outputs[i].OutputType == OUTPUT_TYPE_LED)
+        {
+            LED* l = new LED(dbus, &cfg.Outputs[i], prov);
+            this->ledOutputs.push_back(l);
+            this->outputDrivers.push_back(l);
+            log_debug("using LED output " + cfg.Outputs[i].SignalName);
         }
         else if (cfg.Outputs[i].OutputType == OUTPUT_TYPE_NULL)
         {

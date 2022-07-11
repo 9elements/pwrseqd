@@ -86,6 +86,10 @@ struct convert<ConfigOutput>
                 {
                     c.OutputType = OUTPUT_TYPE_GPIO;
                 }
+                else if (nameOfType.compare("led") == 0)
+                {
+                    c.OutputType = OUTPUT_TYPE_LED;
+                }
                 else if (nameOfType.compare("null") == 0)
                 {
                     c.OutputType = OUTPUT_TYPE_NULL;

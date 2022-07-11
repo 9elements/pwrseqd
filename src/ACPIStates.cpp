@@ -121,30 +121,30 @@ void ACPIStates::Update(void)
     {
         case ACPI_S0:
             if (this->signalHostState->GetLevel())
-                this->dbus.SetHostState(dbus::HostState::running);
+                this->dbus->SetHostState(dbus::HostState::running);
             else
-                this->dbus.SetHostState(dbus::HostState::transitionToOff);
-            this->dbus.SetChassisState(true);
+                this->dbus->SetHostState(dbus::HostState::transitionToOff);
+            this->dbus->SetChassisState(true);
             break;
         case ACPI_S3:
             if (this->signalHostState->GetLevel())
-                this->dbus.SetHostState(dbus::HostState::transitionToRunning);
+                this->dbus->SetHostState(dbus::HostState::transitionToRunning);
             else
-                this->dbus.SetHostState(dbus::HostState::standby);
-            this->dbus.SetChassisState(true);
+                this->dbus->SetHostState(dbus::HostState::standby);
+            this->dbus->SetChassisState(true);
             break;
         case ACPI_S5:
             if (this->signalHostState->GetLevel())
-                this->dbus.SetHostState(dbus::HostState::transitionToRunning);
+                this->dbus->SetHostState(dbus::HostState::transitionToRunning);
             else
-                this->dbus.SetHostState(dbus::HostState::off);
-            this->dbus.SetChassisState(true);
+                this->dbus->SetHostState(dbus::HostState::off);
+            this->dbus->SetChassisState(true);
             break;
         case ACPI_G3:
             this->powerCycleTimer.cancel();
 
-            this->dbus.SetChassisState(false);
-            this->dbus.SetHostState(dbus::HostState::off);
+            this->dbus->SetChassisState(false);
+            this->dbus->SetHostState(dbus::HostState::off);
             break;
     }
 }
@@ -228,9 +228,10 @@ bool ACPIStates::RequestedPowerTransition(const std::string& requested,
 }
 
 ACPIStates::ACPIStates(Config& cfg, SignalProvider& sp,
-                       boost::asio::io_service& io) :
+                       boost::asio::io_service& io,
+                       Dbus& d) :
     sp{&sp},
-    dbus{cfg, io}, powerCycleTimer(io)
+    dbus(&d), powerCycleTimer(io)
 {
 
     for (auto it : ObservedStates)
@@ -243,17 +244,17 @@ ACPIStates::ACPIStates(Config& cfg, SignalProvider& sp,
     this->signalHostState = sp.FindOrAdd("STATE_REQ_HOST_ON");
     this->signalChassisState = sp.FindOrAdd("STATE_REQ_CHASSIS_ON");
 
-    this->dbus.RegisterRequestedHostTransition(
+    this->dbus->RegisterRequestedHostTransition(
         [this](const std::string& requested, std::string& resp) {
             log_debug("RequestedHostTransition to " + requested);
             return this->RequestedHostTransition(requested, resp);
         });
-    this->dbus.RegisterRequestedPowerTransition(
+    this->dbus->RegisterRequestedPowerTransition(
         [this](const std::string& requested, std::string& resp) {
             log_debug("RequestedPowerTransition to " + requested);
             return this->RequestedPowerTransition(requested, resp);
         });
-    this->dbus.Initialize();
+    this->dbus->Initialize();
 }
 
 ACPIStates::~ACPIStates()

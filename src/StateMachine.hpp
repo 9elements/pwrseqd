@@ -5,6 +5,7 @@
 #include "GpioOutput.hpp"
 #include "IODriver.hpp"
 #include "Logic.hpp"
+#include "LED.hpp"
 #include "NullInput.hpp"
 #include "NullOutput.hpp"
 #include "Signal.hpp"
@@ -26,7 +27,7 @@ class StateMachine : Validator
 {
   public:
     // Create statemachine from config
-    StateMachine(Config&, SignalProvider&, boost::asio::io_service& io);
+    StateMachine(Config&, SignalProvider&, boost::asio::io_service& io, Dbus& dbus);
     ~StateMachine();
 
     // Run starts the internal state machine.
@@ -65,6 +66,7 @@ class StateMachine : Validator
     vector<OutputDriver*> outputDrivers;
     vector<NullOutput*> nullOutputs;
     vector<NullInput*> nullInputs;
+    vector<LED*> ledOutputs;
 
     vector<VoltageRegulator*> voltageRegulators;
 

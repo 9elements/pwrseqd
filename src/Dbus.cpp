@@ -16,6 +16,23 @@ static constexpr std::string_view getChassisState(const bool isOn)
         return "xyz.openbmc_project.State.Chassis.PowerState.Off";
 };
 
+void Dbus::SetLEDState(string name, bool state)
+{
+#ifdef WITH_SDBUSPLUSPLUS
+        conn->async_method_call(
+            [name](const boost::system::error_code ec) {
+                if (ec)
+                {
+                    log_err("Failed to set LED " + name + "\n");
+                }
+            },
+            "xyz.openbmc_project.LED.GroupManager",
+            "/xyz/openbmc_project/led/groups/" + name, "org.freedesktop.DBus.Properties",
+            "Set", "xyz.openbmc_project.Led.Group", "Asserted",
+            std::variant<bool>(state));
+#endif
+}
+
 void Dbus::SetHostState(const dbus::HostState state)
 {
 #ifdef WITH_SDBUSPLUSPLUS

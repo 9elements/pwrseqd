@@ -38,7 +38,7 @@ class ACPIStates : public SignalDriver, SignalReceiver
     // GetCurrent returns the current ACPI state.
     enum ACPILevel GetCurrent(void);
 
-    ACPIStates(Config& cfg, SignalProvider& sp, boost::asio::io_service& io);
+    ACPIStates(Config& cfg, SignalProvider& sp, boost::asio::io_service& io, Dbus& d);
     ~ACPIStates();
 
     vector<Signal*> Signals(void);
@@ -54,6 +54,6 @@ class ACPIStates : public SignalDriver, SignalReceiver
     Signal* signalChassisState;
     Signal* signalHostState;
     unordered_map<enum ACPILevel, Signal*> outputs;
-    Dbus dbus;
+    Dbus *dbus;
     boost::asio::deadline_timer powerCycleTimer;
 };

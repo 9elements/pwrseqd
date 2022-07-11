@@ -130,9 +130,10 @@ int main(int argc, char * const argv[])
     try
     {
         SignalProvider signalprovider(cfg, dumpSignalsFolder);
-        ACPIStates states(cfg, signalprovider, io);
+	Dbus dbus(cfg, io);
+        ACPIStates states(cfg, signalprovider, io, dbus);
         signalprovider.AddDriver(&states);
-        StateMachine sm(cfg, signalprovider, io);
+        StateMachine sm(cfg, signalprovider, io, dbus);
 
         log_info("Validating config ...");
 

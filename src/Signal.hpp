@@ -18,6 +18,7 @@ class NullOutput;
 class LogicInput;
 class VoltageRegulator;
 class ACPIStates;
+class LED;
 
 // The signal receiver reads the current level from the Signal.
 // The signal keeps track of all receivers.
@@ -71,6 +72,7 @@ class Signal
     friend LogicInput;
     friend VoltageRegulator;
     friend ACPIStates;
+    friend LED;
 
   private:
     SignalProvider* parent;

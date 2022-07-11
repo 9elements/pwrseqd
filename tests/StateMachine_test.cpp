@@ -66,7 +66,8 @@ TEST(StateMachine, StateChangeAfterEvaluateState)
     boost::asio::io_context io;
     struct Config cfg = init();
     SignalProvider sp(cfg);
-    StateMachine sm(cfg, sp, io);
+    Dbus d(cfg, io);
+    StateMachine sm(cfg, sp, io, d);
 
     sm.EvaluateState();
 
@@ -90,7 +91,8 @@ TEST(StateMachine, StateChangeAfterIO)
     boost::asio::io_context io;
     struct Config cfg = init();
     SignalProvider sp(cfg);
-    StateMachine sm(cfg, sp, io);
+    Dbus d(cfg, io);
+    StateMachine sm(cfg, sp, io, d);
     StateMachineTester smt(&sm);
 
     sm.EvaluateState();
@@ -115,7 +117,8 @@ TEST(StateMachine, StateChangeWithIOContext)
     boost::asio::io_context io;
     struct Config cfg = init();
     SignalProvider sp(cfg);
-    StateMachine sm(cfg, sp, io);
+    Dbus d(cfg, io);
+    StateMachine sm(cfg, sp, io, d);
     StateMachineTester smt(&sm);
 
     sm.EvaluateState();
