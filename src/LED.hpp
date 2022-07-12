@@ -27,8 +27,8 @@ class LED : SignalReceiver, public OutputDriver
     LED(Dbus& d, struct ConfigOutput* cfg, SignalProvider& prov);
 
   private:
-    int level;
-    int newLevel;
+    bool level;
+    bool newLevel;
     bool activeLow;
     string name;
     Signal* in;

@@ -16,18 +16,22 @@ void LED::Apply(void)
     if (this->newLevel != this->level)
     {
         this->level = this->newLevel;
-        this->dbus->SetLEDState(this->name, this->level ? !this->activeLow : this->activeLow);
+        this->dbus->SetLEDState(this->name, this->level);
     }
 }
 
 void LED::Update(void)
 {
-    this->newLevel = this->in->GetLevel() ? 1 : 0;
+    this->newLevel = this->in->GetLevel() ^ this->activeLow;
 }
 
 LED::LED(Dbus& d, struct ConfigOutput* cfg, SignalProvider& prov) :
-    level(-1), newLevel(-1), activeLow(cfg->ActiveLow), name(cfg->Name), dbus(&d)
+    level(false), newLevel(false), activeLow(cfg->ActiveLow), name(cfg->Name), dbus(&d)
 {
     this->in = prov.FindOrAdd(cfg->SignalName);
     this->in->AddReceiver(this);
+
+    this->Update();
+    this->level = this->newLevel;
+    this->dbus->SetLEDState(this->name, this->level);
 }
