@@ -117,6 +117,9 @@ class VoltageRegulator :
     string StateToString(const enum RegulatorState);
     string EventsToString(const unsigned long events);
 
+    // Read the regulator status sysfs file
+    void Poll(void);
+
     // DecodeStatus converts the value read from
     // /sys/class/regulator/.../status
     enum RegulatorStatus DecodeStatus(string);
@@ -155,7 +158,8 @@ class VoltageRegulator :
 
     // Timeout in microseconds to wait for the regulator to change it's state
     unsigned long stateChangeTimeoutUsec;
-    boost::asio::deadline_timer timer;
+    boost::asio::deadline_timer timerStateCheck;
+    boost::asio::deadline_timer timerPoll;
 
     // The level to be applied on next Update() call.
     bool newLevel;

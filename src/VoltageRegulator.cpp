@@ -24,7 +24,7 @@ void VoltageRegulator::Apply(void)
 
     if (s != this->stateShadow)
     {
-        this->timer.cancel();
+        this->timerStateCheck.cancel();
 
         this->SetState(s);
 
@@ -36,8 +36,8 @@ void VoltageRegulator::Apply(void)
             this->SetState(s);
         }
 
-        this->timer.expires_from_now(boost::posix_time::microseconds(this->stateChangeTimeoutUsec));
-        this->timer.async_wait([&](const boost::system::error_code& err) {
+        this->timerStateCheck.expires_from_now(boost::posix_time::microseconds(this->stateChangeTimeoutUsec));
+        this->timerStateCheck.async_wait([&](const boost::system::error_code& err) {
             if (err != boost::asio::error::operation_aborted)
             {
                 this->ConfirmStatusAfterTimeout();
@@ -379,11 +379,31 @@ static string SysFsConsumerDir(path root)
     return "";
 }
 
+void VoltageRegulator::Poll(void)
+{
+    // Regulators do not propagate their status changes through IRQs.
+    // Only errors are passed through state change....
+    this->timerPoll.expires_from_now(boost::posix_time::seconds(1));
+    this->timerPoll.async_wait([&](const boost::system::error_code& err) {
+        if (err != boost::asio::error::operation_aborted)
+        {
+            string statusText = this->ReadStatus();
+            enum RegulatorStatus status = this->DecodeStatus(statusText);
+            if (status == INVALID) {
+                log_err(this->name + ": Got invalid status string '"+statusText+"'");
+            }
+            this->ApplyStatus(status);
+
+            this->Poll();
+        }
+    });
+}
+
 VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
                                    struct ConfigRegulator* cfg,
                                    SignalProvider& prov, string root) :
-    statusShadow(NOCHANGE), name(cfg->Name) , stateChangeTimeoutUsec(cfg->TimeoutUsec), timer(io),
-    pendingLevelChange(false), pendingNewLevel(DISABLED)
+    statusShadow(NOCHANGE), name(cfg->Name) , stateChangeTimeoutUsec(cfg->TimeoutUsec), timerStateCheck(io),
+    pendingLevelChange(false), pendingNewLevel(DISABLED), timerPoll(io)
 {
     string consumerRoot;
     this->in = prov.FindOrAdd(cfg->Name + "_On");
@@ -479,6 +499,8 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
                 this->ApplyStatus(status);
             });
     }
+
+    io.post([&]() {this->Poll();});
 }
 
 VoltageRegulator::~VoltageRegulator()
