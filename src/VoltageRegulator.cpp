@@ -132,18 +132,19 @@ string VoltageRegulator::StateToString(const enum RegulatorState state)
 void VoltageRegulator::ConfirmStatusAfterTimeout(void)
 {
     bool failure = false;
-    if (this->stateShadow == ENABLED) {
-        if (!this->enabled->GetLevel() ||
-            !this->powergood->GetLevel() ||
-            this->fault->GetLevel()) {
-            failure = true;
-        }
-    } else if (this->stateShadow == DISABLED) {
-        if (this->enabled->GetLevel() ||
-            this->powergood->GetLevel()) {
-            failure = true;
-        }
+    // First check state. Should never missmatch with a single regulator consumer.
+    if (this->pendingNewLevel == DISABLED && this->stateShadow == ENABLED) {
+        failure = true;
+    } else if (this->pendingNewLevel == ENABLED && this->stateShadow == DISABLED) {
+        failure = true;
     }
+    // Now check status
+    if (this->pendingNewLevel == ENABLED && this->statusShadow != ON) {
+        failure = true;
+    } else if (this->pendingNewLevel == DISABLED && this->statusShadow != OFF) {
+        failure = true;
+    }
+
     if (failure) {
         log_err(this->name + ": State didn't change after " + to_string(this->stateChangeTimeoutUsec) + " usec.");
         log_sel(this->name + ": State didn't change after " + to_string(this->stateChangeTimeoutUsec) + " usec.", this->sysfsRoot, true);
