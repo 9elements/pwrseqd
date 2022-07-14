@@ -152,6 +152,6 @@ outputs:
     signal_name: "RST_M2_SSD2_PERST"
     active_low: true
     description: "M.2 reset line"
-  - name: "led_id_dwr"
+  - name: "led_pwr_dwr"
     type: "led"
     signal_name: "LED_PWR_DWR"
