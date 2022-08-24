@@ -1,8 +1,8 @@
 ---
 
-# Controls power to the two NICs
+# Controls power to the rulerdrives
 power_sequencer:
-  - RSSD01_Enable_Unit:
+  - RSSD01_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -11,7 +11,7 @@ power_sequencer:
           - name: "RSSD01_PRESENT"
       out:
         name: "rssd01_3v3_On"
-  - RSSD02_Enable_Unit:
+  - RSSD02_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -20,7 +20,7 @@ power_sequencer:
           - name: "RSSD02_PRESENT"
       out:
         name: "rssd02_3v3_On"
-  - RSSD03_Enable_Unit:
+  - RSSD03_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -29,7 +29,7 @@ power_sequencer:
           - name: "RSSD03_PRESENT"
       out:
         name: "rssd03_3v3_On"
-  - RSSD04_Enable_Unit:
+  - RSSD04_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -38,7 +38,7 @@ power_sequencer:
           - name: "RSSD04_PRESENT"
       out:
         name: "rssd04_3v3_On"
-  - RSSD05_Enable_Unit:
+  - RSSD05_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -47,7 +47,7 @@ power_sequencer:
           - name: "RSSD05_PRESENT"
       out:
         name: "rssd05_3v3_On"
-  - RSSD06_Enable_Unit:
+  - RSSD06_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -56,7 +56,7 @@ power_sequencer:
           - name: "RSSD06_PRESENT"
       out:
         name: "rssd06_3v3_On"
-  - RSSD07_Enable_Unit:
+  - RSSD07_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -65,7 +65,7 @@ power_sequencer:
           - name: "RSSD07_PRESENT"
       out:
         name: "rssd07_3v3_On"
-  - RSSD08_Enable_Unit:
+  - RSSD08_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -74,7 +74,7 @@ power_sequencer:
           - name: "RSSD08_PRESENT"
       out:
         name: "rssd08_3v3_On"
-  - RSSD09_Enable_Unit:
+  - RSSD09_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -83,7 +83,7 @@ power_sequencer:
           - name: "RSSD09_PRESENT"
       out:
         name: "rssd09_3v3_On"
-  - RSSD10_Enable_Unit:
+  - RSSD10_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -92,7 +92,7 @@ power_sequencer:
           - name: "RSSD10_PRESENT"
       out:
         name: "rssd10_3v3_On"
-  - RSSD11_Enable_Unit:
+  - RSSD11_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -101,7 +101,7 @@ power_sequencer:
           - name: "RSSD11_PRESENT"
       out:
         name: "rssd11_3v3_On"
-  - RSSD12_Enable_Unit:
+  - RSSD12_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -110,7 +110,7 @@ power_sequencer:
           - name: "RSSD12_PRESENT"
       out:
         name: "rssd12_3v3_On"
-  - RSSD13_Enable_Unit:
+  - RSSD13_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -119,7 +119,7 @@ power_sequencer:
           - name: "RSSD13_PRESENT"
       out:
         name: "rssd13_3v3_On"
-  - RSSD14_Enable_Unit:
+  - RSSD14_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -128,7 +128,7 @@ power_sequencer:
           - name: "RSSD14_PRESENT"
       out:
         name: "rssd14_3v3_On"
-  - RSSD15_Enable_Unit:
+  - RSSD15_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -137,7 +137,7 @@ power_sequencer:
           - name: "RSSD15_PRESENT"
       out:
         name: "rssd15_3v3_On"
-  - RSSD16_Enable_Unit:
+  - RSSD16_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -146,7 +146,7 @@ power_sequencer:
           - name: "RSSD16_PRESENT"
       out:
         name: "rssd16_3v3_On"
-  - RSSD17_Enable_Unit:
+  - RSSD17_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -155,7 +155,7 @@ power_sequencer:
           - name: "RSSD17_PRESENT"
       out:
         name: "rssd17_3v3_On"
-  - RSSD18_Enable_Unit:
+  - RSSD18_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -164,7 +164,7 @@ power_sequencer:
           - name: "RSSD18_PRESENT"
       out:
         name: "rssd18_3v3_On"
-  - RSSD19_Enable_Unit:
+  - RSSD19_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -173,7 +173,7 @@ power_sequencer:
           - name: "RSSD19_PRESENT"
       out:
         name: "rssd19_3v3_On"
-  - RSSD20_Enable_Unit:
+  - RSSD20_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -182,7 +182,7 @@ power_sequencer:
           - name: "RSSD20_PRESENT"
       out:
         name: "rssd20_3v3_On"
-  - RSSD21_Enable_Unit:
+  - RSSD21_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -191,7 +191,7 @@ power_sequencer:
           - name: "RSSD21_PRESENT"
       out:
         name: "rssd21_3v3_On"
-  - RSSD22_Enable_Unit:
+  - RSSD22_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -200,7 +200,7 @@ power_sequencer:
           - name: "RSSD22_PRESENT"
       out:
         name: "rssd22_3v3_On"
-  - RSSD23_Enable_Unit:
+  - RSSD23_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -209,7 +209,7 @@ power_sequencer:
           - name: "RSSD23_PRESENT"
       out:
         name: "rssd23_3v3_On"
-  - RSSD24_Enable_Unit:
+  - RSSD24_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -218,7 +218,7 @@ power_sequencer:
           - name: "RSSD24_PRESENT"
       out:
         name: "rssd24_3v3_On"
-  - RSSD25_Enable_Unit:
+  - RSSD25_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -227,7 +227,7 @@ power_sequencer:
           - name: "RSSD25_PRESENT"
       out:
         name: "rssd25_3v3_On"
-  - RSSD26_Enable_Unit:
+  - RSSD26_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -236,7 +236,7 @@ power_sequencer:
           - name: "RSSD26_PRESENT"
       out:
         name: "rssd26_3v3_On"
-  - RSSD27_Enable_Unit:
+  - RSSD27_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -245,7 +245,7 @@ power_sequencer:
           - name: "RSSD27_PRESENT"
       out:
         name: "rssd27_3v3_On"
-  - RSSD28_Enable_Unit:
+  - RSSD28_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -254,7 +254,7 @@ power_sequencer:
           - name: "RSSD28_PRESENT"
       out:
         name: "rssd28_3v3_On"
-  - RSSD29_Enable_Unit:
+  - RSSD29_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -263,7 +263,7 @@ power_sequencer:
           - name: "RSSD29_PRESENT"
       out:
         name: "rssd29_3v3_On"
-  - RSSD30_Enable_Unit:
+  - RSSD30_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -272,7 +272,7 @@ power_sequencer:
           - name: "RSSD30_PRESENT"
       out:
         name: "rssd30_3v3_On"
-  - RSSD31_Enable_Unit:
+  - RSSD31_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -281,7 +281,7 @@ power_sequencer:
           - name: "RSSD31_PRESENT"
       out:
         name: "rssd31_3v3_On"
-  - RSSD32_Enable_Unit:
+  - RSSD32_3v3_Enable_Unit:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
@@ -291,6 +291,391 @@ power_sequencer:
       out:
         name: "rssd32_3v3_On"
 
+  - RSSD01_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD01_PRESENT"
+          - name: "rssd01_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd01_3v3_PowerGood"
+      out:
+        name: "rssd01_12v_On"
+  - RSSD02_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD02_PRESENT"
+          - name: "rssd02_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd02_3v3_PowerGood"
+      out:
+        name: "rssd02_12v_On"
+  - RSSD03_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD03_PRESENT"
+          - name: "rssd03_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd03_3v3_PowerGood"
+      out:
+        name: "rssd03_12v_On"
+  - RSSD04_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD04_PRESENT"
+          - name: "rssd04_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd04_3v3_PowerGood"
+      out:
+        name: "rssd04_12v_On"
+  - RSSD05_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD05_PRESENT"
+          - name: "rssd05_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd05_3v3_PowerGood"
+      out:
+        name: "rssd05_12v_On"
+  - RSSD06_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD06_PRESENT"
+          - name: "rssd06_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd06_3v3_PowerGood"
+      out:
+        name: "rssd06_12v_On"
+  - RSSD07_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD07_PRESENT"
+          - name: "rssd07_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd07_3v3_PowerGood"
+      out:
+        name: "rssd07_12v_On"
+  - RSSD08_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD08_PRESENT"
+          - name: "rssd08_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd08_3v3_PowerGood"
+      out:
+        name: "rssd08_12v_On"
+  - RSSD09_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD09_PRESENT"
+          - name: "rssd09_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd09_3v3_PowerGood"
+      out:
+        name: "rssd09_12v_On"
+  - RSSD10_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD10_PRESENT"
+          - name: "rssd10_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd10_3v3_PowerGood"
+      out:
+        name: "rssd10_12v_On"
+  - RSSD11_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD11_PRESENT"
+          - name: "rssd11_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd11_3v3_PowerGood"
+      out:
+        name: "rssd11_12v_On"
+  - RSSD12_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD12_PRESENT"
+          - name: "rssd12_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd12_3v3_PowerGood"
+      out:
+        name: "rssd12_12v_On"
+  - RSSD13_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD13_PRESENT"
+          - name: "rssd13_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd13_3v3_PowerGood"
+      out:
+        name: "rssd13_12v_On"
+  - RSSD14_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD14_PRESENT"
+          - name: "rssd14_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd14_3v3_PowerGood"
+      out:
+        name: "rssd14_12v_On"
+  - RSSD15_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD15_PRESENT"
+          - name: "rssd15_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd15_3v3_PowerGood"
+      out:
+        name: "rssd15_12v_On"
+  - RSSD16_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD16_PRESENT"
+          - name: "rssd16_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd16_3v3_PowerGood"
+      out:
+        name: "rssd16_12v_On"
+  - RSSD17_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD17_PRESENT"
+          - name: "rssd17_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd17_3v3_PowerGood"
+      out:
+        name: "rssd17_12v_On"
+  - RSSD18_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD18_PRESENT"
+          - name: "rssd18_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd18_3v3_PowerGood"
+      out:
+        name: "rssd18_12v_On"
+  - RSSD19_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD19_PRESENT"
+          - name: "rssd19_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd19_3v3_PowerGood"
+      out:
+        name: "rssd19_12v_On"
+  - RSSD20_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD20_PRESENT"
+          - name: "rssd20_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd20_3v3_PowerGood"
+      out:
+        name: "rssd20_12v_On"
+  - RSSD21_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD21_PRESENT"
+          - name: "rssd21_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd21_3v3_PowerGood"
+      out:
+        name: "rssd21_12v_On"
+  - RSSD22_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD22_PRESENT"
+          - name: "rssd22_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd22_3v3_PowerGood"
+      out:
+        name: "rssd22_12v_On"
+  - RSSD23_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD23_PRESENT"
+          - name: "rssd23_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd23_3v3_PowerGood"
+      out:
+        name: "rssd23_12v_On"
+  - RSSD24_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD24_PRESENT"
+          - name: "rssd24_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd24_3v3_PowerGood"
+      out:
+        name: "rssd24_12v_On"
+  - RSSD25_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD25_PRESENT"
+          - name: "rssd25_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd25_3v3_PowerGood"
+      out:
+        name: "rssd25_12v_On"
+  - RSSD26_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD26_PRESENT"
+          - name: "rssd26_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd26_3v3_PowerGood"
+      out:
+        name: "rssd26_12v_On"
+  - RSSD27_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD27_PRESENT"
+          - name: "rssd27_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd27_3v3_PowerGood"
+      out:
+        name: "rssd27_12v_On"
+  - RSSD28_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD28_PRESENT"
+          - name: "rssd28_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd28_3v3_PowerGood"
+      out:
+        name: "rssd28_12v_On"
+  - RSSD29_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD29_PRESENT"
+          - name: "rssd29_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd29_3v3_PowerGood"
+      out:
+        name: "rssd29_12v_On"
+  - RSSD30_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD30_PRESENT"
+          - name: "rssd30_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd30_3v3_PowerGood"
+      out:
+        name: "rssd30_12v_On"
+  - RSSD31_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD31_PRESENT"
+          - name: "rssd31_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd31_3v3_PowerGood"
+      out:
+        name: "rssd31_12v_On"
+  - RSSD32_12v_Enable_Unit:
+      in:
+        and:
+          - name: "STATE_REQ_HOST_ON"
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSSD32_PRESENT"
+          - name: "rssd32_3v3_PowerGood"
+            input_stable_usec: 10000
+          - name: "rssd32_3v3_PowerGood"
+      out:
+        name: "rssd32_12v_On"
+  
 regulators:
   - name: "rssd01_3v3"
   - name: "rssd02_3v3"
@@ -324,7 +709,38 @@ regulators:
   - name: "rssd30_3v3"
   - name: "rssd31_3v3"
   - name: "rssd32_3v3"
-
+  - name: "rssd01_12v"
+  - name: "rssd02_12v"
+  - name: "rssd03_12v"
+  - name: "rssd04_12v"
+  - name: "rssd05_12v"
+  - name: "rssd06_12v"
+  - name: "rssd07_12v"
+  - name: "rssd08_12v"
+  - name: "rssd09_12v"
+  - name: "rssd10_12v"
+  - name: "rssd11_12v"
+  - name: "rssd12_12v"
+  - name: "rssd13_12v"
+  - name: "rssd14_12v"
+  - name: "rssd15_12v"
+  - name: "rssd16_12v"
+  - name: "rssd17_12v"
+  - name: "rssd18_12v"
+  - name: "rssd19_12v"
+  - name: "rssd20_12v"
+  - name: "rssd21_12v"
+  - name: "rssd22_12v"
+  - name: "rssd23_12v"
+  - name: "rssd24_12v"
+  - name: "rssd25_12v"
+  - name: "rssd26_12v"
+  - name: "rssd27_12v"
+  - name: "rssd28_12v"
+  - name: "rssd29_12v"
+  - name: "rssd30_12v"
+  - name: "rssd31_12v"
+  - name: "rssd32_12v"
 inputs:
   - name: "RSSD01_PRESENT_N"
     type: "gpio"
@@ -488,38 +904,6 @@ floating_signals:
   - "rssd30_3v3_Enabled"
   - "rssd31_3v3_Enabled"
   - "rssd32_3v3_Enabled"
-  - "rssd01_3v3_PowerGood"
-  - "rssd02_3v3_PowerGood"
-  - "rssd03_3v3_PowerGood"
-  - "rssd04_3v3_PowerGood"
-  - "rssd05_3v3_PowerGood"
-  - "rssd06_3v3_PowerGood"
-  - "rssd07_3v3_PowerGood"
-  - "rssd08_3v3_PowerGood"
-  - "rssd09_3v3_PowerGood"
-  - "rssd10_3v3_PowerGood"
-  - "rssd11_3v3_PowerGood"
-  - "rssd12_3v3_PowerGood"
-  - "rssd13_3v3_PowerGood"
-  - "rssd14_3v3_PowerGood"
-  - "rssd15_3v3_PowerGood"
-  - "rssd16_3v3_PowerGood"
-  - "rssd17_3v3_PowerGood"
-  - "rssd18_3v3_PowerGood"
-  - "rssd19_3v3_PowerGood"
-  - "rssd20_3v3_PowerGood"
-  - "rssd21_3v3_PowerGood"
-  - "rssd22_3v3_PowerGood"
-  - "rssd23_3v3_PowerGood"
-  - "rssd24_3v3_PowerGood"
-  - "rssd25_3v3_PowerGood"
-  - "rssd26_3v3_PowerGood"
-  - "rssd27_3v3_PowerGood"
-  - "rssd28_3v3_PowerGood"
-  - "rssd29_3v3_PowerGood"
-  - "rssd30_3v3_PowerGood"
-  - "rssd31_3v3_PowerGood"
-  - "rssd32_3v3_PowerGood"
   - "rssd01_3v3_Fault"
   - "rssd02_3v3_Fault"
   - "rssd03_3v3_Fault"
@@ -552,3 +936,67 @@ floating_signals:
   - "rssd30_3v3_Fault"
   - "rssd31_3v3_Fault"
   - "rssd32_3v3_Fault"
+  - "rssd01_12v_Enabled"
+  - "rssd02_12v_Enabled"
+  - "rssd03_12v_Enabled"
+  - "rssd04_12v_Enabled"
+  - "rssd05_12v_Enabled"
+  - "rssd06_12v_Enabled"
+  - "rssd07_12v_Enabled"
+  - "rssd08_12v_Enabled"
+  - "rssd09_12v_Enabled"
+  - "rssd10_12v_Enabled"
+  - "rssd11_12v_Enabled"
+  - "rssd12_12v_Enabled"
+  - "rssd13_12v_Enabled"
+  - "rssd14_12v_Enabled"
+  - "rssd15_12v_Enabled"
+  - "rssd16_12v_Enabled"
+  - "rssd17_12v_Enabled"
+  - "rssd18_12v_Enabled"
+  - "rssd19_12v_Enabled"
+  - "rssd20_12v_Enabled"
+  - "rssd21_12v_Enabled"
+  - "rssd22_12v_Enabled"
+  - "rssd23_12v_Enabled"
+  - "rssd24_12v_Enabled"
+  - "rssd25_12v_Enabled"
+  - "rssd26_12v_Enabled"
+  - "rssd27_12v_Enabled"
+  - "rssd28_12v_Enabled"
+  - "rssd29_12v_Enabled"
+  - "rssd30_12v_Enabled"
+  - "rssd31_12v_Enabled"
+  - "rssd32_12v_Enabled"
+  - "rssd01_12v_Fault"
+  - "rssd02_12v_Fault"
+  - "rssd03_12v_Fault"
+  - "rssd04_12v_Fault"
+  - "rssd05_12v_Fault"
+  - "rssd06_12v_Fault"
+  - "rssd07_12v_Fault"
+  - "rssd08_12v_Fault"
+  - "rssd09_12v_Fault"
+  - "rssd10_12v_Fault"
+  - "rssd11_12v_Fault"
+  - "rssd12_12v_Fault"
+  - "rssd13_12v_Fault"
+  - "rssd14_12v_Fault"
+  - "rssd15_12v_Fault"
+  - "rssd16_12v_Fault"
+  - "rssd17_12v_Fault"
+  - "rssd18_12v_Fault"
+  - "rssd19_12v_Fault"
+  - "rssd20_12v_Fault"
+  - "rssd21_12v_Fault"
+  - "rssd22_12v_Fault"
+  - "rssd23_12v_Fault"
+  - "rssd24_12v_Fault"
+  - "rssd25_12v_Fault"
+  - "rssd26_12v_Fault"
+  - "rssd27_12v_Fault"
+  - "rssd28_12v_Fault"
+  - "rssd29_12v_Fault"
+  - "rssd30_12v_Fault"
+  - "rssd31_12v_Fault"
+  - "rssd32_12v_Fault"
