@@ -1097,130 +1097,162 @@ regulators:
 inputs:
   - name: "RSSD01_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD01_PRESENT"
     active_low: true
   - name: "RSSD02_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD02_PRESENT"
     active_low: true
   - name: "RSSD03_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD03_PRESENT"
     active_low: true
   - name: "RSSD04_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD04_PRESENT"
     active_low: true
   - name: "RSSD05_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD05_PRESENT"
     active_low: true
   - name: "RSSD06_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD06_PRESENT"
     active_low: true
   - name: "RSSD07_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD07_PRESENT"
     active_low: true
   - name: "RSSD08_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD08_PRESENT"
     active_low: true
   - name: "RSSD09_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD09_PRESENT"
     active_low: true
   - name: "RSSD10_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD10_PRESENT"
     active_low: true
   - name: "RSSD11_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD11_PRESENT"
     active_low: true
   - name: "RSSD12_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD12_PRESENT"
     active_low: true
   - name: "RSSD13_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD13_PRESENT"
     active_low: true
   - name: "RSSD14_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD14_PRESENT"
     active_low: true
   - name: "RSSD15_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD15_PRESENT"
     active_low: true
   - name: "RSSD16_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD16_PRESENT"
     active_low: true
   - name: "RSSD17_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD17_PRESENT"
     active_low: true
   - name: "RSSD18_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD18_PRESENT"
     active_low: true
   - name: "RSSD19_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD19_PRESENT"
     active_low: true
   - name: "RSSD20_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD20_PRESENT"
     active_low: true
   - name: "RSSD21_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD21_PRESENT"
     active_low: true
   - name: "RSSD22_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD22_PRESENT"
     active_low: true
   - name: "RSSD23_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD23_PRESENT"
     active_low: true
   - name: "RSSD24_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD24_PRESENT"
     active_low: true
   - name: "RSSD25_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD25_PRESENT"
     active_low: true
   - name: "RSSD26_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD26_PRESENT"
     active_low: true
   - name: "RSSD27_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD27_PRESENT"
     active_low: true
   - name: "RSSD28_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD28_PRESENT"
     active_low: true
   - name: "RSSD29_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD29_PRESENT"
     active_low: true
   - name: "RSSD30_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD30_PRESENT"
     active_low: true
   - name: "RSSD31_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD31_PRESENT"
     active_low: true
   - name: "RSSD32_PRESENT_N"
     type: "gpio"
+    pullup: true
     signal_name: "RSSD32_PRESENT"
     active_low: true
 
