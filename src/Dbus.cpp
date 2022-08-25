@@ -23,7 +23,7 @@ void Dbus::SetLEDState(string name, bool state)
             [name](const boost::system::error_code ec) {
                 if (ec)
                 {
-                    log_err("Failed to set LED " + name + "\n");
+                    log_err("Failed to set LED " + name + ": " + ec.message() +"\n");
                 }
             },
             "xyz.openbmc_project.LED.GroupManager",
