@@ -91,7 +91,7 @@ set(
   )
 
 set(
-  CONFIG_FILE
+  CONFIG_FILE_GEN3
   ${PROJECT_SOURCE_DIR}/config/genesis3/pch.yaml
   ${PROJECT_SOURCE_DIR}/config/genesis3/states.yaml
   ${PROJECT_SOURCE_DIR}/config/genesis3/chassis.yaml
@@ -101,6 +101,10 @@ set(
   ${PROJECT_SOURCE_DIR}/config/genesis3/cpu3_pwr.yaml
   ${PROJECT_SOURCE_DIR}/config/genesis3/rulerdrive.yaml
   ${PROJECT_SOURCE_DIR}/config/genesis3/nic.yaml
+  )
+
+set(
+  CONFIG_FILE_SBP1
   ${PROJECT_SOURCE_DIR}/config/sbp1/pch.yaml
   ${PROJECT_SOURCE_DIR}/config/sbp1/states.yaml
   ${PROJECT_SOURCE_DIR}/config/sbp1/chassis.yaml
@@ -109,9 +113,10 @@ set(
   ${PROJECT_SOURCE_DIR}/config/sbp1/cpu2_pwr.yaml
   ${PROJECT_SOURCE_DIR}/config/sbp1/cpu3_pwr.yaml
   ${PROJECT_SOURCE_DIR}/config/sbp1/rulerdrive.yaml
-  ${PROJECT_SOURCE_DIR}/config/sbp1/nic.yaml 
+  ${PROJECT_SOURCE_DIR}/config/sbp1/nic.yaml
   )
 
 install(FILES ${SERVICE_FILES} DESTINATION /lib/systemd/system/)
-install(FILES ${CONFIG_FILE} DESTINATION /usr/share/pwrseqd/genesis3/)
+install(FILES ${CONFIG_FILE_GEN3} DESTINATION /usr/share/pwrseqd/genesis3/)
+install(FILES ${CONFIG_FILE_SBP1} DESTINATION /usr/share/pwrseqd/sbp1/)
 install(TARGETS ${CMAKE_PROJECT_NAME} DESTINATION bin)
