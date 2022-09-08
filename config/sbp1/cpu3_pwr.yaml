@@ -222,7 +222,7 @@ power_sequencer:
       out:
         name: "pvccfa_ehv_fivra_cpu3_On"
 
-    - PVCCINFAON_CPU3_Unit:
+  - PVCCINFAON_CPU3_Unit:
       in:
         and:
           - name: "CPU_POWER"
@@ -239,7 +239,7 @@ power_sequencer:
       out:
         name: "pvccinfaon_cpu3_On"
 
-    - PVNN_MAIN_CPU3_Unit:
+  - PVNN_MAIN_CPU3_Unit:
       in:
         and:
           - name: "CPU_POWER"
@@ -256,7 +256,7 @@ power_sequencer:
       out:
         name: "pvnn_main_cpu3_On"
   
-    - PVCCIN_CPU3_Unit:
+  - PVCCIN_CPU3_Unit:
       in:
         and:
           - name: "CPU_POWER"
@@ -273,7 +273,7 @@ power_sequencer:
       out:
         name: "pvccin_cpu3_On"
 
-    - PVPP_HBM_CPU3_Unit:
+  - PVPP_HBM_CPU3_Unit:
       in:
         and:
           - name: "CPU_POWER"
@@ -286,7 +286,7 @@ power_sequencer:
       out:
         name: "pvpp_hbm_cpu3_On"
 
-    - CPU3_HBM_PRESENT_Unit:
+  - CPU3_HBM_PRESENT_Unit:
       in:
         and:
           - name: "FM_CPU3_PKG_ID0"
@@ -295,7 +295,7 @@ power_sequencer:
       out:
         name: "CPU3_HBM_PRESENT"
 
-    - CPU3_HBM_Gated_PowerGood_Unit:
+  - CPU3_HBM_Gated_PowerGood_Unit:
       in:
         or:
           - name: "pvpp_hbm_cpu3_PowerGood"
