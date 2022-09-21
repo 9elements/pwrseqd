@@ -52,11 +52,6 @@ inputs:
     description: "PROC_PWRGD. PCH informs the CPU that power is stable and clocks are running."
 
 outputs:
-  - name: "PWRGD_PCH_DPWROK"
-    type: "gpio"
-    signal_name: "DSW_PWROK"
-    description: >
-      PCH core power good for at least 10msec. Min 1 usec after RTCRST_N
   - name: "PWRGD_PCH_PWROK"
     type: "gpio"
     signal_name: "PCH_PWROK"
@@ -89,18 +84,6 @@ outputs:
       SLP_S4_N, SLP_S5_N.
   
 power_sequencer:
-  - DSW_PWRGD_Unit:
-      in:
-        and:
-          - name: "RTCRST"
-            invert: true
-            input_stable_usec: 1
-          - name: "p3v3_pch_PowerGood"
-            input_stable_usec: 10000 # EBG:BT2
-          - name: "p3v3_pch_PowerGood"
-      out:
-        name: "DSW_PWROK"
-
   # P3V3 provides AUX power to PCH as well. Always drive it when not in G3
   - P3V3_Unit:
       in:
@@ -150,8 +133,10 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_CHASSIS_ON"
+          # As SLP_SUS# can't be read using a GPIO wait maximum timeout of 100msec
+          # DSW is tied to P3V3_PCH
           - name: "p3v3_pch_PowerGood"
-            input_stable_usec: 10000  # LBG:BT3 min 10 msec
+            input_stable_usec: 100000  # LBG:BT3 min 10 msec. SLP_SUS# timeout: 100msec
           - name: "p3v3_pch_PowerGood"
           - name: "p1v8_pch_aux_PowerGood"
             input_stable_usec: 10000  # LBG:BT3 min 10 msec
@@ -159,10 +144,6 @@ power_sequencer:
           - name: "p1v05_pch_aux_PowerGood"
             input_stable_usec: 10000  # LBG:BT3 min 10 msec
           - name: "p1v05_pch_aux_PowerGood"
-          # As SLP_SUS# can't be read using a GPIO wait maximum timeout
-          - name: "DSW_PWROK"
-            input_stable_usec: 100000  # LBG:T25 max 100 msec
-          - name: "DSW_PWROK"
       out:
         active_low: true
         name: "RSMRST"
@@ -243,7 +224,6 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "RSMRST"
             invert: true
-          - name: "DSW_PWROK"
           - name: "PCH_PWROK"
           - name: "FM_SLPS3"
             invert: true

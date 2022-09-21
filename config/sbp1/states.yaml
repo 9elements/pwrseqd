@@ -7,15 +7,12 @@ power_sequencer:
       in:
         or:
           - name: "RSMRST"
-          - name: "DSW_PWROK"
-            invert: true
       out:
         name: "ACPI_STATE_IS_G3"
 
   - ACPI_STATE_IS_S5_Unit:
       in:
         and:
-          - name: "DSW_PWROK"
           - name: "RSMRST"
             invert: true
           - name: "FM_SLPS4"
@@ -28,7 +25,6 @@ power_sequencer:
         and:
           - name: "RSMRST"
             invert: true
-          - name: "DSW_PWROK"
           - name: "PCH_PWROK"
           - name: "CPU0_SYS_PWROK"
           - name: "CPU1_SYS_PWROK"
