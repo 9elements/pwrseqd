@@ -86,28 +86,6 @@ power_sequencer:
       out:
         name: "RST_M2_SSD2_PERST"
 
-  - LED_PWR_DWR_FRNT:
-      in:
-        and:
-          - name: "ACPI_STATE_IS_S0"
-          - name: "FM_NIC1_RST"
-            invert: true
-          - name: "FM_NIC2_RST"
-            invert: true
-      out:
-        name: "LED_PWR_DWR_FRNT"
-
-  - LED_PWR_DWR_BACK:
-      in:
-        and:
-          - name: "ACPI_STATE_IS_S0"
-          - name: "FM_NIC1_RST"
-            invert: true
-          - name: "FM_NIC2_RST"
-            invert: true
-      out:
-        name: "LED_PWR_DWR_BACK"
-
 regulators:
   - name: "bcm1"
   - name: "bcm2"
@@ -163,11 +141,3 @@ outputs:
     signal_name: "RST_M2_SSD2_PERST"
     active_low: true
     description: "M.2 reset line"
-  - name: "LED_PWR_DWR_BACK"
-    type: "gpio"
-    signal_name: "LED_PWR_DWR_BACK"
-    active_low: true
-  - name: "LED_PWR_DWR_FRNT"
-    type: "gpio"
-    signal_name: "LED_PWR_DWR_FRNT"
-    active_low: true
