@@ -90,26 +90,26 @@ outputs:
 
   - name: "PWRGD_LVC3_CPU3_AB_DRAM_G"
     type: "gpio"
-    signal_name: "PWRGD_LVC3_CPU3_AB_DRAM"
+    signal_name: "PWRGD_LVC3_CPU3_AB_DRAM_G"
     open_drain: true
     description: "CPU3 memory channel AB power good."
 
   - name: "PWRGD_LVC3_CPU3_CD_DRAM_G"
     type: "gpio"
-    signal_name: "PWRGD_LVC3_CPU3_CD_DRAM"
+    signal_name: "PWRGD_LVC3_CPU3_CD_DRAM_G"
     open_drain: true
     description: "CPU3 memory channel CD power good."
 
   - name: "PWRGD_LVC3_CPU3_EF_DRAM_G"
     type: "gpio"
     open_drain: true
-    signal_name: "PWRGD_LVC3_CPU3_EF_DRAM"
+    signal_name: "PWRGD_LVC3_CPU3_EF_DRAM_G"
     description: "CPU3 memory channel EF power good."
 
   - name: "PWRGD_LVC3_CPU3_GH_DRAM_G"
     type: "gpio"
     open_drain: true
-    signal_name: "PWRGD_LVC3_CPU3_GH_DRAM"
+    signal_name: "PWRGD_LVC3_CPU3_GH_DRAM_G"
     description: "CPU3 memory channel GH power good."
 
   - name: "RST_LVC3_CPU3_RESET_N"
