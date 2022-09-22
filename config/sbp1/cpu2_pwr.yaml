@@ -422,8 +422,8 @@ power_sequencer:
   - H_LVT3_CPU2_THERMTRIP_OUT_N_Enable_Unit:
       in:
         and:
-          - name: "pvnn_main_On"
-          - name: "pvnn_main_PowerGood"
+          - name: "pvnn_main_cpu2_On"
+          - name: "pvnn_main_cpu2_PowerGood"
       out:
         name: "H_LVT3_CPU2_THERMTRIP_OUT_N_On"
 
