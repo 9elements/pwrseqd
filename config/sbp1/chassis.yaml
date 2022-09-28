@@ -97,6 +97,30 @@ power_sequencer:
       out:
         name: "LED_PWR_DWR"
 
+  # Clock is required for early DbC
+  - FM_CK440Q_DEV_Enable:
+      in:
+        or:
+          - name: "STATE_REQ_CHASSIS_ON"
+          - name: "RSMRST"
+            invert: true
+            input_stable_usec: 10000
+          - name: "RSMRST"
+      out:
+        name: "FM_CK440Q_DEV_EN"
+
+  - FM_DB2000_DEV_Enable:
+      in:
+        and:
+          - name: "FM_SLPS3"
+            invert: true
+          - name: "RSMRST"
+            invert: true
+          - name: "FM_CK440Q_DEV_EN"
+            input_stable_usec: 2000  # Wait for clock to be stable
+      out:
+        name: "FM_DB2000_DEV_EN"
+
 regulators:
   - name: "bcm1"
   - name: "bcm2"
@@ -155,3 +179,9 @@ outputs:
   - name: "led_pwr_dwr"
     type: "led"
     signal_name: "LED_PWR_DWR"
+  - name: "FM_CK440Q_DEV_EN"
+    type: "gpio"
+    signal_name: "FM_CK440Q_DEV_EN"
+  - name: "FM_DB2000_DEV_EN"
+    type: "gpio"
+    signal_name: "FM_DB2000_DEV_EN"
