@@ -106,6 +106,7 @@ power_sequencer:
             invert: true
             input_stable_usec: 10000
           - name: "RSMRST"
+            invert: true
       out:
         name: "FM_CK440Q_DEV_EN"
 
