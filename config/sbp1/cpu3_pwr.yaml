@@ -341,7 +341,9 @@ power_sequencer:
         and:
           - name: "CPU3_DDR_PWRGD"
             # PDG: 2usec max from VR failure to SYS_PWROK low
-          - name: "CPU3_VR_PWRGD" # fast path
+          - name: "CPU3_VR_PWRGD" # fast path for emergency shutdown
+          - name: "pvccin_cpu3_PowerGood"
+            input_stable_usec: 1800
           - name: "PWRGD_CPUPWRGD" # signal from PCH (slow)
           - name: "FM_DB2000_DEV_EN" # Clock buffer enable
             input_stable_usec: 2000 # wait for clocks to be stable
