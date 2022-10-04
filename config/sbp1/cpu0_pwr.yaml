@@ -123,6 +123,10 @@ outputs:
     signal_name: "PWRGD_LVC3_CPU0_PWRGOOD"
     description: "Tell CPU0 power good."
 
+  - name: "PWRGD_PLT_AUX_CPU0_LVT3"
+    type: "gpio"
+    signal_name: "PWRGD_PLT_AUX_CPU0"
+
 immutables:
   - signal_name: "H_LVT3_CPU0_PROCHOT"
     value: false
@@ -331,6 +335,21 @@ power_sequencer:
           - name: "CPU0_HBM_Gated_PowerGood"
       out:
         name: "PWRGD_LVC3_CPU0_PWRGOOD"
+
+  - PWRGD_PLT_AUX_CPU0_Unit:
+      in:
+        and:
+          - name: "CPU0_VR_Fault"
+            invert: true
+          - name: "FM_CPU0_SKTOCC"
+        or:
+          - name: "CPU0_SYS_PWROK" # Release after SYS_PWROK
+            input_stable_usec: 100
+          - name: "pvnn_main_cpu0_PowerGood"
+            input_stable_usec: 1
+        and_then_or: false
+      out:
+        name: "PWRGD_PLT_AUX_CPU0"
 
   # All VRs except HBM
   - CPU0_SYS_PWROK_Unit:

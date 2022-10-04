@@ -79,6 +79,24 @@ inputs:
     pullup: true
     description: "CPU 0 PKGID"
 
+  - name: "PWRGD_PLT_AUX_CPU3_LVT3"
+    type: "gpio"
+    signal_name: "PWRGD_PLT_AUX_CPU3"
+
+  - PWRGD_PLT_AUX_CPU3_Unit:
+      in:
+        and:
+          - name: "CPU3_VR_Fault"
+            invert: true
+          - name: "FM_CPU3_SKTOCC"
+        or:
+          - name: "CPU3_SYS_PWROK" # Release after SYS_PWROK
+            input_stable_usec: 100
+          - name: "pvnn_main_cpu3_PowerGood"
+            input_stable_usec: 1
+        and_then_or: false
+      out:
+        name: "PWRGD_PLT_AUX_CPU3"
 
 outputs:
   - name: "H_LVT3_CPU3_PROCHOT_N"
