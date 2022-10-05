@@ -79,10 +79,6 @@ inputs:
     pullup: true
     description: "CPU 0 PKGID"
 
-  - name: "PWRGD_PLT_AUX_CPU3_LVT3"
-    type: "gpio"
-    signal_name: "PWRGD_PLT_AUX_CPU3"
-
 outputs:
   - name: "H_LVT3_CPU3_PROCHOT_N"
     type: "gpio"
@@ -125,6 +121,10 @@ outputs:
     type: "gpio"
     signal_name: "PWRGD_LVC3_CPU3_PWRGOOD"
     description: "Tell CPU3 power good."
+
+  - name: "PWRGD_PLT_AUX_CPU3_LVT3"
+    type: "gpio"
+    signal_name: "PWRGD_PLT_AUX_CPU3"
 
 immutables:
   - signal_name: "H_LVT3_CPU3_PROCHOT"
