@@ -127,6 +127,11 @@ outputs:
     type: "gpio"
     signal_name: "PWRGD_PLT_AUX_CPU0"
 
+  - name: "SEL_SMB_DIMM_CPU0"
+    type: "gpio"
+    active_low: true
+    signal_name: "SEL_SMB_DIMM_CPU0"
+
 immutables:
   - signal_name: "H_LVT3_CPU0_PROCHOT"
     value: false
@@ -191,6 +196,14 @@ power_sequencer:
           - name: "pvccd_hv_cpu0_PowerGood"
       out:
         name: "CPU0_DDR_PWRGD"
+
+  - SEL_SMB_DIMM_CPU0_Unit:
+      in:
+        and:
+          - name: "CPU0_SYS_PWROK"
+          - name: "FM_CPU0_SKTOCC"
+      out:
+        name: "SEL_SMB_DIMM_CPU0"
 
   - PVCCFA_EHV_CPU0_Unit:
       in:
