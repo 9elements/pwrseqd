@@ -115,8 +115,10 @@ power_sequencer:
         and:
           - name: "FM_SLPS3"
             invert: true
+            input_stable_usec: 10000 # Let clock running 20usec after PWRGOOD down
           - name: "RSMRST"
             invert: true
+            input_stable_usec: 10000 # Let clock running 20usec after PWRGOOD down
           - name: "FM_CK440Q_DEV_EN"
             input_stable_usec: 2000  # Wait for clock to be stable
       out:
