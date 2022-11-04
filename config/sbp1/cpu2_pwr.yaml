@@ -132,8 +132,14 @@ outputs:
     active_low: true
     signal_name: "SEL_SMB_DIMM_CPU2"
 
+  - name: "H_LVT3_CPU2_NMI"
+    type: "gpio"
+    signal_name: "CPU2_NMI"
+
 immutables:
   - signal_name: "H_LVT3_CPU2_PROCHOT"
+    value: false
+  - signal_name: "CPU2_NMI"
     value: false
 
 power_sequencer:
