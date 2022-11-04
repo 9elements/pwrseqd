@@ -136,10 +136,17 @@ outputs:
     type: "gpio"
     signal_name: "CPU2_NMI"
 
+  - name: "FM_CPU2_DISABLE_COD_N"
+    type: "gpio"
+    active_low: true
+    signal_name: "FM_CPU2_DISABLE_COD"
+
 immutables:
   - signal_name: "H_LVT3_CPU2_PROCHOT"
     value: false
   - signal_name: "CPU2_NMI"
+    value: false
+  - signal_name: "FM_CPU2_DISABLE_COD"
     value: false
 
 power_sequencer:
