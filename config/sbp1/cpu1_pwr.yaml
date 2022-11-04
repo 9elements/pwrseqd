@@ -203,7 +203,7 @@ power_sequencer:
             input_stable_usec: 2
         or:
           - name: "pvccfa_ehv_fivra_cpu1_Enabled"
-          - name: "pvccfa_ehv_fivra_cpu1_Enabled"
+          - name: "pvccfa_ehv_fivra_cpu1_PowerGood"
             input_stable_usec: 1000
         and_then_or: true
       out:
@@ -220,7 +220,7 @@ power_sequencer:
             input_stable_usec: 2
         or:
           - name: "pvccinfaon_cpu1_Enabled"
-          - name: "pvccinfaon_cpu1_Enabled"
+          - name: "pvccinfaon_cpu1_PowerGood"
             input_stable_usec: 1000
         and_then_or: true
       out:
@@ -236,8 +236,8 @@ power_sequencer:
           - name: "pvccfa_ehv_fivra_cpu1_PowerGood"
             input_stable_usec: 2
         or:
-          - name: "pvccinfaon_cpu1_Enabled"
-          - name: "pvccinfaon_cpu1_Enabled"
+          - name: "pvnn_main_cpu1_Enabled"
+          - name: "pvnn_main_cpu1_PowerGood"
             input_stable_usec: 10000
         and_then_or: true
       out:
@@ -254,7 +254,7 @@ power_sequencer:
             input_stable_usec: 2
         or:
           - name: "pvccin_cpu1_Enabled"
-          - name: "pvccin_cpu1_Enabled"
+          - name: "pvccin_cpu1_PowerGood"
             input_stable_usec: 100
         and_then_or: true
       out:
@@ -271,8 +271,10 @@ power_sequencer:
             input_stable_usec: 2
         or:
           - name: "pvpp_hbm_cpu1_Enabled"
-          - name: "pvpp_hbm_cpu1_Enabled"
+          - name: "pvpp_hbm_cpu1_PowerGood"
             input_stable_usec: 1000
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+            input_stable_usec: 20
         and_then_or: true
       out:
         name: "pvccin_cpu1_On"
@@ -287,6 +289,7 @@ power_sequencer:
             invert: true
           - name: "pvccin_cpu1_PowerGood"
             input_stable_usec: 2
+          - name: "PWRGD_CPUPWRGD"
       out:
         name: "pvpp_hbm_cpu1_On"
 
