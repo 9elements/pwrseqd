@@ -110,17 +110,11 @@ power_sequencer:
       out:
         name: "FM_CK440Q_DEV_EN"
 
+  # For early platform bringup turn it on early
   - FM_DB2000_DEV_Enable:
       in:
         and:
-          - name: "FM_SLPS3"
-            invert: true
-            input_stable_usec: 10000 # Let clock running 20usec after PWRGOOD down
-          - name: "RSMRST"
-            invert: true
-            input_stable_usec: 10000 # Let clock running 20usec after PWRGOOD down
           - name: "FM_CK440Q_DEV_EN"
-            input_stable_usec: 2000  # Wait for clock to be stable
       out:
         name: "FM_DB2000_DEV_EN"
 
