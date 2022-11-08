@@ -151,7 +151,6 @@ power_sequencer:
   # Wait 10msec after Vcc_main is stable.
   # Vcc_main is the same as AUX. AUX is already powered if RSMRST is asserted.
   # Vcc_main must be stable for 100usec or longer after PCH_PWROK goes low.
-  # PCH_PWROK is only read by PCH if SLP_S3# is not asserted.
   - PCH_PWROK_Unit:
       in:
         and:
@@ -162,8 +161,8 @@ power_sequencer:
             invert: true
           - name: "FM_SLPS3"
             invert: true
-          - name: "STATE_REQ_HOST_ON"
-          - name: "STATE_REQ_CHASSIS_ON"
+          - name: "FM_DB2000_DEV_EN" # Ext clocks are stable
+            input_stable_usec: 10000 # PCH Spec. 1msec
       out:
         name: "PCH_PWROK"
 
