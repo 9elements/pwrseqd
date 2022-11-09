@@ -148,21 +148,14 @@ power_sequencer:
         active_low: true
         name: "RSMRST"
 
-  # Wait 10msec after Vcc_main is stable.
-  # Vcc_main is the same as AUX. AUX is already powered if RSMRST is asserted.
-  # Vcc_main must be stable for 100usec or longer after PCH_PWROK goes low.
+  # When RSMRST deasserts all rails are up for more than 10msec.
   - PCH_PWROK_Unit:
       in:
         and:
           - name: "RSMRST"
-            input_stable_usec: 10000  # PCH Spec. 10msec
-            invert: true
-          - name: "RSMRST"
-            invert: true
-          - name: "FM_SLPS3"
             invert: true
           - name: "FM_DB2000_DEV_EN" # Ext clocks are stable
-            input_stable_usec: 10000 # PCH Spec. 1msec
+            input_stable_usec: 10000 # PCH Spec. 1msec after clocks are stable
       out:
         name: "PCH_PWROK"
 
