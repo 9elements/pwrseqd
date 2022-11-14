@@ -154,8 +154,14 @@ power_sequencer:
         and:
           - name: "RSMRST"
             invert: true
+          - name: "FM_SLPS3"
+            invert: true
+            input_stable_usec: 1000000
+          - name: "FM_SLPS3"
+            invert: true
           - name: "FM_DB2000_DEV_EN" # Ext clocks are stable
             input_stable_usec: 10000 # PCH Spec. 1msec after clocks are stable
+          - name: "FM_DB2000_DEV_EN" # Ext clocks are stable
       out:
         name: "PCH_PWROK"
 
@@ -165,6 +171,9 @@ power_sequencer:
         and:
           - name: "RSMRST"
             invert: true
+          - name: "FM_SLPS4"
+            invert: true
+            input_stable_usec: 1000000 # glitch filter
           - name: "FM_SLPS4"
             invert: true
           - name: "STATE_REQ_HOST_ON"
@@ -186,6 +195,9 @@ power_sequencer:
   - CPU_POWER_Unit:
       in:
         and:
+          - name: "FM_SLPS3"
+            invert: true
+            input_stable_usec: 1000000 # glitch filter
           - name: "FM_SLPS3"
             invert: true
           - name: "RSMRST"
