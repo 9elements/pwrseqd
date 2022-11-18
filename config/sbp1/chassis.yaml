@@ -29,10 +29,7 @@ power_sequencer:
   - M2_SSD1_Unit:
       in:
         and:
-          - name: "FM_SLPS3"
-            invert: true
-          - name: "RSMRST"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "STATE_REQ_HOST_ON"
         or:
           - name: "PLUG_DETECT_M2_SSD_CARRIER1"
@@ -44,10 +41,7 @@ power_sequencer:
   - M2_SSD2_Unit:
       in:
         and:
-          - name: "FM_SLPS3"
-            invert: true
-          - name: "RSMRST"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "STATE_REQ_HOST_ON"
         or:
           - name: "PLUG_DETECT_M2_SSD_CARRIER2"

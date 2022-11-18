@@ -6,8 +6,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD01_PRESENT"
       out:
         name: "rssd01_3v3_On"
@@ -15,8 +14,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD02_PRESENT"
       out:
         name: "rssd02_3v3_On"
@@ -24,8 +22,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD03_PRESENT"
       out:
         name: "rssd03_3v3_On"
@@ -33,8 +30,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD04_PRESENT"
       out:
         name: "rssd04_3v3_On"
@@ -42,8 +38,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD05_PRESENT"
       out:
         name: "rssd05_3v3_On"
@@ -51,8 +46,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD06_PRESENT"
       out:
         name: "rssd06_3v3_On"
@@ -60,8 +54,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD07_PRESENT"
       out:
         name: "rssd07_3v3_On"
@@ -69,8 +62,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD08_PRESENT"
       out:
         name: "rssd08_3v3_On"
@@ -78,8 +70,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD09_PRESENT"
       out:
         name: "rssd09_3v3_On"
@@ -87,8 +78,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD10_PRESENT"
       out:
         name: "rssd10_3v3_On"
@@ -96,8 +86,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD11_PRESENT"
       out:
         name: "rssd11_3v3_On"
@@ -105,8 +94,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD12_PRESENT"
       out:
         name: "rssd12_3v3_On"
@@ -114,8 +102,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD13_PRESENT"
       out:
         name: "rssd13_3v3_On"
@@ -123,8 +110,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD14_PRESENT"
       out:
         name: "rssd14_3v3_On"
@@ -132,8 +118,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD15_PRESENT"
       out:
         name: "rssd15_3v3_On"
@@ -141,8 +126,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD16_PRESENT"
       out:
         name: "rssd16_3v3_On"
@@ -150,8 +134,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD17_PRESENT"
       out:
         name: "rssd17_3v3_On"
@@ -159,8 +142,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD18_PRESENT"
       out:
         name: "rssd18_3v3_On"
@@ -168,8 +150,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD19_PRESENT"
       out:
         name: "rssd19_3v3_On"
@@ -177,8 +158,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD20_PRESENT"
       out:
         name: "rssd20_3v3_On"
@@ -186,8 +166,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD21_PRESENT"
       out:
         name: "rssd21_3v3_On"
@@ -195,8 +174,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD22_PRESENT"
       out:
         name: "rssd22_3v3_On"
@@ -204,8 +182,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD23_PRESENT"
       out:
         name: "rssd23_3v3_On"
@@ -213,8 +190,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD24_PRESENT"
       out:
         name: "rssd24_3v3_On"
@@ -222,8 +198,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD25_PRESENT"
       out:
         name: "rssd25_3v3_On"
@@ -231,8 +206,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD26_PRESENT"
       out:
         name: "rssd26_3v3_On"
@@ -240,8 +214,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD27_PRESENT"
       out:
         name: "rssd27_3v3_On"
@@ -249,8 +222,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD28_PRESENT"
       out:
         name: "rssd28_3v3_On"
@@ -258,8 +230,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD29_PRESENT"
       out:
         name: "rssd29_3v3_On"
@@ -267,8 +238,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD30_PRESENT"
       out:
         name: "rssd30_3v3_On"
@@ -276,8 +246,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD31_PRESENT"
       out:
         name: "rssd31_3v3_On"
@@ -285,8 +254,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD32_PRESENT"
       out:
         name: "rssd32_3v3_On"
@@ -295,8 +263,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD01_PRESENT"
           - name: "rssd01_3v3_PowerGood"
             input_stable_usec: 10000
@@ -307,8 +274,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD02_PRESENT"
           - name: "rssd02_3v3_PowerGood"
             input_stable_usec: 10000
@@ -319,8 +285,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD03_PRESENT"
           - name: "rssd03_3v3_PowerGood"
             input_stable_usec: 10000
@@ -331,8 +296,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD04_PRESENT"
           - name: "rssd04_3v3_PowerGood"
             input_stable_usec: 10000
@@ -343,8 +307,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD05_PRESENT"
           - name: "rssd05_3v3_PowerGood"
             input_stable_usec: 10000
@@ -355,8 +318,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD06_PRESENT"
           - name: "rssd06_3v3_PowerGood"
             input_stable_usec: 10000
@@ -367,8 +329,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD07_PRESENT"
           - name: "rssd07_3v3_PowerGood"
             input_stable_usec: 10000
@@ -379,8 +340,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD08_PRESENT"
           - name: "rssd08_3v3_PowerGood"
             input_stable_usec: 10000
@@ -391,8 +351,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD09_PRESENT"
           - name: "rssd09_3v3_PowerGood"
             input_stable_usec: 10000
@@ -403,8 +362,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD10_PRESENT"
           - name: "rssd10_3v3_PowerGood"
             input_stable_usec: 10000
@@ -415,8 +373,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD11_PRESENT"
           - name: "rssd11_3v3_PowerGood"
             input_stable_usec: 10000
@@ -427,8 +384,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD12_PRESENT"
           - name: "rssd12_3v3_PowerGood"
             input_stable_usec: 10000
@@ -439,8 +395,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD13_PRESENT"
           - name: "rssd13_3v3_PowerGood"
             input_stable_usec: 10000
@@ -451,8 +406,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD14_PRESENT"
           - name: "rssd14_3v3_PowerGood"
             input_stable_usec: 10000
@@ -463,8 +417,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD15_PRESENT"
           - name: "rssd15_3v3_PowerGood"
             input_stable_usec: 10000
@@ -475,8 +428,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD16_PRESENT"
           - name: "rssd16_3v3_PowerGood"
             input_stable_usec: 10000
@@ -487,8 +439,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD17_PRESENT"
           - name: "rssd17_3v3_PowerGood"
             input_stable_usec: 10000
@@ -499,8 +450,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD18_PRESENT"
           - name: "rssd18_3v3_PowerGood"
             input_stable_usec: 10000
@@ -511,8 +461,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD19_PRESENT"
           - name: "rssd19_3v3_PowerGood"
             input_stable_usec: 10000
@@ -523,8 +472,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD20_PRESENT"
           - name: "rssd20_3v3_PowerGood"
             input_stable_usec: 10000
@@ -535,8 +483,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD21_PRESENT"
           - name: "rssd21_3v3_PowerGood"
             input_stable_usec: 10000
@@ -547,8 +494,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD22_PRESENT"
           - name: "rssd22_3v3_PowerGood"
             input_stable_usec: 10000
@@ -559,8 +505,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD23_PRESENT"
           - name: "rssd23_3v3_PowerGood"
             input_stable_usec: 10000
@@ -571,8 +516,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD24_PRESENT"
           - name: "rssd24_3v3_PowerGood"
             input_stable_usec: 10000
@@ -583,8 +527,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD25_PRESENT"
           - name: "rssd25_3v3_PowerGood"
             input_stable_usec: 10000
@@ -595,8 +538,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD26_PRESENT"
           - name: "rssd26_3v3_PowerGood"
             input_stable_usec: 10000
@@ -607,8 +549,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD27_PRESENT"
           - name: "rssd27_3v3_PowerGood"
             input_stable_usec: 10000
@@ -619,8 +560,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD28_PRESENT"
           - name: "rssd28_3v3_PowerGood"
             input_stable_usec: 10000
@@ -631,8 +571,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD29_PRESENT"
           - name: "rssd29_3v3_PowerGood"
             input_stable_usec: 10000
@@ -643,8 +582,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD30_PRESENT"
           - name: "rssd30_3v3_PowerGood"
             input_stable_usec: 10000
@@ -655,8 +593,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD31_PRESENT"
           - name: "rssd31_3v3_PowerGood"
             input_stable_usec: 10000
@@ -667,8 +604,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
-          - name: "FM_SLPS3"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "RSSD32_PRESENT"
           - name: "rssd32_3v3_PowerGood"
             input_stable_usec: 10000

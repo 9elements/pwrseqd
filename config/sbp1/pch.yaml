@@ -156,7 +156,7 @@ power_sequencer:
             invert: true
           - name: "FM_SLPS3"
             invert: true
-            input_stable_usec: 1000000
+            input_stable_usec: 1000000 # glitch filter
           - name: "FM_SLPS3"
             invert: true
           - name: "FM_DB2000_DEV_EN" # Ext clocks are stable
@@ -169,11 +169,7 @@ power_sequencer:
   - DDR_Power_Internal_Unit:
       in:
         and:
-          - name: "RSMRST"
-            invert: true
-          - name: "FM_SLPS4"
-            invert: true
-            input_stable_usec: 1000000 # glitch filter
+          - name: "PCH_PWROK"
           - name: "FM_SLPS4"
             invert: true
           - name: "STATE_REQ_HOST_ON"
@@ -195,13 +191,7 @@ power_sequencer:
   - CPU_POWER_Unit:
       in:
         and:
-          - name: "FM_SLPS3"
-            invert: true
-            input_stable_usec: 1000000 # glitch filter
-          - name: "FM_SLPS3"
-            invert: true
-          - name: "RSMRST"
-            invert: true
+          - name: "PCH_PWROK"
           - name: "STATE_REQ_HOST_ON"
           - name: "CPU0_VR_Fault_Shutdown"
             input_stable_usec: 1000
@@ -226,11 +216,7 @@ power_sequencer:
         and:
           - name: "STATE_REQ_CHASSIS_ON"
           - name: "STATE_REQ_HOST_ON"
-          - name: "RSMRST"
-            invert: true
           - name: "PCH_PWROK"
-          - name: "FM_SLPS3"
-            invert: true
           - name: "CPU0_SYS_PWROK"
           - name: "CPU1_SYS_PWROK"
           - name: "CPU2_SYS_PWROK"
