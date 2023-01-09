@@ -62,6 +62,7 @@ power_sequencer:
             invert: true
           - name: "p3v3_m2_ssd1_PowerGood"
             invert: true
+          - name: "PLTRST"
       out:
         name: "RST_M2_SSD1_PERST"
 
@@ -77,6 +78,7 @@ power_sequencer:
             invert: true
           - name: "p3v3_m2_ssd2_PowerGood"
             invert: true
+          - name: "PLTRST"
       out:
         name: "RST_M2_SSD2_PERST"
 
