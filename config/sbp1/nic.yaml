@@ -110,6 +110,133 @@ power_sequencer:
       out:
         name: "FM_NIC2_ALLSTANDBY"
 
+  - FM_NIC1_PERST0_Unit:
+      in:
+        or:
+          - name: "FM_NIC1_RST"
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "FM_NIC1_PERST0"
+  - FM_NIC1_PERST1_Unit:
+      in:
+        or:
+          - name: "FM_NIC1_RST"
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+            invert: true
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "FM_NIC1_PERST1"
+  - FM_NIC1_PERST2_Unit:
+      in:
+        or:
+          - name: "FM_NIC1_RST"
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "FM_NIC1_PERST2"
+  - FM_NIC1_PERST3_Unit:
+      in:
+        or:
+          - name: "FM_NIC1_RST"
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
+            invert: true
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "FM_NIC1_PERST3"
+  - FM_NIC2_PERST0_Unit:
+      in:
+        or:
+          - name: "FM_NIC2_RST"
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "FM_NIC2_PERST0"
+  - FM_NIC2_PERST1_Unit:
+      in:
+        or:
+          - name: "FM_NIC2_RST"
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+            invert: true
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "FM_NIC2_PERST1"
+  - FM_NIC2_PERST2_Unit:
+      in:
+        or:
+          - name: "FM_NIC2_RST"
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "FM_NIC2_PERST2"
+  - FM_NIC2_PERST3_Unit:
+      in:
+        or:
+          - name: "FM_NIC2_RST"
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
+            invert: true
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "FM_NIC2_PERST3"
+
   # Keep NIC in reset when
   #  - PCH is in reset
   #  - Platform is in S5/S4
@@ -118,58 +245,48 @@ power_sequencer:
   - FM_NIC1_Globalreset_Unit:
       in:
         or:
-          - name: "RSMRST"
-          - name: "FM_SLPS3"
-          - name: "PLTRST"
+          - name: "PCH_PWROK"
+            invert: true
+          - name: "pvcore_nic1_Fault"
           - name: "pvcore_nic1_PowerGood"
             invert: true
-          - name: "pvcore_nic1_PowerGood"
-            invert: true
-            input_stable_usec: 10000 # FIXME
+            input_stable_usec: 100000 # FIXME
+          - name: "p1v2_nic_Fault"
           - name: "p1v2_nic_PowerGood"
             invert: true
-          - name: "p1v2_nic_PowerGood"
-            invert: true
-            input_stable_usec: 10000 # FIXME
+            input_stable_usec: 100000 # FIXME
+          - name: "p1v8_nic_Fault"
           - name: "p1v8_nic_PowerGood"
             invert: true
-          - name: "p1v8_nic_PowerGood"
-            invert: true
-            input_stable_usec: 10000 # FIXME
+            input_stable_usec: 100000 # FIXME
           - name: "p3v3_nic_PowerGood"
             invert: true
-            input_stable_usec: 10000 # FIXME
-          - name: "p3v3_nic_PowerGood"
-            invert: true
+            input_stable_usec: 100000 # FIXME
+          - name: "p3v3_nic_Fault"
       out:
         name: "FM_NIC1_RST"
 
   - FM_NIC2_Globalreset_Unit:
       in:
         or:
-          - name: "RSMRST"
-          - name: "FM_SLPS3"
-          - name: "PLTRST"
+          - name: "PCH_PWROK"
+            invert: true
           - name: "pvcore_nic2_PowerGood"
             invert: true
-            input_stable_usec: 10000 # FIXME
-          - name: "pvcore_nic2_PowerGood"
-            invert: true
+            input_stable_usec: 100000 # FIXME
+          - name: "pvcore_nic2_Fault"
           - name: "p1v2_nic_PowerGood"
             invert: true
-            input_stable_usec: 10000 # FIXME
-          - name: "p1v2_nic_PowerGood"
-            invert: true
+            input_stable_usec: 100000 # FIXME
+          - name: "p1v2_nic_Fault"
           - name: "p1v8_nic_PowerGood"
             invert: true
-            input_stable_usec: 10000 # FIXME
-          - name: "p1v8_nic_PowerGood"
-            invert: true
+            input_stable_usec: 100000 # FIXME
+          - name: "p1v8_nic_Fault"
           - name: "p3v3_nic_PowerGood"
             invert: true
-            input_stable_usec: 10000 # FIXME
-          - name: "p3v3_nic_PowerGood"
-            invert: true
+            input_stable_usec: 100000 # FIXME
+          - name: "p3v3_nic_Fault"
       out:
         name: "FM_NIC2_RST"
 
@@ -211,14 +328,6 @@ regulators:
   - name: "pvcore_nic2"
   - name: "p1v2_nic"
   - name: "p1v8_nic"
-
-floating_signals:
-  - "pvcore_nic1_Fault"
-  - "pvcore_nic2_Fault"
-  - "p3v3_nic_Enabled"
-  - "p3v3_nic_Fault"
-  - "p1v2_nic_Fault"
-  - "p1v8_nic_Fault"
 
 outputs:
   - name: "FM_NIC1_PERST0_N"
@@ -339,25 +448,10 @@ floating_signals:
   - "IRQ_NIC2_OVT_WRNG"
   - "IRQ_NIC1_OVT_SHTDN"
   - "IRQ_NIC2_OVT_SHTDN"
+  - "p3v3_nic_Enabled"
 
 immutables:
   - signal_name: "FM_NIC1_FLASH_PRSNT"
     value: true
   - signal_name: "FM_NIC2_FLASH_PRSNT"
-    value: true
-  - signal_name: "FM_NIC1_PERST0"
-    value: true
-  - signal_name: "FM_NIC1_PERST1"
-    value: true
-  - signal_name: "FM_NIC1_PERST2"
-    value: true
-  - signal_name: "FM_NIC1_PERST3"
-    value: true
-  - signal_name: "FM_NIC2_PERST0"
-    value: true
-  - signal_name: "FM_NIC2_PERST1"
-    value: true
-  - signal_name: "FM_NIC2_PERST2"
-    value: true
-  - signal_name: "FM_NIC2_PERST3"
     value: true
