@@ -612,356 +612,1015 @@ power_sequencer:
       out:
         name: "rssd32_12v_On"
 
+  - RSSD01_Reset_Unit:
+      in:
+        or:
+          - name: "RSSD01_PRESENT"
+            invert: true
+          - name: "rssd01_12v_Fault"
+          - name: "rssd01_3v3_Fault"
+          - name: "rssd01_3v3_PowerGood"
+            invert: true
+            input_stable_usec: 100000
+          - name: "rssd01_12v_PowerGood"
+            invert: true
+            input_stable_usec: 100000
+          - name: "STATE_REQ_HOST_ON"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR0_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD01_RESET"
+  - RSSD02_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD02_PRESENT"
+          invert: true
+        - name: "rssd02_12v_Fault"
+        - name: "rssd02_3v3_Fault"
+        - name: "rssd02_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd02_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU3_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD02_RESET"
+  - RSSD03_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD03_PRESENT"
+          invert: true
+        - name: "rssd03_12v_Fault"
+        - name: "rssd03_3v3_Fault"
+        - name: "rssd03_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd03_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU3_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD03_RESET"
+  - RSSD04_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD04_PRESENT"
+          invert: true
+        - name: "rssd04_12v_Fault"
+        - name: "rssd04_3v3_Fault"
+        - name: "rssd04_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd04_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU3_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD04_RESET"
+  - RSSD05_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD05_PRESENT"
+          invert: true
+        - name: "rssd05_12v_Fault"
+        - name: "rssd05_3v3_Fault"
+        - name: "rssd05_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd05_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU3_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD05_RESET"
+  - RSSD06_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD06_PRESENT"
+          invert: true
+        - name: "rssd06_12v_Fault"
+        - name: "rssd06_3v3_Fault"
+        - name: "rssd06_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd06_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU3_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD06_RESET"
+  - RSSD07_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD07_PRESENT"
+          invert: true
+        - name: "rssd07_12v_Fault"
+        - name: "rssd07_3v3_Fault"
+        - name: "rssd07_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd07_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU3_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD07_RESET"
+  - RSSD08_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD08_PRESENT"
+          invert: true
+        - name: "rssd08_12v_Fault"
+        - name: "rssd08_3v3_Fault"
+        - name: "rssd08_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd08_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU3_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD08_RESET"
+  - RSSD09_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD09_PRESENT"
+          invert: true
+        - name: "rssd09_12v_Fault"
+        - name: "rssd09_3v3_Fault"
+        - name: "rssd09_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd09_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD09_RESET"
+  - RSSD10_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD10_PRESENT"
+          invert: true
+        - name: "rssd10_12v_Fault"
+        - name: "rssd10_3v3_Fault"
+        - name: "rssd10_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd10_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD10_RESET"
+  - RSSD11_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD11_PRESENT"
+          invert: true
+        - name: "rssd11_12v_Fault"
+        - name: "rssd11_3v3_Fault"
+        - name: "rssd11_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd11_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD11_RESET"
+  - RSSD12_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD12_PRESENT"
+          invert: true
+        - name: "rssd12_12v_Fault"
+        - name: "rssd12_3v3_Fault"
+        - name: "rssd12_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd12_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD12_RESET"
+  - RSSD13_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD13_PRESENT"
+          invert: true
+        - name: "rssd13_12v_Fault"
+        - name: "rssd13_3v3_Fault"
+        - name: "rssd13_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd13_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD13_RESET"
+  - RSSD14_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD14_PRESENT"
+          invert: true
+        - name: "rssd14_12v_Fault"
+        - name: "rssd14_3v3_Fault"
+        - name: "rssd14_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd14_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD14_RESET"
+  - RSSD15_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD15_PRESENT"
+          invert: true
+        - name: "rssd15_12v_Fault"
+        - name: "rssd15_3v3_Fault"
+        - name: "rssd15_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd15_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD15_RESET"
+  - RSSD16_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD16_PRESENT"
+          invert: true
+        - name: "rssd16_12v_Fault"
+        - name: "rssd16_3v3_Fault"
+        - name: "rssd16_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd16_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR0_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD16_RESET"
+  - RSSD17_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD17_PRESENT"
+          invert: true
+        - name: "rssd17_12v_Fault"
+        - name: "rssd17_3v3_Fault"
+        - name: "rssd17_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd17_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD17_RESET"
+  - RSSD18_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD18_PRESENT"
+          invert: true
+        - name: "rssd18_12v_Fault"
+        - name: "rssd18_3v3_Fault"
+        - name: "rssd18_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd18_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD18_RESET"
+  - RSSD19_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD19_PRESENT"
+          invert: true
+        - name: "rssd19_12v_Fault"
+        - name: "rssd19_3v3_Fault"
+        - name: "rssd19_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd19_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD19_RESET"
+  - RSSD20_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD20_PRESENT"
+          invert: true
+        - name: "rssd20_12v_Fault"
+        - name: "rssd20_3v3_Fault"
+        - name: "rssd20_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd20_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD20_RESET"
+  - RSSD21_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD21_PRESENT"
+          invert: true
+        - name: "rssd21_12v_Fault"
+        - name: "rssd21_3v3_Fault"
+        - name: "rssd21_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd21_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD21_RESET"
+  - RSSD22_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD22_PRESENT"
+          invert: true
+        - name: "rssd22_12v_Fault"
+        - name: "rssd22_3v3_Fault"
+        - name: "rssd22_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd22_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD22_RESET"
+  - RSSD23_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD23_PRESENT"
+          invert: true
+        - name: "rssd23_12v_Fault"
+        - name: "rssd23_3v3_Fault"
+        - name: "rssd23_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd23_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD23_RESET"
+  - RSSD24_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD24_PRESENT"
+          invert: true
+        - name: "rssd24_12v_Fault"
+        - name: "rssd24_3v3_Fault"
+        - name: "rssd24_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd24_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD24_RESET"
+  - RSSD25_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD25_PRESENT"
+          invert: true
+        - name: "rssd25_12v_Fault"
+        - name: "rssd25_3v3_Fault"
+        - name: "rssd25_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd25_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD25_RESET"
+  - RSSD26_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD26_PRESENT"
+          invert: true
+        - name: "rssd26_12v_Fault"
+        - name: "rssd26_3v3_Fault"
+        - name: "rssd26_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd26_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD26_RESET"
+  - RSSD27_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD27_PRESENT"
+          invert: true
+        - name: "rssd27_12v_Fault"
+        - name: "rssd27_3v3_Fault"
+        - name: "rssd27_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd27_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD27_RESET"
+  - RSSD28_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD28_PRESENT"
+          invert: true
+        - name: "rssd28_12v_Fault"
+        - name: "rssd28_3v3_Fault"
+        - name: "rssd28_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd28_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD28_RESET"
+  - RSSD29_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD29_PRESENT"
+          invert: true
+        - name: "rssd29_12v_Fault"
+        - name: "rssd29_3v3_Fault"
+        - name: "rssd29_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd29_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD29_RESET"
+  - RSSD30_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD30_PRESENT"
+          invert: true
+        - name: "rssd30_12v_Fault"
+        - name: "rssd30_3v3_Fault"
+        - name: "rssd30_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd30_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD30_RESET"
+  - RSSD31_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD31_PRESENT"
+          invert: true
+        - name: "rssd31_12v_Fault"
+        - name: "rssd31_3v3_Fault"
+        - name: "rssd31_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd31_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD31_RESET"
+  - RSSD32_Reset_Unit:
+    in:
+      or:
+        - name: "RSSD32_PRESENT"
+          invert: true
+        - name: "rssd32_12v_Fault"
+        - name: "rssd32_3v3_Fault"
+        - name: "rssd32_3v3_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "rssd32_12v_PowerGood"
+          invert: true
+          input_stable_usec: 100000
+        - name: "STATE_REQ_HOST_ON"
+          invert: true
+        - name: "FM_SSD_CLK_DRVR1_EN"
+          invert: true
+          input_stable_usec: 100000
+        - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+          invert: true
+          input_stable_usec: 100000
+    out:
+      name: "RSSD32_RESET"
+
+  - DB1900Z_DEV0_Enable:
+      in:
+        or:
+          - name: "RSSD01_PRESENT"
+          - name: "RSSD02_PRESENT"
+          - name: "RSSD03_PRESENT"
+          - name: "RSSD04_PRESENT"
+          - name: "RSSD05_PRESENT"
+          - name: "RSSD06_PRESENT"
+          - name: "RSSD07_PRESENT"
+          - name: "RSSD08_PRESENT"
+          - name: "RSSD09_PRESENT"
+          - name: "RSSD10_PRESENT"
+          - name: "RSSD11_PRESENT"
+          - name: "RSSD12_PRESENT"
+          - name: "RSSD13_PRESENT"
+          - name: "RSSD14_PRESENT"
+          - name: "RSSD15_PRESENT"
+          - name: "RSSD16_PRESENT"
+        and:
+          - name: "FM_CK440Q_DEV_EN"
+        and_then_or: false
+      out:
+        name: "FM_SSD_CLK_DRVR0_EN"
+
+  - DB1900Z_DEV1_Enable:
+      in:
+        or:
+          - name: "RSSD17_PRESENT"
+          - name: "RSSD18_PRESENT"
+          - name: "RSSD19_PRESENT"
+          - name: "RSSD20_PRESENT"
+          - name: "RSSD21_PRESENT"
+          - name: "RSSD22_PRESENT"
+          - name: "RSSD23_PRESENT"
+          - name: "RSSD24_PRESENT"
+          - name: "RSSD25_PRESENT"
+          - name: "RSSD26_PRESENT"
+          - name: "RSSD27_PRESENT"
+          - name: "RSSD28_PRESENT"
+          - name: "RSSD29_PRESENT"
+          - name: "RSSD30_PRESENT"
+          - name: "RSSD31_PRESENT"
+          - name: "RSSD32_PRESENT"
+        and:
+          - name: "FM_CK440Q_DEV_EN"
+        and_then_or: false
+      out:
+        name: "FM_SSD_CLK_DRVR1_EN"
   - RSSD01_LED_Unit:
       in:
         and:
-          - name: "rssd01_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd01_12v_PowerGood"
-          - name: "rssd01_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd01_3v3_PowerGood"
+          - name: "RSSD01_RESET"
+            invert: true
       out:
         name: "LED_RSSD01"
   - RSSD02_LED_Unit:
       in:
         and:
-          - name: "rssd02_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd02_12v_PowerGood"
-          - name: "rssd02_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd02_3v3_PowerGood"
+          - name: "RSSD02_RESET"
+            invert: true
       out:
         name: "LED_RSSD02"
   - RSSD03_LED_Unit:
       in:
         and:
-          - name: "rssd03_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd03_12v_PowerGood"
-          - name: "rssd03_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd03_3v3_PowerGood"
+          - name: "RSSD03_RESET"
+            invert: true
       out:
         name: "LED_RSSD03"
   - RSSD04_LED_Unit:
       in:
         and:
-          - name: "rssd04_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd04_12v_PowerGood"
-          - name: "rssd04_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd04_3v3_PowerGood"
+          - name: "RSSD04_RESET"
+            invert: true
       out:
         name: "LED_RSSD04"
   - RSSD05_LED_Unit:
       in:
         and:
-          - name: "rssd05_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd05_12v_PowerGood"
-          - name: "rssd05_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd05_3v3_PowerGood"
+          - name: "RSSD05_RESET"
+            invert: true
       out:
         name: "LED_RSSD05"
   - RSSD06_LED_Unit:
       in:
         and:
-          - name: "rssd06_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd06_12v_PowerGood"
-          - name: "rssd06_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd06_3v3_PowerGood"
+          - name: "RSSD06_RESET"
+            invert: true
       out:
         name: "LED_RSSD06"
   - RSSD07_LED_Unit:
       in:
         and:
-          - name: "rssd07_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd07_12v_PowerGood"
-          - name: "rssd07_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd07_3v3_PowerGood"
+          - name: "RSSD07_RESET"
+            invert: true
       out:
         name: "LED_RSSD07"
   - RSSD08_LED_Unit:
       in:
         and:
-          - name: "rssd08_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd08_12v_PowerGood"
-          - name: "rssd08_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd08_3v3_PowerGood"
+          - name: "RSSD08_RESET"
+            invert: true
       out:
         name: "LED_RSSD08"
   - RSSD09_LED_Unit:
       in:
         and:
-          - name: "rssd09_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd09_12v_PowerGood"
-          - name: "rssd09_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd09_3v3_PowerGood"
+          - name: "RSSD09_RESET"
+            invert: true
       out:
         name: "LED_RSSD09"
   - RSSD10_LED_Unit:
       in:
         and:
-          - name: "rssd10_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd10_12v_PowerGood"
-          - name: "rssd10_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd10_3v3_PowerGood"
+          - name: "RSSD10_RESET"
+            invert: true
       out:
         name: "LED_RSSD10"
   - RSSD11_LED_Unit:
       in:
         and:
-          - name: "rssd11_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd11_12v_PowerGood"
-          - name: "rssd11_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd11_3v3_PowerGood"
+          - name: "RSSD11_RESET"
+            invert: true
       out:
         name: "LED_RSSD11"
   - RSSD12_LED_Unit:
       in:
         and:
-          - name: "rssd12_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd12_12v_PowerGood"
-          - name: "rssd12_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd12_3v3_PowerGood"
+          - name: "RSSD12_RESET"
+            invert: true
       out:
         name: "LED_RSSD12"
   - RSSD13_LED_Unit:
       in:
         and:
-          - name: "rssd13_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd13_12v_PowerGood"
-          - name: "rssd13_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd13_3v3_PowerGood"
+          - name: "RSSD13_RESET"
+            invert: true
       out:
         name: "LED_RSSD13"
   - RSSD14_LED_Unit:
       in:
         and:
-          - name: "rssd14_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd14_12v_PowerGood"
-          - name: "rssd14_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd14_3v3_PowerGood"
+          - name: "RSSD14_RESET"
+            invert: true
       out:
         name: "LED_RSSD14"
   - RSSD15_LED_Unit:
       in:
         and:
-          - name: "rssd15_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd15_12v_PowerGood"
-          - name: "rssd15_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd15_3v3_PowerGood"
+          - name: "RSSD15_RESET"
+            invert: true
       out:
         name: "LED_RSSD15"
   - RSSD16_LED_Unit:
       in:
         and:
-          - name: "rssd16_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd16_12v_PowerGood"
-          - name: "rssd16_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd16_3v3_PowerGood"
+          - name: "RSSD16_RESET"
+            invert: true
       out:
         name: "LED_RSSD16"
   - RSSD17_LED_Unit:
       in:
         and:
-          - name: "rssd17_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd17_12v_PowerGood"
-          - name: "rssd17_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd17_3v3_PowerGood"
+          - name: "RSSD17_RESET"
+            invert: true
       out:
         name: "LED_RSSD17"
   - RSSD18_LED_Unit:
       in:
         and:
-          - name: "rssd18_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd18_12v_PowerGood"
-          - name: "rssd18_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd18_3v3_PowerGood"
+          - name: "RSSD18_RESET"
+            invert: true
       out:
         name: "LED_RSSD18"
   - RSSD19_LED_Unit:
       in:
         and:
-          - name: "rssd19_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd19_12v_PowerGood"
-          - name: "rssd19_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd19_3v3_PowerGood"
+          - name: "RSSD19_RESET"
+            invert: true
       out:
         name: "LED_RSSD19"
   - RSSD20_LED_Unit:
       in:
         and:
-          - name: "rssd20_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd20_12v_PowerGood"
-          - name: "rssd20_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd20_3v3_PowerGood"
+          - name: "RSSD20_RESET"
+            invert: true
       out:
         name: "LED_RSSD20"
   - RSSD21_LED_Unit:
       in:
         and:
-          - name: "rssd21_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd21_12v_PowerGood"
-          - name: "rssd21_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd21_3v3_PowerGood"
+          - name: "RSSD21_RESET"
+            invert: true
       out:
         name: "LED_RSSD21"
   - RSSD22_LED_Unit:
       in:
         and:
-          - name: "rssd22_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd22_12v_PowerGood"
-          - name: "rssd22_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd22_3v3_PowerGood"
+          - name: "RSSD22_RESET"
+            invert: true
       out:
         name: "LED_RSSD22"
   - RSSD23_LED_Unit:
       in:
         and:
-          - name: "rssd23_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd23_12v_PowerGood"
-          - name: "rssd23_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd23_3v3_PowerGood"
+          - name: "RSSD23_RESET"
+            invert: true
       out:
         name: "LED_RSSD23"
   - RSSD24_LED_Unit:
       in:
         and:
-          - name: "rssd24_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd24_12v_PowerGood"
-          - name: "rssd24_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd24_3v3_PowerGood"
+          - name: "RSSD24_RESET"
+            invert: true
       out:
         name: "LED_RSSD24"
   - RSSD25_LED_Unit:
       in:
         and:
-          - name: "rssd25_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd25_12v_PowerGood"
-          - name: "rssd25_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd25_3v3_PowerGood"
+          - name: "RSSD25_RESET"
+            invert: true
       out:
         name: "LED_RSSD25"
   - RSSD26_LED_Unit:
       in:
         and:
-          - name: "rssd26_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd26_12v_PowerGood"
-          - name: "rssd26_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd26_3v3_PowerGood"
+          - name: "RSSD26_RESET"
+            invert: true
       out:
         name: "LED_RSSD26"
   - RSSD27_LED_Unit:
       in:
         and:
-          - name: "rssd27_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd27_12v_PowerGood"
-          - name: "rssd27_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd27_3v3_PowerGood"
+          - name: "RSSD27_RESET"
+            invert: true
       out:
         name: "LED_RSSD27"
   - RSSD28_LED_Unit:
       in:
         and:
-          - name: "rssd28_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd28_12v_PowerGood"
-          - name: "rssd28_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd28_3v3_PowerGood"
+          - name: "RSSD28_RESET"
+            invert: true
       out:
         name: "LED_RSSD28"
   - RSSD29_LED_Unit:
       in:
         and:
-          - name: "rssd29_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd29_12v_PowerGood"
-          - name: "rssd29_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd29_3v3_PowerGood"
+          - name: "RSSD29_RESET"
+            invert: true
       out:
         name: "LED_RSSD29"
   - RSSD30_LED_Unit:
       in:
         and:
-          - name: "rssd30_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd30_12v_PowerGood"
-          - name: "rssd30_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd30_3v3_PowerGood"
+          - name: "RSSD30_RESET"
+            invert: true
       out:
         name: "LED_RSSD30"
   - RSSD31_LED_Unit:
       in:
         and:
-          - name: "rssd31_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd31_12v_PowerGood"
-          - name: "rssd31_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd31_3v3_PowerGood"
+          - name: "RSSD31_RESET"
+            invert: true
       out:
         name: "LED_RSSD31"
+
   - RSSD32_LED_Unit:
       in:
         and:
-          - name: "rssd32_12v_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd32_12v_PowerGood"
-          - name: "rssd32_3v3_PowerGood"
-            input_stable_usec: 100000
-          - name: "rssd32_3v3_PowerGood"
+          - name: "RSSD32_RESET"
+            invert: true
       out:
         name: "LED_RSSD32"
 
@@ -1289,6 +1948,140 @@ outputs:
   - name: "led_rssd32_power"
     type: "led"
     signal_name: "LED_RSSD32"
+  - name: "RSSD01_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD01_RESET"
+    active_low: true
+  - name: "RSSD02_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD02_RESET"
+    active_low: true
+  - name: "RSSD03_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD03_RESET"
+    active_low: true
+  - name: "RSSD04_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD04_RESET"
+    active_low: true
+  - name: "RSSD05_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD05_RESET"
+    active_low: true
+  - name: "RSSD06_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD06_RESET"
+    active_low: true
+  - name: "RSSD07_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD07_RESET"
+    active_low: true
+  - name: "RSSD08_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD08_RESET"
+    active_low: true
+  - name: "RSSD09_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD09_RESET"
+    active_low: true
+  - name: "RSSD10_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD10_RESET"
+    active_low: true
+  - name: "RSSD11_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD11_RESET"
+    active_low: true
+  - name: "RSSD12_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD12_RESET"
+    active_low: true
+  - name: "RSSD13_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD13_RESET"
+    active_low: true
+  - name: "RSSD14_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD14_RESET"
+    active_low: true
+  - name: "RSSD15_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD15_RESET"
+    active_low: true
+  - name: "RSSD16_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD16_RESET"
+    active_low: true
+  - name: "RSSD17_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD17_RESET"
+    active_low: true
+  - name: "RSSD18_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD18_RESET"
+    active_low: true
+  - name: "RSSD19_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD19_RESET"
+    active_low: true
+  - name: "RSSD20_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD20_RESET"
+    active_low: true
+  - name: "RSSD21_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD21_RESET"
+    active_low: true
+  - name: "RSSD22_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD22_RESET"
+    active_low: true
+  - name: "RSSD23_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD23_RESET"
+    active_low: true
+  - name: "RSSD24_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD24_RESET"
+    active_low: true
+  - name: "RSSD25_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD25_RESET"
+    active_low: true
+  - name: "RSSD26_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD26_RESET"
+    active_low: true
+  - name: "RSSD27_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD27_RESET"
+    active_low: true
+  - name: "RSSD28_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD28_RESET"
+    active_low: true
+  - name: "RSSD29_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD29_RESET"
+    active_low: true
+  - name: "RSSD30_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD30_RESET"
+    active_low: true
+  - name: "RSSD31_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD31_RESET"
+    active_low: true
+  - name: "RSSD32_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD32_RESET"
+    active_low: true
+  - name: "FM_SSD_CLK_DRVR0_EN"
+    type: "gpio"
+    signal_name: "FM_SSD_CLK_DRVR0_EN"
+  - name: "FM_SSD_CLK_DRVR1_EN"
+    type: "gpio"
+    signal_name: "FM_SSD_CLK_DRVR1_EN"
 
 floating_signals:
   - "rssd01_3v3_Enabled"
@@ -1323,38 +2116,6 @@ floating_signals:
   - "rssd30_3v3_Enabled"
   - "rssd31_3v3_Enabled"
   - "rssd32_3v3_Enabled"
-  - "rssd01_3v3_Fault"
-  - "rssd02_3v3_Fault"
-  - "rssd03_3v3_Fault"
-  - "rssd04_3v3_Fault"
-  - "rssd05_3v3_Fault"
-  - "rssd06_3v3_Fault"
-  - "rssd07_3v3_Fault"
-  - "rssd08_3v3_Fault"
-  - "rssd09_3v3_Fault"
-  - "rssd10_3v3_Fault"
-  - "rssd11_3v3_Fault"
-  - "rssd12_3v3_Fault"
-  - "rssd13_3v3_Fault"
-  - "rssd14_3v3_Fault"
-  - "rssd15_3v3_Fault"
-  - "rssd16_3v3_Fault"
-  - "rssd17_3v3_Fault"
-  - "rssd18_3v3_Fault"
-  - "rssd19_3v3_Fault"
-  - "rssd20_3v3_Fault"
-  - "rssd21_3v3_Fault"
-  - "rssd22_3v3_Fault"
-  - "rssd23_3v3_Fault"
-  - "rssd24_3v3_Fault"
-  - "rssd25_3v3_Fault"
-  - "rssd26_3v3_Fault"
-  - "rssd27_3v3_Fault"
-  - "rssd28_3v3_Fault"
-  - "rssd29_3v3_Fault"
-  - "rssd30_3v3_Fault"
-  - "rssd31_3v3_Fault"
-  - "rssd32_3v3_Fault"
   - "rssd01_12v_Enabled"
   - "rssd02_12v_Enabled"
   - "rssd03_12v_Enabled"
@@ -1387,35 +2148,3 @@ floating_signals:
   - "rssd30_12v_Enabled"
   - "rssd31_12v_Enabled"
   - "rssd32_12v_Enabled"
-  - "rssd01_12v_Fault"
-  - "rssd02_12v_Fault"
-  - "rssd03_12v_Fault"
-  - "rssd04_12v_Fault"
-  - "rssd05_12v_Fault"
-  - "rssd06_12v_Fault"
-  - "rssd07_12v_Fault"
-  - "rssd08_12v_Fault"
-  - "rssd09_12v_Fault"
-  - "rssd10_12v_Fault"
-  - "rssd11_12v_Fault"
-  - "rssd12_12v_Fault"
-  - "rssd13_12v_Fault"
-  - "rssd14_12v_Fault"
-  - "rssd15_12v_Fault"
-  - "rssd16_12v_Fault"
-  - "rssd17_12v_Fault"
-  - "rssd18_12v_Fault"
-  - "rssd19_12v_Fault"
-  - "rssd20_12v_Fault"
-  - "rssd21_12v_Fault"
-  - "rssd22_12v_Fault"
-  - "rssd23_12v_Fault"
-  - "rssd24_12v_Fault"
-  - "rssd25_12v_Fault"
-  - "rssd26_12v_Fault"
-  - "rssd27_12v_Fault"
-  - "rssd28_12v_Fault"
-  - "rssd29_12v_Fault"
-  - "rssd30_12v_Fault"
-  - "rssd31_12v_Fault"
-  - "rssd32_12v_Fault"
