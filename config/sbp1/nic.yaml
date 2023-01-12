@@ -2,10 +2,31 @@
 
 # Controls power to the two NICs
 power_sequencer:
-  - pvcore_nic1_Unit:
+  # Power on if PCH request S0 and user requests S0
+  - NIC_POWER_ENABLE_Unit:
       in:
         and:
           - name: "PCH_PWROK"
+          - name: "STATE_REQ_HOST_ON"
+        or:
+          - name: "NIC_POWER_ENABLE_Hold"
+        and_then_or: true
+      out:
+        name: "NIC_POWER_ENABLE"
+
+  # Keep powered until PCH_PWROK goes down again
+  - NIC_POWER_ENABLE_Hold_Unit:
+      in:
+        and:
+          - name: "NIC_POWER_ENABLE"
+          - name: "PCH_PWROK"
+      out:
+        name: "NIC_POWER_ENABLE_Hold"
+
+  - pvcore_nic1_Unit:
+      in:
+        and:
+          - name: "NIC_POWER_ENABLE"
           - name: "p3v3_nic_PowerGood"
             input_stable_usec: 10000 # FIXME
           - name: "p3v3_nic_PowerGood"
@@ -21,7 +42,7 @@ power_sequencer:
   - pvcore_nic2_Unit:
       in:
         and:
-          - name: "PCH_PWROK"
+          - name: "NIC_POWER_ENABLE"
           - name: "p3v3_nic_PowerGood"
             input_stable_usec: 10000 # FIXME
           - name: "p3v3_nic_PowerGood"
@@ -46,7 +67,7 @@ power_sequencer:
           - name: "p3v3_nic_PowerGood"
             input_stable_usec: 10000 # FIXME
           - name: "p3v3_nic_PowerGood"
-          - name: "PCH_PWROK"
+          - name: "NIC_POWER_ENABLE"
         or:
           - name: "p1v8_nic_Enabled"
             input_stable_usec: 1000 # FIXME
@@ -69,15 +90,14 @@ power_sequencer:
           - name: "p3v3_nic_PowerGood"
             input_stable_usec: 10000 # FIXME
           - name: "p3v3_nic_PowerGood"
-          - name: "PCH_PWROK"
+          - name: "NIC_POWER_ENABLE"
       out:
         name: "p1v8_nic_On"
 
   - p3v3_nic_Unit:
       in:
-        and:
-          - name: "PCH_PWROK"
         or:
+          - name: "NIC_POWER_ENABLE"
           - name: "pvcore_nic1_Enabled"
             input_stable_usec: 1000 # FIXME
           - name: "pvcore_nic2_Enabled"
@@ -86,7 +106,6 @@ power_sequencer:
             input_stable_usec: 1000 # FIXME
           - name: "p1v8_nic_Enabled"
             input_stable_usec: 1000 # FIXME
-        and_then_or: true
       out:
         name: "p3v3_nic_On"
 
@@ -245,7 +264,7 @@ power_sequencer:
   - FM_NIC1_Globalreset_Unit:
       in:
         or:
-          - name: "PCH_PWROK"
+          - name: "NIC_POWER_ENABLE"
             invert: true
           - name: "pvcore_nic1_Fault"
           - name: "pvcore_nic1_PowerGood"
