@@ -265,9 +265,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD01_PRESENT"
-          - name: "rssd01_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd01_3v3_PowerGood"
       out:
         name: "rssd01_12v_On"
   - RSSD02_12v_Enable_Unit:
@@ -276,9 +274,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD02_PRESENT"
-          - name: "rssd02_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd02_3v3_PowerGood"
       out:
         name: "rssd02_12v_On"
   - RSSD03_12v_Enable_Unit:
@@ -287,9 +283,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD03_PRESENT"
-          - name: "rssd03_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd03_3v3_PowerGood"
       out:
         name: "rssd03_12v_On"
   - RSSD04_12v_Enable_Unit:
@@ -298,9 +292,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD04_PRESENT"
-          - name: "rssd04_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd04_3v3_PowerGood"
       out:
         name: "rssd04_12v_On"
   - RSSD05_12v_Enable_Unit:
@@ -309,9 +301,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD05_PRESENT"
-          - name: "rssd05_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd05_3v3_PowerGood"
       out:
         name: "rssd05_12v_On"
   - RSSD06_12v_Enable_Unit:
@@ -320,9 +310,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD06_PRESENT"
-          - name: "rssd06_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd06_3v3_PowerGood"
       out:
         name: "rssd06_12v_On"
   - RSSD07_12v_Enable_Unit:
@@ -331,9 +319,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD07_PRESENT"
-          - name: "rssd07_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd07_3v3_PowerGood"
       out:
         name: "rssd07_12v_On"
   - RSSD08_12v_Enable_Unit:
@@ -342,9 +328,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD08_PRESENT"
-          - name: "rssd08_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd08_3v3_PowerGood"
       out:
         name: "rssd08_12v_On"
   - RSSD09_12v_Enable_Unit:
@@ -353,9 +337,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD09_PRESENT"
-          - name: "rssd09_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd09_3v3_PowerGood"
       out:
         name: "rssd09_12v_On"
   - RSSD10_12v_Enable_Unit:
@@ -364,9 +346,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD10_PRESENT"
-          - name: "rssd10_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd10_3v3_PowerGood"
       out:
         name: "rssd10_12v_On"
   - RSSD11_12v_Enable_Unit:
@@ -375,9 +355,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD11_PRESENT"
-          - name: "rssd11_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd11_3v3_PowerGood"
       out:
         name: "rssd11_12v_On"
   - RSSD12_12v_Enable_Unit:
@@ -386,9 +364,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD12_PRESENT"
-          - name: "rssd12_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd12_3v3_PowerGood"
       out:
         name: "rssd12_12v_On"
   - RSSD13_12v_Enable_Unit:
@@ -397,9 +373,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD13_PRESENT"
-          - name: "rssd13_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd13_3v3_PowerGood"
       out:
         name: "rssd13_12v_On"
   - RSSD14_12v_Enable_Unit:
@@ -408,9 +382,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD14_PRESENT"
-          - name: "rssd14_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd14_3v3_PowerGood"
       out:
         name: "rssd14_12v_On"
   - RSSD15_12v_Enable_Unit:
@@ -419,9 +391,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD15_PRESENT"
-          - name: "rssd15_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd15_3v3_PowerGood"
       out:
         name: "rssd15_12v_On"
   - RSSD16_12v_Enable_Unit:
@@ -430,9 +400,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD16_PRESENT"
-          - name: "rssd16_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd16_3v3_PowerGood"
       out:
         name: "rssd16_12v_On"
   - RSSD17_12v_Enable_Unit:
@@ -441,9 +409,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD17_PRESENT"
-          - name: "rssd17_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd17_3v3_PowerGood"
       out:
         name: "rssd17_12v_On"
   - RSSD18_12v_Enable_Unit:
@@ -452,9 +418,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD18_PRESENT"
-          - name: "rssd18_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd18_3v3_PowerGood"
       out:
         name: "rssd18_12v_On"
   - RSSD19_12v_Enable_Unit:
@@ -463,9 +427,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD19_PRESENT"
-          - name: "rssd19_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd19_3v3_PowerGood"
       out:
         name: "rssd19_12v_On"
   - RSSD20_12v_Enable_Unit:
@@ -474,9 +436,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD20_PRESENT"
-          - name: "rssd20_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd20_3v3_PowerGood"
       out:
         name: "rssd20_12v_On"
   - RSSD21_12v_Enable_Unit:
@@ -485,9 +445,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD21_PRESENT"
-          - name: "rssd21_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd21_3v3_PowerGood"
       out:
         name: "rssd21_12v_On"
   - RSSD22_12v_Enable_Unit:
@@ -496,9 +454,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD22_PRESENT"
-          - name: "rssd22_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd22_3v3_PowerGood"
       out:
         name: "rssd22_12v_On"
   - RSSD23_12v_Enable_Unit:
@@ -507,9 +463,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD23_PRESENT"
-          - name: "rssd23_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd23_3v3_PowerGood"
       out:
         name: "rssd23_12v_On"
   - RSSD24_12v_Enable_Unit:
@@ -518,9 +472,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD24_PRESENT"
-          - name: "rssd24_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd24_3v3_PowerGood"
       out:
         name: "rssd24_12v_On"
   - RSSD25_12v_Enable_Unit:
@@ -529,9 +481,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD25_PRESENT"
-          - name: "rssd25_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd25_3v3_PowerGood"
       out:
         name: "rssd25_12v_On"
   - RSSD26_12v_Enable_Unit:
@@ -540,9 +490,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD26_PRESENT"
-          - name: "rssd26_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd26_3v3_PowerGood"
       out:
         name: "rssd26_12v_On"
   - RSSD27_12v_Enable_Unit:
@@ -551,9 +499,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD27_PRESENT"
-          - name: "rssd27_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd27_3v3_PowerGood"
       out:
         name: "rssd27_12v_On"
   - RSSD28_12v_Enable_Unit:
@@ -562,9 +508,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD28_PRESENT"
-          - name: "rssd28_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd28_3v3_PowerGood"
       out:
         name: "rssd28_12v_On"
   - RSSD29_12v_Enable_Unit:
@@ -573,9 +517,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD29_PRESENT"
-          - name: "rssd29_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd29_3v3_PowerGood"
       out:
         name: "rssd29_12v_On"
   - RSSD30_12v_Enable_Unit:
@@ -584,9 +526,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD30_PRESENT"
-          - name: "rssd30_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd30_3v3_PowerGood"
       out:
         name: "rssd30_12v_On"
   - RSSD31_12v_Enable_Unit:
@@ -595,9 +535,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD31_PRESENT"
-          - name: "rssd31_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd31_3v3_PowerGood"
       out:
         name: "rssd31_12v_On"
   - RSSD32_12v_Enable_Unit:
@@ -606,9 +544,7 @@ power_sequencer:
           - name: "STATE_REQ_HOST_ON"
           - name: "PCH_PWROK"
           - name: "RSSD32_PRESENT"
-          - name: "rssd32_3v3_PowerGood"
             input_stable_usec: 10000
-          - name: "rssd32_3v3_PowerGood"
       out:
         name: "rssd32_12v_On"
 
@@ -2564,3 +2500,35 @@ floating_signals:
   - "rssd30_12v_Enabled"
   - "rssd31_12v_Enabled"
   - "rssd32_12v_Enabled"
+  - "rssd01_3v3_PowerGood"
+  - "rssd02_3v3_PowerGood"
+  - "rssd03_3v3_PowerGood"
+  - "rssd04_3v3_PowerGood"
+  - "rssd05_3v3_PowerGood"
+  - "rssd06_3v3_PowerGood"
+  - "rssd07_3v3_PowerGood"
+  - "rssd08_3v3_PowerGood"
+  - "rssd09_3v3_PowerGood"
+  - "rssd10_3v3_PowerGood"
+  - "rssd11_3v3_PowerGood"
+  - "rssd12_3v3_PowerGood"
+  - "rssd13_3v3_PowerGood"
+  - "rssd14_3v3_PowerGood"
+  - "rssd15_3v3_PowerGood"
+  - "rssd16_3v3_PowerGood"
+  - "rssd17_3v3_PowerGood"
+  - "rssd18_3v3_PowerGood"
+  - "rssd19_3v3_PowerGood"
+  - "rssd20_3v3_PowerGood"
+  - "rssd21_3v3_PowerGood"
+  - "rssd22_3v3_PowerGood"
+  - "rssd23_3v3_PowerGood"
+  - "rssd24_3v3_PowerGood"
+  - "rssd25_3v3_PowerGood"
+  - "rssd26_3v3_PowerGood"
+  - "rssd27_3v3_PowerGood"
+  - "rssd28_3v3_PowerGood"
+  - "rssd29_3v3_PowerGood"
+  - "rssd30_3v3_PowerGood"
+  - "rssd31_3v3_PowerGood"
+  - "rssd32_3v3_PowerGood"
