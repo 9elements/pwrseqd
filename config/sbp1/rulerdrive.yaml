@@ -618,10 +618,6 @@ power_sequencer:
           - name: "RSSD01_PRESENT"
             invert: true
           - name: "rssd01_12v_Fault"
-          - name: "rssd01_3v3_Fault"
-          - name: "rssd01_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd01_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -641,10 +637,6 @@ power_sequencer:
           - name: "RSSD02_PRESENT"
             invert: true
           - name: "rssd02_12v_Fault"
-          - name: "rssd02_3v3_Fault"
-          - name: "rssd02_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd02_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -664,10 +656,6 @@ power_sequencer:
           - name: "RSSD03_PRESENT"
             invert: true
           - name: "rssd03_12v_Fault"
-          - name: "rssd03_3v3_Fault"
-          - name: "rssd03_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd03_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -687,10 +675,6 @@ power_sequencer:
           - name: "RSSD04_PRESENT"
             invert: true
           - name: "rssd04_12v_Fault"
-          - name: "rssd04_3v3_Fault"
-          - name: "rssd04_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd04_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -710,10 +694,6 @@ power_sequencer:
           - name: "RSSD05_PRESENT"
             invert: true
           - name: "rssd05_12v_Fault"
-          - name: "rssd05_3v3_Fault"
-          - name: "rssd05_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd05_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -733,10 +713,6 @@ power_sequencer:
           - name: "RSSD06_PRESENT"
             invert: true
           - name: "rssd06_12v_Fault"
-          - name: "rssd06_3v3_Fault"
-          - name: "rssd06_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd06_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -756,10 +732,6 @@ power_sequencer:
           - name: "RSSD07_PRESENT"
             invert: true
           - name: "rssd07_12v_Fault"
-          - name: "rssd07_3v3_Fault"
-          - name: "rssd07_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd07_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -779,10 +751,6 @@ power_sequencer:
           - name: "RSSD08_PRESENT"
             invert: true
           - name: "rssd08_12v_Fault"
-          - name: "rssd08_3v3_Fault"
-          - name: "rssd08_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd08_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -802,10 +770,6 @@ power_sequencer:
           - name: "RSSD09_PRESENT"
             invert: true
           - name: "rssd09_12v_Fault"
-          - name: "rssd09_3v3_Fault"
-          - name: "rssd09_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd09_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -825,10 +789,6 @@ power_sequencer:
           - name: "RSSD10_PRESENT"
             invert: true
           - name: "rssd10_12v_Fault"
-          - name: "rssd10_3v3_Fault"
-          - name: "rssd10_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd10_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -848,10 +808,6 @@ power_sequencer:
           - name: "RSSD11_PRESENT"
             invert: true
           - name: "rssd11_12v_Fault"
-          - name: "rssd11_3v3_Fault"
-          - name: "rssd11_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd11_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -871,10 +827,6 @@ power_sequencer:
           - name: "RSSD12_PRESENT"
             invert: true
           - name: "rssd12_12v_Fault"
-          - name: "rssd12_3v3_Fault"
-          - name: "rssd12_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd12_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -894,10 +846,6 @@ power_sequencer:
           - name: "RSSD13_PRESENT"
             invert: true
           - name: "rssd13_12v_Fault"
-          - name: "rssd13_3v3_Fault"
-          - name: "rssd13_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd13_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -917,10 +865,6 @@ power_sequencer:
           - name: "RSSD14_PRESENT"
             invert: true
           - name: "rssd14_12v_Fault"
-          - name: "rssd14_3v3_Fault"
-          - name: "rssd14_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd14_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -940,10 +884,6 @@ power_sequencer:
           - name: "RSSD15_PRESENT"
             invert: true
           - name: "rssd15_12v_Fault"
-          - name: "rssd15_3v3_Fault"
-          - name: "rssd15_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd15_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -963,10 +903,6 @@ power_sequencer:
           - name: "RSSD16_PRESENT"
             invert: true
           - name: "rssd16_12v_Fault"
-          - name: "rssd16_3v3_Fault"
-          - name: "rssd16_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd16_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -986,10 +922,6 @@ power_sequencer:
           - name: "RSSD17_PRESENT"
             invert: true
           - name: "rssd17_12v_Fault"
-          - name: "rssd17_3v3_Fault"
-          - name: "rssd17_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd17_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1009,10 +941,6 @@ power_sequencer:
           - name: "RSSD18_PRESENT"
             invert: true
           - name: "rssd18_12v_Fault"
-          - name: "rssd18_3v3_Fault"
-          - name: "rssd18_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd18_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1032,10 +960,6 @@ power_sequencer:
           - name: "RSSD19_PRESENT"
             invert: true
           - name: "rssd19_12v_Fault"
-          - name: "rssd19_3v3_Fault"
-          - name: "rssd19_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd19_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1055,10 +979,6 @@ power_sequencer:
           - name: "RSSD20_PRESENT"
             invert: true
           - name: "rssd20_12v_Fault"
-          - name: "rssd20_3v3_Fault"
-          - name: "rssd20_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd20_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1078,10 +998,6 @@ power_sequencer:
           - name: "RSSD21_PRESENT"
             invert: true
           - name: "rssd21_12v_Fault"
-          - name: "rssd21_3v3_Fault"
-          - name: "rssd21_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd21_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1101,10 +1017,6 @@ power_sequencer:
           - name: "RSSD22_PRESENT"
             invert: true
           - name: "rssd22_12v_Fault"
-          - name: "rssd22_3v3_Fault"
-          - name: "rssd22_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd22_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1124,10 +1036,6 @@ power_sequencer:
           - name: "RSSD23_PRESENT"
             invert: true
           - name: "rssd23_12v_Fault"
-          - name: "rssd23_3v3_Fault"
-          - name: "rssd23_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd23_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1147,10 +1055,6 @@ power_sequencer:
           - name: "RSSD24_PRESENT"
             invert: true
           - name: "rssd24_12v_Fault"
-          - name: "rssd24_3v3_Fault"
-          - name: "rssd24_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd24_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1170,10 +1074,6 @@ power_sequencer:
           - name: "RSSD25_PRESENT"
             invert: true
           - name: "rssd25_12v_Fault"
-          - name: "rssd25_3v3_Fault"
-          - name: "rssd25_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd25_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1193,10 +1093,6 @@ power_sequencer:
           - name: "RSSD26_PRESENT"
             invert: true
           - name: "rssd26_12v_Fault"
-          - name: "rssd26_3v3_Fault"
-          - name: "rssd26_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd26_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1216,10 +1112,6 @@ power_sequencer:
           - name: "RSSD27_PRESENT"
             invert: true
           - name: "rssd27_12v_Fault"
-          - name: "rssd27_3v3_Fault"
-          - name: "rssd27_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd27_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1239,10 +1131,6 @@ power_sequencer:
           - name: "RSSD28_PRESENT"
             invert: true
           - name: "rssd28_12v_Fault"
-          - name: "rssd28_3v3_Fault"
-          - name: "rssd28_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd28_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1262,10 +1150,6 @@ power_sequencer:
           - name: "RSSD29_PRESENT"
             invert: true
           - name: "rssd29_12v_Fault"
-          - name: "rssd29_3v3_Fault"
-          - name: "rssd29_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd29_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1285,10 +1169,6 @@ power_sequencer:
           - name: "RSSD30_PRESENT"
             invert: true
           - name: "rssd30_12v_Fault"
-          - name: "rssd30_3v3_Fault"
-          - name: "rssd30_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd30_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1308,10 +1188,6 @@ power_sequencer:
           - name: "RSSD31_PRESENT"
             invert: true
           - name: "rssd31_12v_Fault"
-          - name: "rssd31_3v3_Fault"
-          - name: "rssd31_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd31_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -1331,10 +1207,6 @@ power_sequencer:
           - name: "RSSD32_PRESENT"
             invert: true
           - name: "rssd32_12v_Fault"
-          - name: "rssd32_3v3_Fault"
-          - name: "rssd32_3v3_PowerGood"
-            invert: true
-            input_stable_usec: 100000
           - name: "rssd32_12v_PowerGood"
             invert: true
             input_stable_usec: 100000
@@ -2084,6 +1956,38 @@ outputs:
     signal_name: "FM_SSD_CLK_DRVR1_EN"
 
 floating_signals:
+  - "rssd01_3v3_Fault"
+  - "rssd02_3v3_Fault"
+  - "rssd03_3v3_Fault"
+  - "rssd04_3v3_Fault"
+  - "rssd05_3v3_Fault"
+  - "rssd06_3v3_Fault"
+  - "rssd07_3v3_Fault"
+  - "rssd08_3v3_Fault"
+  - "rssd09_3v3_Fault"
+  - "rssd10_3v3_Fault"
+  - "rssd11_3v3_Fault"
+  - "rssd12_3v3_Fault"
+  - "rssd13_3v3_Fault"
+  - "rssd14_3v3_Fault"
+  - "rssd15_3v3_Fault"
+  - "rssd16_3v3_Fault"
+  - "rssd17_3v3_Fault"
+  - "rssd18_3v3_Fault"
+  - "rssd19_3v3_Fault"
+  - "rssd20_3v3_Fault"
+  - "rssd21_3v3_Fault"
+  - "rssd22_3v3_Fault"
+  - "rssd23_3v3_Fault"
+  - "rssd24_3v3_Fault"
+  - "rssd25_3v3_Fault"
+  - "rssd26_3v3_Fault"
+  - "rssd27_3v3_Fault"
+  - "rssd28_3v3_Fault"
+  - "rssd29_3v3_Fault"
+  - "rssd30_3v3_Fault"
+  - "rssd31_3v3_Fault"
+  - "rssd32_3v3_Fault"
   - "rssd01_3v3_Enabled"
   - "rssd02_3v3_Enabled"
   - "rssd03_3v3_Enabled"
