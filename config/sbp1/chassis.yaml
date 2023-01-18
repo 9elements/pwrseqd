@@ -114,6 +114,26 @@ power_sequencer:
       out:
         name: "FM_DB2000_DEV_EN"
 
+  - SSD1_LED_Unit:
+      in:
+        and:
+          - name: "p3v3_m2_ssd1_PowerGood"
+            invert: true
+            input_stable_usec: 100000
+          - name: "p3v3_m2_ssd1_PowerGood"
+            invert: true
+      out:
+        name: "LED_SSD1"
+
+  - SSD2_LED_Unit:
+      in:
+        and:
+          - name: "p3v3_m2_ssd2_PowerGood"
+            input_stable_usec: 100000
+          - name: "p3v3_m2_ssd2_PowerGood"
+      out:
+        name: "LED_SSD2"
+
 regulators:
   - name: "bcm1"
   - name: "bcm2"
@@ -178,3 +198,9 @@ outputs:
   - name: "FM_DB2000_DEV_EN"
     type: "gpio"
     signal_name: "FM_DB2000_DEV_EN"
+  - name: "led_m2_ssb_ssd1_power"
+    type: "led"
+    signal_name: "LED_SSD1"
+  - name: "led_m2_ssb_ssd2_power"
+    type: "led"
+    signal_name: "LED_SSD2"
