@@ -101,10 +101,8 @@ power_sequencer:
       in:
         and:
           - name: "p3v3_m2_ssd1_PowerGood"
-            invert: true
             input_stable_usec: 100000
           - name: "p3v3_m2_ssd1_PowerGood"
-            invert: true
       out:
         name: "LED_SSD1"
 
