@@ -90,6 +90,16 @@ class Dbus
     void SetChassisState(const bool IsOn);
     void SetLEDState(string name, bool state);
 
+    void RegisterItemPresentCallback(
+        const std::string& inventoryPath,
+        const std::function<void(const bool present)>&
+            eventHandler);
+
+    void GetItemPresentCallback(
+        const std::string& inventoryPath,
+        const std::function<void(const bool present)>&
+            eventHandler);
+
     void RegisterRequestedHostTransition(
         const std::function<bool(const std::string& requested,
                                  std::string& resp)>& handler);
@@ -101,6 +111,8 @@ class Dbus
 
   private:
 #ifdef WITH_SDBUSPLUSPLUS
+    std::vector<std::unique_ptr<sdbusplus::bus::match::match>> matches;
+
     std::shared_ptr<sdbusplus::asio::connection> conn;
 
     sdbusplus::asio::object_server hostServer;

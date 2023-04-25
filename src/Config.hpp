@@ -55,6 +55,7 @@ struct ConfigLogic
 enum ConfigInputType
 {
     INPUT_TYPE_GPIO,
+    INPUT_TYPE_DBUS_PRESENCE,
     INPUT_TYPE_NULL,
     INPUT_TYPE_UNKNOWN,
 };
@@ -70,6 +71,8 @@ enum ConfigOutputType
 struct ConfigInput
 {
     // The name where the signal level is read from
+    // For DBUS it's the inventory path.
+    // For GPIO it's the GPIO line name.
     string Name;
     // The chipname where the signal level is read from (only for GPIOs)
     string GpioChipName;

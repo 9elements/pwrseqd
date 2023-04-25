@@ -35,6 +35,13 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
             prov.AddDriver(g);
             log_debug("pushing gpio input " + cfg.Inputs[i].SignalName);
         }
+        else if (cfg.Inputs[i].InputType == INPUT_TYPE_DBUS_PRESENCE)
+        {
+            ItemPresent* p = new ItemPresent(dbus, &cfg.Inputs[i], prov);
+            this->itemPresenceInputs.push_back(p);
+            prov.AddDriver(p);
+            log_debug("using DBus presence input " + cfg.Inputs[i].SignalName);
+        }
         else if (cfg.Inputs[i].InputType == INPUT_TYPE_NULL)
         {
             NullInput* n = new NullInput(io, &cfg.Inputs[i], prov);

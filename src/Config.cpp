@@ -209,6 +209,8 @@ struct convert<ConfigInput>
                 string nameOfType = it.second.as<string>();
                 if (nameOfType == "gpio")
                     c.InputType = INPUT_TYPE_GPIO;
+                else if (nameOfType == "dbus_presence")
+                    c.InputType = INPUT_TYPE_DBUS_PRESENCE;
                 else if (nameOfType == "null")
                     c.InputType = INPUT_TYPE_NULL;
                 else

@@ -4,6 +4,7 @@
 #include "GpioInput.hpp"
 #include "GpioOutput.hpp"
 #include "IODriver.hpp"
+#include "InventoryItemPresence.hpp"
 #include "Logic.hpp"
 #include "LED.hpp"
 #include "NullInput.hpp"
@@ -67,6 +68,7 @@ class StateMachine : Validator
     vector<NullOutput*> nullOutputs;
     vector<NullInput*> nullInputs;
     vector<LED*> ledOutputs;
+    vector<ItemPresent*> itemPresenceInputs;
 
     vector<VoltageRegulator*> voltageRegulators;
 
