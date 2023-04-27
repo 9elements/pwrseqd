@@ -115,6 +115,7 @@ string VoltageRegulator::StatusToString(const enum RegulatorStatus status)
         case STANDBY: return "STANDBY";
         case NOCHANGE: return "NOCHANGE";
         case INVALID: return "INVALID";
+	case UNDEFINED: return "UNDEFINED";
     }
 
     return "unknown";
@@ -158,10 +159,21 @@ void VoltageRegulator::ConfirmStatusAfterTimeout(void)
 
 void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
 {
+    // If status is undefined regulator is not in error state.
+    // Assume it's on when state is set to enabled, else off.
+    // TODO: Fix the linux driver to return proper status.
+    if (status == UNDEFINED) {
+      if (this->stateShadow == ENABLED) {
+        status = ON;
+      } else {
+        status = OFF;
+      }
+    }
     // If status haven't changed just return
-    // This can happen if a PRE_DISABLE or PRE_VOLTAGE_CHANGE is send
+    // This can happen if a PRE_DISABLE or PRE_VOLTAGE_CHANGE is sent
     if (this->statusShadow == status)
         return;
+
     if (status == NOCHANGE)
         return;
 
@@ -247,13 +259,13 @@ enum RegulatorStatus VoltageRegulator::DecodeStatus(string state)
     {
         enum RegulatorStatus status;
         string str;
-    } lookup[7] = {
+    } lookup[8] = {
         {OFF, "off"},         {ON, "on"},         {ERROR, "error"},
         {FAST, "fast"},       {NORMAL, "normal"}, {IDLE, "idle"},
-        {STANDBY, "standby"},
+        {STANDBY, "standby"}, {UNDEFINED, "undefined"},
     };
 
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 8; i++)
     {
         if (state == lookup[i].str || state == lookup[i].str + "\n")
         {

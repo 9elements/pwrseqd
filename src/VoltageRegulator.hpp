@@ -40,8 +40,9 @@ enum RegulatorStatus
     NORMAL = 4,
     IDLE = 5,
     STANDBY = 6,
-    NOCHANGE = 7,
-    INVALID = 8,
+    UNDEFINED = 7,
+    NOCHANGE = 8,
+    INVALID = 9,
 };
 
 #define REGULATOR_EVENT_UNDER_VOLTAGE 0x01
