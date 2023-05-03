@@ -30,7 +30,7 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 macro(package_add_test_with_libraries TESTNAME FILES LIBRARIES)
@@ -51,8 +51,12 @@ set(FILES main.cpp Signal_test.cpp StateMachine_test.cpp  Logic_test.cpp Voltage
 		../src/InventoryItemPresence.cpp)
 set(LIBRARIES ${YAML_CPP_LIBRARIES} ${GPIODCXX_LIBRARY} Threads::Threads)
 if(SDBUSPLUSPLUS_FOUND)
-	set(LIBRARIES ${YAML_CPP_LIBRARIES} ${GPIODCXX_LIBRARY} Threads::Threads sdbusplus -lsystemd)
+	set(LIBRARIES ${LIBRARIES} sdbusplus -lsystemd)
 endif()
+if(PHOSPHOR_LOGGING_FOUND)
+	set(LIBRARIES ${LIBRARIES} phosphor_logging)
+endif()
+
 include_directories(../src ${YAML_CPP_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${GPIOD_INCLUDE_DIR})
 
 package_add_test_with_libraries(test_all "${FILES}" "${LIBRARIES}")
@@ -64,7 +68,10 @@ set(FILES main.cpp LogicRuntimeTest.cpp
 		../src/InventoryItemPresence.cpp)
 set(LIBRARIES ${YAML_CPP_LIBRARIES} ${GPIODCXX_LIBRARY} Threads::Threads)
 if(SDBUSPLUSPLUS_FOUND)
-	set(LIBRARIES ${YAML_CPP_LIBRARIES} ${GPIODCXX_LIBRARY} Threads::Threads sdbusplus -lsystemd)
+	set(LIBRARIES ${LIBRARIES} sdbusplus -lsystemd)
+endif()
+if(PHOSPHOR_LOGGING_FOUND)
+	set(LIBRARIES ${LIBRARIES} phosphor_logging)
 endif()
 
 include_directories(../src ${YAML_CPP_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${GPIOD_INCLUDE_DIR})

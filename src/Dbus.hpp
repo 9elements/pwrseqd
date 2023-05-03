@@ -3,6 +3,7 @@
 #include "Config.hpp"
 
 #include <boost/asio.hpp>
+#include <boost/container/flat_map.hpp>
 
 #ifdef WITH_SDBUSPLUSPLUS
 #include <sdbusplus/asio/object_server.hpp>
