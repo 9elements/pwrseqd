@@ -25,6 +25,26 @@ enum class HostState
     diagnosticMode,
 };
 
+enum class OSState
+{
+    inactive,
+    standby,
+};
+
+static constexpr std::string_view getOSState(const OSState state)
+{
+    switch (state)
+    {
+        case OSState::inactive:
+            return "xyz.openbmc_project.State.OperatingSystem.Status.OSStatus.Inactive";
+        case OSState::standby:
+            return "xyz.openbmc_project.State.OperatingSystem.Status.OSStatus.Standby";
+        default:
+            return "xyz.openbmc_project.State.OperatingSystem.Status.OSStatus.Inactive";
+            break;
+    }
+};
+
 static std::string getHostStateName(HostState state)
 {
     switch (state)
@@ -88,6 +108,7 @@ class Dbus
     Dbus(Config& cfg, boost::asio::io_service& io);
     ~Dbus();
     void SetHostState(const dbus::HostState);
+    void SetOSState(const dbus::OSState);
     void SetChassisState(const bool IsOn);
     void SetLEDState(string name, bool state);
 
@@ -118,8 +139,11 @@ class Dbus
 
     sdbusplus::asio::object_server hostServer;
     sdbusplus::asio::object_server chassisServer;
+    sdbusplus::asio::object_server osServer;
 
     std::shared_ptr<sdbusplus::asio::dbus_interface> hostIface;
     std::shared_ptr<sdbusplus::asio::dbus_interface> chassisIface;
+    std::shared_ptr<sdbusplus::asio::dbus_interface> osIface;
+
 #endif
 };

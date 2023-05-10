@@ -125,6 +125,14 @@ void ACPIStates::Update(void)
             else
                 this->dbus->SetHostState(dbus::HostState::transitionToOff);
             this->dbus->SetChassisState(true);
+            if (this->signalPostDone != nullptr) {
+                if (this->signalPostDone->GetLevel())
+                    this->dbus->SetOSState(dbus::OSState::standby);
+                else
+                    this->dbus->SetOSState(dbus::OSState::inactive);
+            } else {
+                    this->dbus->SetOSState(dbus::OSState::standby);
+            }
             break;
         case ACPI_S3:
             if (this->signalHostState->GetLevel())
@@ -132,6 +140,7 @@ void ACPIStates::Update(void)
             else
                 this->dbus->SetHostState(dbus::HostState::standby);
             this->dbus->SetChassisState(true);
+            this->dbus->SetOSState(dbus::OSState::inactive);
             break;
         case ACPI_S5:
             if (this->signalHostState->GetLevel())
@@ -139,12 +148,14 @@ void ACPIStates::Update(void)
             else
                 this->dbus->SetHostState(dbus::HostState::off);
             this->dbus->SetChassisState(true);
+            this->dbus->SetOSState(dbus::OSState::inactive);
             break;
         case ACPI_G3:
             this->powerCycleTimer.cancel();
 
             this->dbus->SetChassisState(false);
             this->dbus->SetHostState(dbus::HostState::off);
+            this->dbus->SetOSState(dbus::OSState::inactive);
             break;
     }
 }
@@ -243,7 +254,10 @@ ACPIStates::ACPIStates(Config& cfg, SignalProvider& sp,
 
     this->signalHostState = sp.FindOrAdd("STATE_REQ_HOST_ON");
     this->signalChassisState = sp.FindOrAdd("STATE_REQ_CHASSIS_ON");
-
+    this->signalPostDone = sp.Find("STATE_POST_DONE");
+    if (this->signalPostDone == nullptr) {
+        log_debug("Could not find signal STATE_POST_DONE. POST will be unreliable.");
+    }
     this->dbus->RegisterRequestedHostTransition(
         [this](const std::string& requested, std::string& resp) {
             log_debug("RequestedHostTransition to " + requested);
@@ -271,6 +285,8 @@ vector<Signal*> ACPIStates::Signals()
 
     vec.push_back(this->signalHostState);
     vec.push_back(this->signalChassisState);
-
+    if (this->signalPostDone != nullptr) {
+        vec.push_back(this->signalPostDone);
+    }
     return vec;
 }

@@ -53,6 +53,7 @@ class ACPIStates : public SignalDriver, SignalReceiver
     SignalProvider* sp;
     Signal* signalChassisState;
     Signal* signalHostState;
+    Signal* signalPostDone;
     unordered_map<enum ACPILevel, Signal*> outputs;
     Dbus *dbus;
     boost::asio::deadline_timer powerCycleTimer;

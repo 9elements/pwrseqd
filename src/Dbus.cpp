@@ -36,6 +36,10 @@ const static constexpr char* property = "Present";
 const static constexpr char* prefix = "/xyz/openbmc_project/inventory/";
 } // namespace inventory
 
+namespace os
+{
+const static constexpr char* busname = "xyz.openbmc_project.State.OperatingSystem.Status";
+}
 using namespace dbus;
 
 static constexpr std::string_view getChassisState(const bool isOn)
@@ -141,6 +145,16 @@ void Dbus::SetChassisState(const bool IsOn)
 #endif
 }
 
+void Dbus::SetOSState(const dbus::OSState state)
+{
+#ifdef WITH_SDBUSPLUSPLUS
+    this->osIface->set_property("OperatingSystemState",
+                                std::string(getOSState(state)));
+
+    log_debug("DBUS CurrentOSState " + std::string(getOSState(state)));
+#endif
+}
+
 void Dbus::RegisterRequestedHostTransition(
     const std::function<bool(const std::string& requested, std::string& resp)>&
         handler)
@@ -175,6 +189,7 @@ void Dbus::Initialize(void)
 #ifdef WITH_SDBUSPLUSPLUS
     this->hostIface->initialize();
     this->chassisIface->initialize();
+    this->osIface->initialize();
 #endif
 }
 
@@ -182,10 +197,7 @@ Dbus::Dbus(Config& cfg, boost::asio::io_service& io)
 #ifdef WITH_SDBUSPLUSPLUS
     :
     conn{std::make_shared<sdbusplus::asio::connection>(io)},
-    hostServer{conn}, chassisServer
-{
-    conn
-}
+    hostServer{conn}, chassisServer{conn}, osServer{conn}
 
 #endif
 {
@@ -202,6 +214,14 @@ Dbus::Dbus(Config& cfg, boost::asio::io_service& io)
     // Request all the dbus names
     conn->request_name(std::string(power::busname).append(node).c_str());
     conn->request_name(std::string(chassis::busname).append(node).c_str());
+
+    // OS State Interface
+    this->osIface = osServer.add_interface(
+        "/xyz/openbmc_project/state/os",
+        os::busname);
+    this->osIface->register_property(
+        "OperatingSystemState",
+        std::string(getOSState(dbus::OSState::inactive)));
 
     // Power Control Interface
     this->hostIface =
