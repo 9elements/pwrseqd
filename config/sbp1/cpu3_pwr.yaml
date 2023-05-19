@@ -13,10 +13,10 @@ inputs:
     gate_input: true
     gated_idle_high: true
 
-  - name: "FM_CPU3_SKTOCC_N"
+  - name: "system/chassis/motherboard/cpu3"
+    type: "dbus_presence"
+    pullup: true
     signal_name: "FM_CPU3_SKTOCC"
-    type: "gpio"
-    active_low: true
     description: "CPU3 socket is occupied."
 
   - name: "PWRGD_CHA_CPU3"
