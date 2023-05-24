@@ -254,9 +254,11 @@ ACPIStates::ACPIStates(Config& cfg, SignalProvider& sp,
 
     this->signalHostState = sp.FindOrAdd("STATE_REQ_HOST_ON");
     this->signalChassisState = sp.FindOrAdd("STATE_REQ_CHASSIS_ON");
-    this->signalPostDone = sp.Find("STATE_POST_DONE");
+    this->signalPostDone = sp.FindOrAdd("STATE_POST_DONE");
     if (this->signalPostDone == nullptr) {
         log_debug("Could not find signal STATE_POST_DONE. POST will be unreliable.");
+    } else {
+        this->signalPostDone->AddReceiver(this);
     }
     this->dbus->RegisterRequestedHostTransition(
         [this](const std::string& requested, std::string& resp) {
