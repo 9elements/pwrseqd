@@ -126,12 +126,16 @@ void ACPIStates::Update(void)
                 this->dbus->SetHostState(dbus::HostState::transitionToOff);
             this->dbus->SetChassisState(true);
             if (this->signalPostDone != nullptr) {
-                if (this->signalPostDone->GetLevel())
+                if (this->signalPostDone->GetLevel()) {
+                    this->dbus->SetBootState(dbus::BootProgress::SystemInitComplete);
                     this->dbus->SetOSState(dbus::OSState::standby);
-                else
+                } else {
+                    this->dbus->SetBootState(dbus::BootProgress::PrimaryProcInit);
                     this->dbus->SetOSState(dbus::OSState::inactive);
+                }
             } else {
-                    this->dbus->SetOSState(dbus::OSState::standby);
+                this->dbus->SetBootState(dbus::BootProgress::PrimaryProcInit);
+                this->dbus->SetOSState(dbus::OSState::standby);
             }
             break;
         case ACPI_S3:
@@ -141,6 +145,7 @@ void ACPIStates::Update(void)
                 this->dbus->SetHostState(dbus::HostState::standby);
             this->dbus->SetChassisState(true);
             this->dbus->SetOSState(dbus::OSState::inactive);
+	    this->dbus->SetBootState(dbus::BootProgress::Unspecified);
             break;
         case ACPI_S5:
             if (this->signalHostState->GetLevel())
@@ -149,6 +154,7 @@ void ACPIStates::Update(void)
                 this->dbus->SetHostState(dbus::HostState::off);
             this->dbus->SetChassisState(true);
             this->dbus->SetOSState(dbus::OSState::inactive);
+	    this->dbus->SetBootState(dbus::BootProgress::Unspecified);
             break;
         case ACPI_G3:
             this->powerCycleTimer.cancel();
@@ -156,6 +162,7 @@ void ACPIStates::Update(void)
             this->dbus->SetChassisState(false);
             this->dbus->SetHostState(dbus::HostState::off);
             this->dbus->SetOSState(dbus::OSState::inactive);
+	    this->dbus->SetBootState(dbus::BootProgress::Unspecified);
             break;
     }
 }

@@ -31,6 +31,19 @@ enum class OSState
     standby,
 };
 
+enum class BootProgress
+{
+	Unspecified,
+	PrimaryProcInit,
+	MemoryInit,
+	SecondaryProcInit,
+	PCIInit,
+	SystemSetup,
+	SystemInitComplete,
+	OSStart,
+	OSRunning,
+};
+
 static constexpr std::string_view getOSState(const OSState state)
 {
     switch (state)
@@ -42,6 +55,33 @@ static constexpr std::string_view getOSState(const OSState state)
         default:
             return "xyz.openbmc_project.State.OperatingSystem.Status.OSStatus.Inactive";
             break;
+    }
+};
+
+static constexpr std::string_view getBootProgress(const BootProgress progress)
+{
+    switch (progress)
+    {
+        case BootProgress::Unspecified:
+            return "xyz.openbmc_project.State.Boot.Progress.ProgressStages.Unspecified";
+        case BootProgress::PrimaryProcInit:
+            return "xyz.openbmc_project.State.Boot.Progress.ProgressStages.PrimaryProcInit";
+        case BootProgress::MemoryInit:
+            return "xyz.openbmc_project.State.Boot.Progress.ProgressStages.MemoryInit";
+        case BootProgress::SecondaryProcInit:
+            return "xyz.openbmc_project.State.Boot.Progress.ProgressStages.SecondaryProcInit";
+        case BootProgress::PCIInit:
+            return "xyz.openbmc_project.State.Boot.Progress.ProgressStages.PCIInit";
+        case BootProgress::SystemSetup:
+            return "xyz.openbmc_project.State.Boot.Progress.ProgressStages.SystemSetup";
+        case BootProgress::SystemInitComplete:
+            return "xyz.openbmc_project.State.Boot.Progress.ProgressStages.SystemInitComplete";
+        case BootProgress::OSStart:
+            return "xyz.openbmc_project.State.Boot.Progress.ProgressStages.OSStart";
+        case BootProgress::OSRunning:
+            return "xyz.openbmc_project.State.Boot.Progress.ProgressStages.OSRunning";
+        default:
+            return "xyz.openbmc_project.State.Boot.Progress.ProgressStages.Unspecified";
     }
 };
 
@@ -109,6 +149,7 @@ class Dbus
     ~Dbus();
     void SetHostState(const dbus::HostState);
     void SetOSState(const dbus::OSState);
+    void SetBootState(const dbus::BootProgress progress);
     void SetChassisState(const bool IsOn);
     void SetLEDState(string name, bool state);
 
@@ -138,10 +179,12 @@ class Dbus
     std::shared_ptr<sdbusplus::asio::connection> conn;
 
     sdbusplus::asio::object_server hostServer;
+    sdbusplus::asio::object_server bootServer;
     sdbusplus::asio::object_server chassisServer;
     sdbusplus::asio::object_server osServer;
 
     std::shared_ptr<sdbusplus::asio::dbus_interface> hostIface;
+    std::shared_ptr<sdbusplus::asio::dbus_interface> bootIface;
     std::shared_ptr<sdbusplus::asio::dbus_interface> chassisIface;
     std::shared_ptr<sdbusplus::asio::dbus_interface> osIface;
 

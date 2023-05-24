@@ -40,6 +40,13 @@ namespace os
 {
 const static constexpr char* busname = "xyz.openbmc_project.State.OperatingSystem.Status";
 }
+
+namespace boot
+{
+const static constexpr char* busname = "xyz.openbmc_project.State.Boot.Progress";
+const static constexpr char* property = "BootProgress";
+const static constexpr char* time = "BootProgressLastUpdate";
+}
 using namespace dbus;
 
 static constexpr std::string_view getChassisState(const bool isOn)
@@ -136,7 +143,7 @@ void Dbus::SetChassisState(const bool IsOn)
                                      std::string(getChassisState(IsOn)));
     log_debug("DBUS CurrentPowerState " + std::string(getChassisState(IsOn)));
 
-    this->chassisIface->register_property(
+    this->chassisIface->set_property(
         "LastStateChangeTime",
         std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::system_clock::now() -
@@ -152,6 +159,23 @@ void Dbus::SetOSState(const dbus::OSState state)
                                 std::string(getOSState(state)));
 
     log_debug("DBUS CurrentOSState " + std::string(getOSState(state)));
+#endif
+}
+
+void Dbus::SetBootState(const dbus::BootProgress progress)
+{
+#ifdef WITH_SDBUSPLUSPLUS
+    this->bootIface->set_property(boot::property,
+                                  std::string(getBootProgress(progress)));
+
+    log_debug("DBUS BootState " + std::string(getBootProgress(progress)));
+
+    this->bootIface->set_property(
+        boot::time,
+        std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now() -
+            std::chrono::system_clock::from_time_t(0))
+            .count());
 #endif
 }
 
@@ -188,6 +212,7 @@ void Dbus::Initialize(void)
 {
 #ifdef WITH_SDBUSPLUSPLUS
     this->hostIface->initialize();
+    this->bootIface->initialize();
     this->chassisIface->initialize();
     this->osIface->initialize();
 #endif
@@ -197,7 +222,7 @@ Dbus::Dbus(Config& cfg, boost::asio::io_service& io)
 #ifdef WITH_SDBUSPLUSPLUS
     :
     conn{std::make_shared<sdbusplus::asio::connection>(io)},
-    hostServer{conn}, chassisServer{conn}, osServer{conn}
+    hostServer{conn}, bootServer{conn}, chassisServer{conn}, osServer{conn}
 
 #endif
 {
@@ -230,6 +255,18 @@ Dbus::Dbus(Config& cfg, boost::asio::io_service& io)
 
     this->hostIface->register_property(
         "CurrentHostState", std::string(getHostState(dbus::HostState::off)));
+
+    // Boot Status Interface
+    this->bootIface =
+        bootServer.add_interface("/xyz/openbmc_project/state/host" + node,
+                                boot::busname);
+    this->bootIface->register_property(
+        boot::property, std::string(getBootProgress(dbus::BootProgress::Unspecified)));
+    this->bootIface->register_property(boot::time,
+            std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now() -
+            std::chrono::system_clock::from_time_t(0))
+            .count());
 
     // Chassis Control Interface
     this->chassisIface =
