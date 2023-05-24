@@ -1,4 +1,12 @@
 ---
+inputs:
+  - name: "FM_BIOS_POST_CMPLT_N"
+    type: "gpio"
+    signal_name: "FM_BIOS_POST_CMPLT"
+    active_low: true
+    description: "Indicates that the host is done with silicon init."
+    gate_input: true
+    gated_idle_low: true
 
 power_sequencer:
 
@@ -38,6 +46,14 @@ power_sequencer:
             invert: true
       out:
         name: "ACPI_STATE_IS_S0"
+
+  - POST_DONE_Unit:
+      in:
+        and:
+          - name: "ACPI_STATE_IS_S0"
+          - name: "FM_BIOS_POST_CMPLT"
+      out:
+        name: "STATE_POST_DONE"
 
 immutables:
   - signal_name: "ACPI_STATE_IS_S3"

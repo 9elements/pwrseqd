@@ -214,6 +214,8 @@ power_sequencer:
         and:
           - name: "CPU3_SYS_PWROK"
           - name: "FM_CPU3_SKTOCC"
+          - name: "STATE_POST_DONE"
+            invert: true
       out:
         name: "SEL_SMB_DIMM_CPU3"
 

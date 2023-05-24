@@ -248,6 +248,14 @@ power_sequencer:
       out:
         name: "FM_SLPS4_N_On"
 
+  - FM_BIOS_POST_CMPLT_N_Enable_Unit:
+      in:
+        and:
+          - name: "RSMRST"
+            invert: true
+      out:
+        name: "FM_BIOS_POST_CMPLT_N_On"
+
   - PWRGD_CPUPWRGD_Enable_Unit:
       in:
         and:
