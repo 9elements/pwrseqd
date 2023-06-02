@@ -212,7 +212,7 @@ power_sequencer:
   - SEL_SMB_DIMM_CPU3_Unit:
       in:
         and:
-          - name: "CPU3_SYS_PWROK"
+          - name: "CPU_POWER"
           - name: "FM_CPU3_SKTOCC"
       out:
         name: "SEL_SMB_DIMM_CPU3"
