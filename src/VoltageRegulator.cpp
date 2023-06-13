@@ -26,20 +26,20 @@ void VoltageRegulator::Apply(void)
         this->timerStateCheck.cancel();
 
         this->control.SetState(s);
-        this->pendingLevelChange = true;
-        this->pendingNewLevel = s;
 
         // Setting the state might fail. Read current value from consumer.
-        this->stateShadow =  this->control.DecodeState();
+        this->stateShadow = this->control.DecodeState();
         if (s != this->stateShadow)
         {
             // Try again.
             this->control.SetState(s);
-            this->pendingLevelChange = true;
-            this->pendingNewLevel = s;
+            this->stateShadow = this->control.DecodeState();
         }
 
-        this->timerStateCheck.expires_from_now(boost::posix_time::microseconds(this->stateChangeTimeoutUsec));
+        this->pendingLevelChange = true;
+        this->pendingNewLevel = s;
+        this->retries = 10;
+        this->timerStateCheck.expires_from_now(boost::posix_time::microseconds(this->stateChangeTimeoutUsec / this->retries));
         this->timerStateCheck.async_wait([&](const boost::system::error_code& err) {
             if (err != boost::asio::error::operation_aborted)
             {
@@ -48,7 +48,7 @@ void VoltageRegulator::Apply(void)
         });
 
         // This might glitch if regulator needs some time to disable
-        this->enabled->SetLevel(s == ENABLED);
+        this->enabled->SetLevel(this->stateShadow == ENABLED);
     }
 }
 
@@ -70,6 +70,13 @@ void VoltageRegulator::Update(void)
 
 void VoltageRegulator::ConfirmStatusAfterTimeout(void)
 {
+    /* In case notify is too slow/fast */
+    enum RegulatorStatus status = this->control.DecodeStatus();
+    if (this->statusShadow != status) {
+        log_debug(this->name + ": timerStateCheck read 'status': " +  this->control.StatusToString(status));
+    }
+    this->ApplyStatus(status);
+
     bool failure = false;
     // First check state. Should never missmatch with a single regulator consumer.
     if (this->pendingNewLevel == DISABLED && this->stateShadow == ENABLED) {
@@ -85,12 +92,24 @@ void VoltageRegulator::ConfirmStatusAfterTimeout(void)
     }
 
     if (failure) {
-        log_err(this->name + ": State didn't change after " + to_string(this->stateChangeTimeoutUsec) + " usec.");
+        if (this->retries > 0) {
+            this->timerStateCheck.expires_from_now(boost::posix_time::microseconds(this->stateChangeTimeoutUsec / this->retries));
+            this->timerStateCheck.async_wait([&](const boost::system::error_code& err) {
+                if (err != boost::asio::error::operation_aborted)
+                {
+                    this->ConfirmStatusAfterTimeout();
+                }
+            });
+            this->retries--;
+
+            return;
+        }
+        log_err(this->name + ": State didn't change after " + to_string(this->stateChangeTimeoutUsec * 2) + " usec.");
 
         this->pendingLevelChange = false;
         this->ApplyStatus(ERROR);
         // Something is wrong. Turn off regulator.
-         this->control.SetState(DISABLED);
+        this->control.SetState(DISABLED);
     }
 }
 
@@ -214,7 +233,7 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
         if (this->statusShadow == status)
         {
             io.post([&]() {
-                string statusText =  this->control.ReadStatus();
+                string statusText = this->control.ReadStatus();
                 enum RegulatorStatus status2 = this->control.DecodeStatus(statusText);
                 if (status2 == INVALID) {
                     log_err(this->name + ": Got invalid status string '"+statusText+"'");
@@ -222,7 +241,6 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
                 this->ApplyStatus(status2);
             });
         } else {
-            log_debug(this->name + ": sysfsnotify on 'status'");
             this->ApplyStatus(status);
         }
     });
@@ -232,7 +250,13 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
      this->control.RegisterEventCallback([&](const unsigned long events) {
         enum RegulatorStatus status;
         status =  this->control.DecodeEvents(events);
-        this->ApplyStatus(status);
+        if (status == ON) {
+            this->enabled->SetLevel(true);
+        } else if (status == OFF) {
+            this->enabled->SetLevel(false);
+        } else {
+            this->ApplyStatus(status);
+        }
     });
 }
 

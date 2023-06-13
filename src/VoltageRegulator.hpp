@@ -75,6 +75,8 @@ class VoltageRegulator :
     bool pendingLevelChange;
     // The level that was requested at the regulator.
     enum RegulatorState pendingNewLevel;
+    // Retry counter for pending level change
+    int retries;
 
     Signal* in;
     Signal* enabled;

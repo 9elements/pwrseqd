@@ -259,7 +259,7 @@ void VoltageRegulatorSysfs::RegisterStatusCallback(
         if (status == INVALID) {
             log_err(this->name + ": Got invalid status string '"+string(data)+"'");
         }
-        log_debug(this->name + ": sysfsnotify on 'status'");
+        log_debug(this->name + ": sysfsnotify on 'status': '"+StatusToString(status)+"'");
 
         handler(status);
     });
