@@ -97,12 +97,12 @@ TEST(Regulator, EventParsing)
     WriteFile(root / path("consumer") / path("state"), "disabled");
 
     VoltageRegulator vr(io, &cfg.Regulators[0], sp, root.string());
-    EXPECT_EQ(vr.DecodeRegulatorEvent("0"), 0);
-    EXPECT_EQ(vr.DecodeRegulatorEvent("1"), 1);
-    EXPECT_EQ(vr.DecodeRegulatorEvent("0x2"), 2);
-    EXPECT_EQ(vr.DecodeRegulatorEvent("0x100"), 256);
-    EXPECT_EQ(vr.DecodeRegulatorEvent("-1000"), -1000);
-    EXPECT_EQ(vr.DecodeRegulatorEvent("0xffff\n"), 0xffff);
+    EXPECT_EQ(vr.control.DecodeRegulatorEvent("0"), 0);
+    EXPECT_EQ(vr.control.DecodeRegulatorEvent("1"), 1);
+    EXPECT_EQ(vr.control.DecodeRegulatorEvent("0x2"), 2);
+    EXPECT_EQ(vr.control.DecodeRegulatorEvent("0x100"), 256);
+    EXPECT_EQ(vr.control.DecodeRegulatorEvent("-1000"), -1000);
+    EXPECT_EQ(vr.control.DecodeRegulatorEvent("0xffff\n"), 0xffff);
 
     remove_all(root);
 }
@@ -130,17 +130,17 @@ TEST(Regulator, StatusParsing)
 
     VoltageRegulator vr(io, &cfg.Regulators[0], sp, root.string());
 
-    EXPECT_EQ(vr.DecodeStatus(""), ERROR);
-    EXPECT_EQ(vr.DecodeStatus("on"), ON);
-    EXPECT_EQ(vr.DecodeStatus("on\n"), ON);
-    EXPECT_EQ(vr.DecodeStatus("off"), OFF);
-    EXPECT_EQ(vr.DecodeStatus("off\n"), OFF);
-    EXPECT_EQ(vr.DecodeStatus("error"), ERROR);
-    EXPECT_EQ(vr.DecodeStatus("error\n"), ERROR);
-    EXPECT_EQ(vr.DecodeStatus("fast"), FAST);
-    EXPECT_EQ(vr.DecodeStatus("normal"), NORMAL);
-    EXPECT_EQ(vr.DecodeStatus("idle"), IDLE);
-    EXPECT_EQ(vr.DecodeStatus("standby"), STANDBY);
+    EXPECT_EQ(vr.control.DecodeStatus(""), ERROR);
+    EXPECT_EQ(vr.control.DecodeStatus("on"), ON);
+    EXPECT_EQ(vr.control.DecodeStatus("on\n"), ON);
+    EXPECT_EQ(vr.control.DecodeStatus("off"), OFF);
+    EXPECT_EQ(vr.control.DecodeStatus("off\n"), OFF);
+    EXPECT_EQ(vr.control.DecodeStatus("error"), ERROR);
+    EXPECT_EQ(vr.control.DecodeStatus("error\n"), ERROR);
+    EXPECT_EQ(vr.control.DecodeStatus("fast"), FAST);
+    EXPECT_EQ(vr.control.DecodeStatus("normal"), NORMAL);
+    EXPECT_EQ(vr.control.DecodeStatus("idle"), IDLE);
+    EXPECT_EQ(vr.control.DecodeStatus("standby"), STANDBY);
 
     remove_all(root);
 }
