@@ -6,7 +6,7 @@ all power VRs, monitoring all rails, controlling GPIOs and doing thermal
 management.
 This software is meant to be used on [OpenBmc](https://github.com/openbmc/openbmc).
 
-Detailed implementation can be found in [HighLevelOverview](doc/HighLevelOverview).
+Detailed implementation can be found in [HighLevelOverview](doc/HighLevelOverview.md).
 
 # How to build
 
