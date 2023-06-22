@@ -35,6 +35,7 @@ similar to the verilog/VHDL code used to compiled into a CPLD bitstream.
 Configuration files are merged on program startup.
 For details see [Configuration file layout](doc/config.md).
 
+Also see special signals [Predefined signals](doc/specialSignals.md).
 ## License
 ```
      Apache License
