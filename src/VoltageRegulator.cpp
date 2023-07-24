@@ -93,6 +93,7 @@ void VoltageRegulator::ConfirmStatusAfterTimeout(void)
 
     if (failure) {
         if (this->retries > 0) {
+            log_err(this->name + ": State didn't change yet to " + (this->pendingNewLevel ? "ON" : "OFF") + ", is " + this->control.StatusToString(status));
             this->timerStateCheck.expires_from_now(boost::posix_time::microseconds(this->stateChangeTimeoutUsec / this->retries));
             this->timerStateCheck.async_wait([&](const boost::system::error_code& err) {
                 if (err != boost::asio::error::operation_aborted)
@@ -256,6 +257,18 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
             this->enabled->SetLevel(false);
         } else {
             this->ApplyStatus(status);
+        }
+        if (status == ON || status == OFF) {
+            // Reschedule a status read check as the regulator is slow.
+            // ConfirmStatusAfterTimeout does the same, but slower.
+            io.post([&]() {
+                string statusText = this->control.ReadStatus();
+                enum RegulatorStatus status2 = this->control.DecodeStatus(statusText);
+                if (status2 == INVALID) {
+                    log_err(this->name + ": Got invalid status string '"+statusText+"'");
+                }
+                this->ApplyStatus(status2);
+            });
         }
     });
 }
