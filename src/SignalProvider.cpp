@@ -160,7 +160,8 @@ void SignalProvider::SetDirty(Signal* sig)
         this->DumpSignal(sig);
 
     // Invoke dirty bit listeners
-    this->dirtyBitSignal();
+    if (this->dirtyBitSignal != nullptr)
+        this->dirtyBitSignal();
 }
 
 // SetDirtyBitEvent adds an event handler for dirty bit set events

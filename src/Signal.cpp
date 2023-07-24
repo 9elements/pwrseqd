@@ -18,7 +18,9 @@ string Signal::Name(void)
 Signal::Signal(SignalProvider* parent, string name) :
     dirty{true}, active{false}, name{name}, parent{parent},
     lastLevelChangeTime{steady_clock::now()}
-{}
+{
+    parent->SetDirty(this);
+}
 
 // GetLevel returns the internal active state
 bool Signal::GetLevel()
