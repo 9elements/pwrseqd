@@ -96,11 +96,12 @@ void Dbus::GetItemPresentCallback(
 {
 #ifdef WITH_SDBUSPLUSPLUS
     conn->async_method_call(
-        [eventHandler](boost::system::error_code ec,
+        [this, inventoryPath, eventHandler](boost::system::error_code ec,
             const std::variant<bool>& state) {
             if (ec)
             {
                 log_err("error getting presence status: " + ec.message() + "\n");
+                GetItemPresentCallback(inventoryPath, eventHandler);
                 return;
             }
             eventHandler(std::get<bool>(state));
