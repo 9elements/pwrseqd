@@ -274,10 +274,26 @@ power_sequencer:
       out:
         name: "THRMTRIP"
 
+  - P5V_Unit:
+      in:
+        or:
+          - name: "CPU_POWER"
+          - name: "CPU0_VR_Off"
+            invert: true
+          - name: "CPU1_VR_Off"
+            invert: true
+          - name: "CPU2_VR_Off"
+            invert: true
+          - name: "CPU3_VR_Off"
+            invert: true
+      out:
+        name: "p5v_On"
+
 regulators:
   - name: "p3v3_pch"
   - name: "p1v8_pch_aux"
   - name: "p1v05_pch_aux"
+  - name: "p5v"
 
 floating_signals:
   - "p1v05_pch_aux_Enabled"
@@ -286,3 +302,5 @@ floating_signals:
   - "p1v8_pch_aux_Fault"
   - "p3v3_pch_Enabled"
   - "p3v3_pch_Fault"
+  - "p5v_Enabled"
+  - "p5v_Fault"

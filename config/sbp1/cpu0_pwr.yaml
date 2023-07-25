@@ -227,6 +227,9 @@ power_sequencer:
             invert: true
           - name: "pvccd_hv_cpu0_PowerGood"
             input_stable_usec: 2
+          - name: "p5v_PowerGood"
+            input_stable_usec: 2000
+          - name: "p5v_PowerGood"
         or:
           - name: "pvccfa_ehv_fivra_cpu0_Enabled"
           - name: "pvccfa_ehv_fivra_cpu0_PowerGood"
@@ -244,6 +247,9 @@ power_sequencer:
             invert: true
           - name: "pvccd_hv_cpu0_PowerGood"
             input_stable_usec: 2
+          - name: "p5v_PowerGood"
+            input_stable_usec: 2000
+          - name: "p5v_PowerGood"
         or:
           - name: "pvccinfaon_cpu0_Enabled"
           - name: "pvccinfaon_cpu0_PowerGood"
@@ -261,6 +267,9 @@ power_sequencer:
             invert: true
           - name: "pvccfa_ehv_fivra_cpu0_PowerGood"
             input_stable_usec: 2
+          - name: "p5v_PowerGood"
+            input_stable_usec: 2000
+          - name: "p5v_PowerGood"
         or:
           - name: "pvnn_main_cpu0_Enabled"
           - name: "pvnn_main_cpu0_PowerGood"
@@ -295,6 +304,9 @@ power_sequencer:
             invert: true
           - name: "pvnn_main_cpu0_PowerGood"
             input_stable_usec: 2
+          - name: "p5v_PowerGood"
+            input_stable_usec: 2000
+          - name: "p5v_PowerGood"
         or:
           - name: "pvpp_hbm_cpu0_Enabled"
           - name: "pvpp_hbm_cpu0_PowerGood"
