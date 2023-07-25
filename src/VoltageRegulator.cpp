@@ -93,7 +93,7 @@ void VoltageRegulator::ConfirmStatusAfterTimeout(void)
 
     if (failure) {
         if (this->retries > 0) {
-            log_err(this->name + ": State didn't change yet to " + (this->pendingNewLevel ? "ON" : "OFF") + ", is " + this->control.StatusToString(status));
+            log_err(this->name + ": State didn't change yet to " + ((this->pendingNewLevel == ENABLED) ? "ON" : "OFF") + ", is " + this->control.StatusToString(status));
             this->timerStateCheck.expires_from_now(boost::posix_time::microseconds(this->stateChangeTimeoutUsec / this->retries));
             this->timerStateCheck.async_wait([&](const boost::system::error_code& err) {
                 if (err != boost::asio::error::operation_aborted)
