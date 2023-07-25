@@ -288,13 +288,8 @@ bool VoltageRegulatorSysfs::RegisterEventCallback(
     this->watcher->Register(
         this->sysfsConsumerRoot / path("events"),
         [&, handler](filesystem::path p, const char* data) {
-            enum RegulatorStatus status;
             unsigned long events = this->DecodeRegulatorEvent(string(data));
             log_debug(this->name + ": sysfsnotify on 'events': (" + EventsToString(events) + ")");
-
-            status = this->DecodeEvents(events);
-            if (status == ERROR)
-                log_sel(this->name + ": Regulator signaled error state(s): " + EventsToString(events), "/xyz/openbmc_project/inventory/system/chassis/motherboard", true);
 
             handler(events);
         });
