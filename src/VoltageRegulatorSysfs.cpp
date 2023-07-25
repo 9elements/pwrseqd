@@ -28,28 +28,6 @@ string VoltageRegulatorSysfs::EventsToString(const unsigned long events)
     return msg;
 }
 
-enum RegulatorStatus VoltageRegulatorSysfs::DecodeEvents(unsigned long events)
-{
-    if (events & REGULATOR_EVENT_FAILURE)
-    {
-        return ERROR;
-    }
-    /*
-     * The event 'disable' and 'enable' do not reflect the status.
-     * They happen when the consumer state changes.
-     */
-    else if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_ENABLE)
-    {
-        return ON;
-    }
-    else if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_DISABLE)
-    {
-        return OFF;
-    }
-
-    return NOCHANGE;
-}
-
 string VoltageRegulatorSysfs::StatusToString(const enum RegulatorStatus status)
 {
     switch (status) {

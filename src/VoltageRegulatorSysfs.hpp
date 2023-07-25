@@ -88,9 +88,6 @@ class VoltageRegulatorSysfs
          const std::function<void(const enum RegulatorStatus status)>&
              handler);
 
-    // DecodeEvents turns an bitmask to status
-    enum RegulatorStatus DecodeEvents(unsigned long events);
-
     // DecodeState converts the value read from
     // /sys/class/regulator/.../state
     enum RegulatorState DecodeState(string);
