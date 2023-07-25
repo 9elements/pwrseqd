@@ -110,7 +110,8 @@ void VoltageRegulator::ConfirmStatusAfterTimeout(void)
         this->pendingLevelChange = false;
         this->ApplyStatus(ERROR);
         // Something is wrong. Turn off regulator.
-        this->control.SetState(DISABLED);
+        this->newLevel = false;
+        this->Apply();
     }
 }
 
@@ -126,19 +127,54 @@ void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
         status = OFF;
       }
     }
+
+    if (status == NOCHANGE)
+        return;
+
     // If status haven't changed just return
     // This can happen if a PRE_DISABLE or PRE_VOLTAGE_CHANGE is sent
     if (this->statusShadow == status)
         return;
 
-    if (status == NOCHANGE)
-        return;
+    log_debug(this->name + ": status changed to " +  this->control.StatusToString(status) + ", was " + this->control.StatusToString(this->statusShadow));
 
-    log_debug(this->name + ": status changed to " +  this->control.StatusToString(status) + ", was " +  this->control.StatusToString(this->statusShadow));
     if (this->statusShadow == ERROR && status != ERROR) {
         log_err(this->name + ": Regulator recovered from error, new state is: " +  this->control.StatusToString(status));
         log_sel(this->name + ": Regulator recovered from error, new state is: " +  this->control.StatusToString(status),
                 "/xyz/openbmc_project/inventory/system/chassis/motherboard", false);
+    }
+
+    if (this->pendingLevelChange) {
+        if (this->pendingNewLevel == ENABLED && status == ON)
+            this->pendingLevelChange = false;
+        else if (this->pendingNewLevel == DISABLED && status == OFF)
+            this->pendingLevelChange = false;
+        else {
+            log_err(this->name + ": Got unexpected regulator status! Requested state " +
+                 this->control.StateToString(this->pendingNewLevel) + ", got status " +  this->control.StatusToString(status));
+            if (status == ERROR) {
+                // Status error is also seen on regulator turn on/off as the regulation is
+                // out of range for a short moment.
+                return;
+            }
+        }
+    } else {
+        if (status == ERROR && !this->stateShadow) {
+            if (this->statusShadow == OFF) {
+                // Regulator should be off, ignore errors as OUT OF REGULATION or UNDERVOLATE is unlikely
+                // but expected when regulator was turned off or is turned off.
+                return;
+            } else if (this->statusShadow == ON) {
+                status = OFF;
+            }
+        }
+        if (status == ERROR) {
+            log_err(this->name + ": Got unexpected regulator status! Requested no state change, got status " + this->control.StatusToString(status));
+            log_sel(this->name + ": Got unexpected regulator status! Requested no state change, got status: " + this->control.StatusToString(status),
+                "/xyz/openbmc_project/inventory/system/chassis/motherboard", true);
+        }
+        // Attempting to change it back is pointless.
+        // The power sequencing logic will likely shutdown the system anyways.
     }
     this->statusShadow = status;
 
@@ -152,7 +188,6 @@ void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
     {
         // Errors might get cleared by interrupt handlers before we can
         // read them...
-        this->enabled->SetLevel(true);
         this->powergood->SetLevel(false);
         this->fault->SetLevel(true);
     }
@@ -161,22 +196,6 @@ void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
         this->enabled->SetLevel(true);
         this->powergood->SetLevel(true);
         this->fault->SetLevel(false);
-    }
-    if (this->pendingLevelChange) {
-        if (this->pendingNewLevel == ENABLED && status == ON)
-            this->pendingLevelChange = false;
-        else if (this->pendingNewLevel == DISABLED && status == OFF)
-            this->pendingLevelChange = false;
-        else {
-            log_err(this->name + ": Got unexpected regulator status! Requested state " +
-                 this->control.StateToString(this->pendingNewLevel) + ", got status " +  this->control.StatusToString(status));
-        }
-    } else {
-        log_err(this->name + ": Got unexpected regulator status! Requested no state change, got status " +  this->control.StatusToString(status));
-        log_sel(this->name + ": Got unexpected regulator status! Requested no state change, got status: " +  this->control.StatusToString(status),
-                "/xyz/openbmc_project/inventory/system/chassis/motherboard", true);
-        // Attempting to change it back is pointless.
-        // The power sequencing logic will likely shutdown the system anyways.
     }
 }
 
