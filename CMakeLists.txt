@@ -116,7 +116,7 @@ set(
   ${PROJECT_SOURCE_DIR}/config/sbp1/nic.yaml
   )
 
-install(FILES ${SERVICE_FILES} DESTINATION /lib/systemd/system/)
+install(FILES ${SERVICE_FILES} DESTINATION /usr/lib/systemd/system/)
 install(FILES ${CONFIG_FILE_GEN3} DESTINATION /usr/share/pwrseqd/genesis3/)
 install(FILES ${CONFIG_FILE_SBP1} DESTINATION /usr/share/pwrseqd/sbp1/)
 install(TARGETS ${CMAKE_PROJECT_NAME} DESTINATION bin)
