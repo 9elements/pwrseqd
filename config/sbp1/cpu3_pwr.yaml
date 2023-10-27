@@ -8,6 +8,7 @@ inputs:
     signal_name: "H_LVT3_CPU3_THERMTRIP"
     type: "gpio"
     active_low: true
+    pullup: true
     description: >
       THERMTRIP_N is set on over tempertature condition or internal FIVR fault.
     gate_input: true
@@ -85,29 +86,34 @@ outputs:
     signal_name: "H_LVT3_CPU3_PROCHOT"
     active_low: true
     open_drain: true
+    pullup: true
     description: "CPU3 is hot and throttling. Open Drain."
 
   - name: "PWRGD_LVC3_CPU3_AB_DRAM_G"
     type: "gpio"
     signal_name: "PWRGD_LVC3_CPU3_AB_DRAM_G"
     open_drain: true
+    pullup: true
     description: "CPU3 memory channel AB power good."
 
   - name: "PWRGD_LVC3_CPU3_CD_DRAM_G"
     type: "gpio"
     signal_name: "PWRGD_LVC3_CPU3_CD_DRAM_G"
     open_drain: true
+    pullup: true
     description: "CPU3 memory channel CD power good."
 
   - name: "PWRGD_LVC3_CPU3_EF_DRAM_G"
     type: "gpio"
     open_drain: true
+    pullup: true
     signal_name: "PWRGD_LVC3_CPU3_EF_DRAM_G"
     description: "CPU3 memory channel EF power good."
 
   - name: "PWRGD_LVC3_CPU3_GH_DRAM_G"
     type: "gpio"
     open_drain: true
+    pullup: true
     signal_name: "PWRGD_LVC3_CPU3_GH_DRAM_G"
     description: "CPU3 memory channel GH power good."
 
@@ -133,6 +139,8 @@ outputs:
 
   - name: "H_LVT3_CPU3_NMI"
     type: "gpio"
+    open_drain: true
+    pullup: true
     signal_name: "CPU3_NMI"
 
   - name: "FM_CPU3_DISABLE_COD_N"
