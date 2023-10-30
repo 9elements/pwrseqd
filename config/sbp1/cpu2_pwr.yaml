@@ -121,6 +121,8 @@ outputs:
   - name: "RST_LVC3_CPU2_RESET_N"
     type: "gpio"
     signal_name: "RST_LVC3_CPU2_RESET"
+    open_drain: true
+    pullup: true
     active_low: true
     description: "CPU2 RESET_N"
 
