@@ -121,6 +121,7 @@ outputs:
     type: "gpio"
     signal_name: "RST_LVC3_CPU3_RESET"
     active_low: true
+    pullup: true
     description: "CPU3 RESET_N"
 
   - name: "PWRGD_LVC3_CPU3_PWRGOOD"
