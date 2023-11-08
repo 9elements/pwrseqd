@@ -86,34 +86,29 @@ outputs:
     type: "gpio"
     signal_name: "H_LVT3_CPU1_PROCHOT"
     active_low: true
-    open_drain: true
     pullup: true
     description: "CPU1 is hot and throttling. Open Drain."
 
   - name: "PWRGD_LVC3_CPU1_AB_DRAM_G"
     type: "gpio"
     signal_name: "PWRGD_LVC3_CPU1_AB_DRAM_G"
-    open_drain: true
     pullup: true
     description: "CPU1 memory channel AB power good."
 
   - name: "PWRGD_LVC3_CPU1_CD_DRAM_G"
     type: "gpio"
     signal_name: "PWRGD_LVC3_CPU1_CD_DRAM_G"
-    open_drain: true
     pullup: true
     description: "CPU1 memory channel CD power good."
 
   - name: "PWRGD_LVC3_CPU1_EF_DRAM_G"
     type: "gpio"
-    open_drain: true
     pullup: true
     signal_name: "PWRGD_LVC3_CPU1_EF_DRAM_G"
     description: "CPU1 memory channel EF power good."
 
   - name: "PWRGD_LVC3_CPU1_GH_DRAM_G"
     type: "gpio"
-    open_drain: true
     pullup: true
     signal_name: "PWRGD_LVC3_CPU1_GH_DRAM_G"
     description: "CPU1 memory channel GH power good."
@@ -127,6 +122,7 @@ outputs:
 
   - name: "PWRGD_LVC3_CPU1_PWRGOOD"
     type: "gpio"
+    pullup: true
     signal_name: "PWRGD_LVC3_CPU1_PWRGOOD"
     description: "Tell CPU1 power good."
   
@@ -141,12 +137,12 @@ outputs:
 
   - name: "H_LVT3_CPU1_NMI"
     type: "gpio"
-    open_drain: true
     pullup: true
     signal_name: "CPU1_NMI"
 
   - name: "FM_CPU1_DISABLE_COD_N"
     type: "gpio"
+    pullup: true
     active_low: true
     signal_name: "FM_CPU1_DISABLE_COD"
 
