@@ -61,7 +61,7 @@ outputs:
     type: "gpio"
     signal_name: "RSMRST"
     active_low: true
-    pull_up: true
+    open_drain: true
     description: >
       All PCH primary power rails are stable for 10 msec.
       Either assert after SLP_SUS_N or 100msec after DSW_PWROK assertion.
@@ -69,13 +69,13 @@ outputs:
   - name: "PWRGD_SYS_PWROK"
     type: "gpio"
     signal_name: "SYS_PWROK"
-    pull_up: true
+    open_drain: true
     description: "PCH primary wells are stable, PCIe is out of reset and clocks are stable."
   - name: "H_LVT1_THERMTRIP_N"
     signal_name: "THRMTRIP"
     type: "gpio"
     active_low: true
-    pull_up: true
+    open_drain: true
     description: >
       Signal from BMC to PCH indicating an overheat condition. PCH will got to S5
       without following normal transition flow.
