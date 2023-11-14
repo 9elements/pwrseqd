@@ -383,7 +383,7 @@ outputs:
     type: "gpio"
     signal_name: "FM_NIC1_FLASH_PRSNT"
     description: "Security override."
-    open_drain: true
+    pull_up: true
   - name: "FM_NIC2_PERST0_N"
     type: "gpio"
     signal_name: "FM_NIC2_PERST0"
@@ -418,7 +418,7 @@ outputs:
     type: "gpio"
     signal_name: "FM_NIC2_FLASH_PRSNT"
     description: "Security override."
-    open_drain: true
+    pull_up: true
   - name: "FM_NIC1_RST_N"
     type: "gpio"
     signal_name: "FM_NIC1_RST"
