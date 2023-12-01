@@ -161,6 +161,8 @@ power_sequencer:
           - name: "PWRGD_CHA_CPU0"
           - name: "PWRGD_CHB_CPU0"
           - name: "pvccd_hv_cpu0_PowerGood"
+          - name: "DDR_POWER"
+            input_stable_usec: 10000
       out:
         name: "PWRGD_LVC3_CPU0_AB_DRAM_G"
 
@@ -170,6 +172,8 @@ power_sequencer:
           - name: "PWRGD_CHC_CPU0"
           - name: "PWRGD_CHD_CPU0"
           - name: "pvccd_hv_cpu0_PowerGood"
+          - name: "DDR_POWER"
+            input_stable_usec: 10000
       out:
         name: "PWRGD_LVC3_CPU0_CD_DRAM_G"
   
@@ -179,6 +183,8 @@ power_sequencer:
           - name: "PWRGD_CHE_CPU0"
           - name: "PWRGD_CHF_CPU0"
           - name: "pvccd_hv_cpu0_PowerGood"
+          - name: "DDR_POWER"
+            input_stable_usec: 10000
       out:
         name: "PWRGD_LVC3_CPU0_EF_DRAM_G"
 
@@ -188,6 +194,8 @@ power_sequencer:
           - name: "PWRGD_CHG_CPU0"
           - name: "PWRGD_CHH_CPU0"
           - name: "pvccd_hv_cpu0_PowerGood"
+          - name: "DDR_POWER"
+            input_stable_usec: 10000
       out:
         name: "PWRGD_LVC3_CPU0_GH_DRAM_G"
   # DDR & CPU VRs
