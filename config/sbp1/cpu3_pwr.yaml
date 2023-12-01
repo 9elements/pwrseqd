@@ -145,6 +145,10 @@ outputs:
     active_low: true
     signal_name: "FM_CPU3_DISABLE_COD"
 
+  - name: "CATERR_CPU3_EN"
+    type: "gpio"
+    signal_name: "CATERR_CPU3_EN"
+
 immutables:
   - signal_name: "H_LVT3_CPU3_PROCHOT"
     value: false
@@ -152,6 +156,8 @@ immutables:
     value: false
   - signal_name: "FM_CPU3_DISABLE_COD"
     value: false
+  - signal_name: "CATERR_CPU3_EN"
+    value: true
 
 power_sequencer:
   - PWRGD_LVC3_CPU3_AB_DRAM_G_Unit:
