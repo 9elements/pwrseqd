@@ -230,9 +230,13 @@ power_sequencer:
 
   - SEL_SMB_DIMM_CPU3_Unit:
       in:
-        and:
+        or:
           - name: "CPU_POWER"
+          - name: "CPU3_DDR_PWRGD"
+            input_stable_usec: 10000
+        and:
           - name: "FM_CPU3_SKTOCC"
+        and_then_or: false
       out:
         name: "SEL_SMB_DIMM_CPU3"
 
