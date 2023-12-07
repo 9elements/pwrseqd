@@ -200,7 +200,7 @@ static string SysFsRootDirByName(string name)
 }
 
 // SysFsConsumerDir returns the sysfs path to the first consumer that is of
-// type reg-userspace-consumer
+// type "reg-userspace-consumer" or type "regulator-output"
 static string SysFsConsumerDir(path root)
 {
     directory_iterator it{root};
@@ -216,7 +216,8 @@ static string SysFsConsumerDir(path root)
                 getline(infile, line);
                 infile.close();
 
-                if (line.find("reg-userspace-consumer") != string::npos)
+                if ((line.find("reg-userspace-consumer") != string::npos) ||
+                    (line.find("regulator-output") != string::npos))
                     return it->path().string();
             }
         }
