@@ -24,48 +24,72 @@ inputs:
     signal_name: "PWRGD_CHA_CPU1"
     type: "gpio"
     pullup: true
+    gate_input: true
+    gated_idle_low: true
+    gated_output_od_low: true
     description: "CPU1 DDR Channel A power good."
 
   - name: "PWRGD_CHB_CPU1"
     signal_name: "PWRGD_CHB_CPU1"
     type: "gpio"
     pullup: true
+    gate_input: true
+    gated_idle_low: true
+    gated_output_od_low: true
     description: "CPU1 DDR Channel B power good."
 
   - name: "PWRGD_CHC_CPU1"
     signal_name: "PWRGD_CHC_CPU1"
     type: "gpio"
     pullup: true
+    gate_input: true
+    gated_idle_low: true
+    gated_output_od_low: true
     description: "CPU1 DDR Channel C power good."
 
   - name: "PWRGD_CHD_CPU1"
     signal_name: "PWRGD_CHD_CPU1"
     type: "gpio"
     pullup: true
+    gate_input: true
+    gated_idle_low: true
+    gated_output_od_low: true
     description: "CPU1 DDR Channel D power good."
 
   - name: "PWRGD_CHE_CPU1"
     signal_name: "PWRGD_CHE_CPU1"
     type: "gpio"
     pullup: true
+    gate_input: true
+    gated_idle_low: true
+    gated_output_od_low: true
     description: "CPU1 DDR Channel E power good."
 
   - name: "PWRGD_CHF_CPU1"
     signal_name: "PWRGD_CHF_CPU1"
     type: "gpio"
     pullup: true
+    gate_input: true
+    gated_idle_low: true
+    gated_output_od_low: true
     description: "CPU1 DDR Channel F power good."
 
   - name: "PWRGD_CHG_CPU1"
     signal_name: "PWRGD_CHG_CPU1"
     type: "gpio"
     pullup: true
+    gate_input: true
+    gated_idle_low: true
+    gated_output_od_low: true
     description: "CPU1 DDR Channel G power good."
 
   - name: "PWRGD_CHH_CPU1"
     signal_name: "PWRGD_CHH_CPU1"
     type: "gpio"
     pullup: true
+    gate_input: true
+    gated_idle_low: true
+    gated_output_od_low: true
     description: "CPU1 DDR Channel H power good."
 
   - name: "FM_CPU1_PKG_ID0"
@@ -167,8 +191,6 @@ power_sequencer:
           - name: "PWRGD_CHA_CPU1"
           - name: "PWRGD_CHB_CPU1"
           - name: "pvccd_hv_cpu1_PowerGood"
-          - name: "DDR_POWER"
-            input_stable_usec: 10000
       out:
         name: "PWRGD_LVC3_CPU1_AB_DRAM_G"
 
@@ -178,8 +200,6 @@ power_sequencer:
           - name: "PWRGD_CHC_CPU1"
           - name: "PWRGD_CHD_CPU1"
           - name: "pvccd_hv_cpu1_PowerGood"
-          - name: "DDR_POWER"
-            input_stable_usec: 10000
       out:
         name: "PWRGD_LVC3_CPU1_CD_DRAM_G"
   
@@ -189,8 +209,6 @@ power_sequencer:
           - name: "PWRGD_CHE_CPU1"
           - name: "PWRGD_CHF_CPU1"
           - name: "pvccd_hv_cpu1_PowerGood"
-          - name: "DDR_POWER"
-            input_stable_usec: 10000
       out:
         name: "PWRGD_LVC3_CPU1_EF_DRAM_G"
 
@@ -200,10 +218,81 @@ power_sequencer:
           - name: "PWRGD_CHG_CPU1"
           - name: "PWRGD_CHH_CPU1"
           - name: "pvccd_hv_cpu1_PowerGood"
+      out:
+        name: "PWRGD_LVC3_CPU1_GH_DRAM_G"
+
+  - PWRGD_CHA_CPU1_Enable_Unit:
+      in:
+        and:
+          - name: "pvccd_hv_cpu1_PowerGood"
           - name: "DDR_POWER"
             input_stable_usec: 10000
       out:
-        name: "PWRGD_LVC3_CPU1_GH_DRAM_G"
+        name: "PWRGD_CHA_CPU1_On"
+
+  - PWRGD_CHB_CPU1_Enable_Unit:
+      in:
+        and:
+          - name: "pvccd_hv_cpu1_PowerGood"
+          - name: "DDR_POWER"
+            input_stable_usec: 10000
+      out:
+        name: "PWRGD_CHB_CPU1_On"
+
+  - PWRGD_CHC_CPU1_Enable_Unit:
+      in:
+        and:
+          - name: "pvccd_hv_cpu1_PowerGood"
+          - name: "DDR_POWER"
+            input_stable_usec: 10000
+      out:
+        name: "PWRGD_CHC_CPU1_On"
+
+  - PWRGD_CHD_CPU1_Enable_Unit:
+      in:
+        and:
+          - name: "pvccd_hv_cpu1_PowerGood"
+          - name: "DDR_POWER"
+            input_stable_usec: 10000
+      out:
+        name: "PWRGD_CHD_CPU1_On"
+
+  - PWRGD_CHE_CPU1_Enable_Unit:
+      in:
+        and:
+          - name: "pvccd_hv_cpu1_PowerGood"
+          - name: "DDR_POWER"
+            input_stable_usec: 10000
+      out:
+        name: "PWRGD_CHE_CPU1_On"
+
+  - PWRGD_CHF_CPU1_Enable_Unit:
+      in:
+        and:
+          - name: "pvccd_hv_cpu1_PowerGood"
+          - name: "DDR_POWER"
+            input_stable_usec: 10000
+      out:
+        name: "PWRGD_CHF_CPU1_On"
+
+  - PWRGD_CHG_CPU1_Enable_Unit:
+      in:
+        and:
+          - name: "pvccd_hv_cpu1_PowerGood"
+          - name: "DDR_POWER"
+            input_stable_usec: 10000
+      out:
+        name: "PWRGD_CHG_CPU1_On"
+
+  - PWRGD_CHH_CPU1_Enable_Unit:
+      in:
+        and:
+          - name: "pvccd_hv_cpu1_PowerGood"
+          - name: "DDR_POWER"
+            input_stable_usec: 10000
+      out:
+        name: "PWRGD_CHH_CPU1_On"
+
   # DDR & CPU VRs
 
   # PVCCD_HV must be equal or higher than Vdd at all times.
