@@ -100,6 +100,11 @@ struct ConfigInput
     // The ActiveLow setting will invert this signal if set.
     // You cannot select GatedIdleHigh and GatedIdleLow at the same time.
     bool GatedIdleLow;
+    // When set and GateInput is set and On input signal of the driver
+    // is low then the pin is set to output and driven low (OpenDrain Low).
+    // When On input signal of the driver is high then the pin is input.
+    bool GatedOutputODLow;
+
     // Description is just for debugging purposes
     string Description;
     // Type specifies the input backend to use

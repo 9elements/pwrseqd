@@ -204,6 +204,10 @@ struct convert<ConfigInput>
             {
                 c.GatedIdleLow = it.second.as<bool>();
             }
+            else if (key == "gated_output_od_low")
+            {
+                c.GatedOutputODLow = it.second.as<bool>();
+            }
             else if (key == "type")
             {
                 string nameOfType = it.second.as<string>();

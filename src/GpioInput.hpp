@@ -38,6 +38,8 @@ class GpioInput : SignalReceiver, public SignalDriver
     void WaitForGPIOEvent(void);
     void Release(void);
     void Acquire(void);
+    void TestAcquire(void);
+    void SetOutputLow(void);
 
     boost::asio::posix::stream_descriptor streamDesc;
 
@@ -46,6 +48,7 @@ class GpioInput : SignalReceiver, public SignalDriver
     // Gate input settings
     bool GatedIdleHigh;
     bool GatedIdleLow;
+    bool GatedOutputODLow;
     bool gated;
 
     // Signal out is set to the GPIO input value if not gated

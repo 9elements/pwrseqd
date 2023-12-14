@@ -118,6 +118,7 @@ Every ConfigInput structure has the following keys:
                          When high the signal `signal_name`  is driven from actual GPIO level.
 - `gated_idle_high`: boolean. When gated the signal reads as high.
 - `gated_idle_low`: boolean. When gated the signal reads as low.
+- `gated_output_od_low`: boolean. When gated the pin is set to output and driven low.
 
 ### Example
 

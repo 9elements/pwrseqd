@@ -32,15 +32,42 @@ void GpioInput::OnEvent(gpiod::line_event line_event)
                         gpiod::line_event::RISING_EDGE);
 }
 
-// Acquire removes the interrupt from the GPIO
+// Acquire adds the interrupt listener to the GPIO and releases it
+void GpioInput::TestAcquire(void)
+{
+    this->line.request(this->gpiodRequestInput);
+    this->line.release();
+}
+
+// Configures the line as Output and sets it to drive the line low
+void GpioInput::SetOutputLow(void)
+{
+    ::gpiod::line_request requestOutput = {
+                "pwrseqd", gpiod::line_request::DIRECTION_OUTPUT, 0};
+    try
+    {
+        this->line.request(requestOutput);
+    }
+    catch (exception& e)
+    {
+        throw runtime_error("Failed to request gpio line " + this->chip.name() +
+                    " " + this->line.name() + ": " + e.what());
+    }
+    this->line.set_value(0);
+    log_debug("Set gpio " + this->Name() + " to output low");
+}
+
+// Acquire adds the interrupt listener to the GPIO
 void GpioInput::Acquire(void)
 {
     if (!this->gated)
     {
         return;
     }
-    this->gpiodRequestInput = {"pwrseqd", gpiod::line_request::EVENT_BOTH_EDGES,
-                               this->gpiodFlags};
+    if (this->GatedOutputODLow) {
+        this->line.release();
+    }
+
     try
     {
         this->line.request(this->gpiodRequestInput);
@@ -104,6 +131,10 @@ void GpioInput::Release(void)
     this->line.release();
     this->gated = true;
 
+    if (this->GatedOutputODLow) {
+        this->SetOutputLow();
+    }
+
     if (this->GatedIdleHigh)
     {
         newLevel = true;
@@ -166,6 +197,7 @@ GpioInput::GpioInput(boost::asio::io_context& io, struct ConfigInput* cfg,
                      SignalProvider& prov) :
     io(&io),
     GatedIdleHigh(cfg->GatedIdleHigh), GatedIdleLow(cfg->GatedIdleLow),
+    GatedOutputODLow(cfg->GatedOutputODLow),
     out(NULL), enable(NULL), streamDesc(io), ActiveLow(cfg->ActiveLow),
     gpiodFlags(0), gated(true)
 {
@@ -209,18 +241,6 @@ GpioInput::GpioInput(boost::asio::io_context& io, struct ConfigInput* cfg,
     this->gpiodRequestInput = {"pwrseqd", gpiod::line_request::EVENT_BOTH_EDGES,
                                this->gpiodFlags};
 
-    // Test if line can be acquired
-    try
-    {
-        this->line.request(this->gpiodRequestInput);
-    }
-    catch (exception& e)
-    {
-        throw runtime_error("Failed to request gpio line " + cfg->GpioChipName +
-                            " " + cfg->Name + ": " + e.what());
-    }
-    this->line.release();
-
     if (!cfg->GateInput)
     {
         this->Acquire();
@@ -237,6 +257,20 @@ GpioInput::GpioInput(boost::asio::io_context& io, struct ConfigInput* cfg,
         else if (this->GatedIdleLow)
         {
             this->out->SetLevel(this->ActiveLow ? true : false);
+        }
+
+        if (this->GatedOutputODLow) {
+            this->SetOutputLow();
+        } else {
+            try
+            {
+                TestAcquire();
+            }
+            catch (exception& e)
+            {
+                throw runtime_error("Failed to request gpio line " + this->chip.name() +
+                                " " + this->line.name() + ": " + e.what());
+            }
         }
     }
 }
