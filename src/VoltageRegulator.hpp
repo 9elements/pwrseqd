@@ -5,6 +5,7 @@
 #include "Logging.hpp"
 #include "Signal.hpp"
 #include "VoltageRegulatorSysfs.hpp"
+#include "Netlink.hpp"
 
 #include <boost/asio.hpp>
 #include <boost/filesystem.hpp>
@@ -84,6 +85,7 @@ class VoltageRegulator :
     Signal* powergood;
 
     VoltageRegulatorSysfs control;
+    NetlinkRegulatorEvents *netlink;
 
 #ifdef WITH_GOOGLE_TEST
     FRIEND_TEST(Regulator, EventParsing);

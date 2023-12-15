@@ -305,7 +305,44 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
             this->ApplyStatus(ERROR);
 	}
     });
+
+    netlink = GetNetlinkRegulatorEvents(io);
+    if (netlink) {
+        netlink->Register(this->name, [&](std::string name, uint64_t events) {
+            log_debug(this->name + ": Got NETLINK event: " + to_string(events));
+            if (events & REGULATOR_EVENT_EN_DIS)
+            {
+                // The enable/disable event indicates that the status will change soon,
+                // but it doesn't allow to make assumptions about the actual status.
+                //
+                // Reschedule a status read check as the regulator is slow.
+                // ConfirmStatusAfterTimeout does the same, but even slower.
+                io.post([&]() {
+                    string statusText = this->control.ReadStatus();
+                    enum RegulatorStatus status2 = this->control.DecodeStatus(statusText);
+                    if (status2 == INVALID) {
+                        log_err(this->name + ": Got invalid status string '"+statusText+"'");
+                    }
+                    this->ApplyStatus(status2);
+                });
+                if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_ENABLE)
+                {
+                    this->enabled->SetLevel(true);
+                }
+                else if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_DISABLE)
+                {
+                    this->enabled->SetLevel(false);
+                }
+            } else if (events & REGULATOR_EVENT_FAILURE) {
+                this->ApplyStatus(ERROR);
+            }
+        });
+    }
 }
 
 VoltageRegulator::~VoltageRegulator()
-{}
+{
+    if (netlink) {
+        netlink->Unregister(this->name);
+    }
+}

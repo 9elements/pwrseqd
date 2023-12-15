@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project(pwrseqd)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
 
 find_package(Git QUIET)
 if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
@@ -16,6 +17,12 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 	endif()
 endif()
 find_package(PkgConfig REQUIRED)
+
+find_package(NL REQUIRED)
+if(NL_FOUND)
+	include_directories(${NL_INCLUDE_DIRS})
+	link_directories(${NL_LIBRARY_DIRS})
+endif()
 
 find_package(yaml-cpp)
 FIND_PACKAGE( Boost 1.55 COMPONENTS  REQUIRED )
@@ -70,7 +77,7 @@ include_directories(src/ ${YAML_CPP_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${GPIOD_I
 
 add_executable(${CMAKE_PROJECT_NAME} src/Main.cpp src/Config.cpp src/StateMachine.cpp src/GpioInput.cpp src/GpioOutput.cpp src/Signal.cpp
 	src/SignalProvider.cpp src/Logic.cpp src/LogicInput.cpp src/NullInput.cpp src/NullOutput.cpp src/VoltageRegulator.cpp src/LED.cpp
-	src/ACPIStates.cpp src/SysFsWatcher.cpp src/Dbus.cpp src/InventoryItemPresence.cpp src/VoltageRegulatorSysfs.cpp)
+	src/ACPIStates.cpp src/SysFsWatcher.cpp src/Dbus.cpp src/InventoryItemPresence.cpp src/VoltageRegulatorSysfs.cpp src/Netlink.cpp)
 
 target_link_libraries(${CMAKE_PROJECT_NAME} yaml-cpp )
 target_link_libraries(${CMAKE_PROJECT_NAME} ${GPIODCXX_LIBRARY})
@@ -81,6 +88,9 @@ if(SDBUSPLUSPLUS_FOUND)
 endif()
 if(PHOSPHOR_LOGGING_FOUND)
 	target_link_libraries(${CMAKE_PROJECT_NAME} phosphor_logging)
+endif()
+if(NL_FOUND)
+	target_link_libraries(${CMAKE_PROJECT_NAME} ${NL_LIBRARIES})
 endif()
 
 set(
