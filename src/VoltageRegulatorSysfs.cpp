@@ -113,16 +113,6 @@ enum RegulatorStatus VoltageRegulatorSysfs::DecodeStatus(void)
     return this->DecodeStatus(this->ReadStatus());
 }
 
-string VoltageRegulatorSysfs::ReadEvents()
-{
-    string line;
-    ifstream infile(sysfsConsumerRoot / path("events"));
-    getline(infile, line);
-    infile.close();
-
-    return line;
-}
-
 string VoltageRegulatorSysfs::ReadState()
 {
     string line;
@@ -254,25 +244,6 @@ void VoltageRegulatorSysfs::RegisterStateCallback(
         log_debug(this->name + ": sysfsnotify on 'state': " + to_string(state));
         handler(state);
     });
-}
-
-bool VoltageRegulatorSysfs::RegisterEventCallback(
-    const std::function<void(const unsigned long events)>&
-        handler)
-{
-    if (!filesystem::exists(this->sysfsConsumerRoot / path("events")))
-    {
-        return false;
-    }
-    this->watcher->Register(
-        this->sysfsConsumerRoot / path("events"),
-        [&, handler](filesystem::path p, const char* data) {
-            unsigned long events = this->DecodeRegulatorEvent(string(data));
-            log_debug(this->name + ": sysfsnotify on 'events': (" + EventsToString(events) + ")");
-
-            handler(events);
-        });
-    return true;
 }
 
 VoltageRegulatorSysfs::VoltageRegulatorSysfs(boost::asio::io_context& io,

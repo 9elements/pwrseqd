@@ -76,10 +76,6 @@ class VoltageRegulatorSysfs
                           struct ConfigRegulator* cfg, string root = "");
     ~VoltageRegulatorSysfs();
 
-    bool RegisterEventCallback(
-        const std::function<void(const unsigned long events)>&
-             handler);
-
      void RegisterStateCallback(
          const std::function<void(const enum RegulatorState state)>&
              handler);
@@ -120,9 +116,6 @@ class VoltageRegulatorSysfs
     // DecodeRegulatorEvent converts the value read from
     // /sys/devices/platform/*_consumer/events
     unsigned long DecodeRegulatorEvent(string);
-
-    // DecodeRegulatorEvent reads /sys/devices/platform/*_consumer/events
-    string ReadEvents(void);
 
     // SetState writes to /sys/class/regulator/.../state
     void SetState(const enum RegulatorState);
