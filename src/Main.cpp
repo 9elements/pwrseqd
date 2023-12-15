@@ -4,7 +4,6 @@
 #include "Logging.hpp"
 #include "SignalProvider.hpp"
 #include "StateMachine.hpp"
-#include "SysFsWatcher.hpp"
 
 #include <getopt.h>
 #include <iostream>
@@ -65,7 +64,6 @@ int main(int argc, char * const argv[])
     Config cfg;
     string dumpSignalsFolder;
     boost::asio::io_service io;
-    SysFsWatcher* sysw;
     int opt;
     int option_index = 0;
     string config_option;
@@ -126,11 +124,10 @@ int main(int argc, char * const argv[])
     }
     log_info("Loaded config files.");
 
-    sysw = GetSysFsWatcher(io);
     try
     {
         SignalProvider signalprovider(cfg, dumpSignalsFolder);
-	Dbus dbus(cfg, io);
+        Dbus dbus(cfg, io);
         ACPIStates states(cfg, signalprovider, io, dbus);
         signalprovider.AddDriver(&states);
         StateMachine sm(cfg, signalprovider, io, dbus);
@@ -146,10 +143,8 @@ int main(int argc, char * const argv[])
     catch (const exception& ex)
     {
         log_err("Failed to use provided configuration: " + string(ex.what()));
-        delete sysw;
         return 1;
     }
 
-    delete sysw;
     return 0;
 }

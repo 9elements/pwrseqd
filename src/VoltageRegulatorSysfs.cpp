@@ -218,37 +218,9 @@ static string SysFsConsumerDir(path root)
     return "";
 }
 
-void VoltageRegulatorSysfs::RegisterStatusCallback(
-    const std::function<void(const enum RegulatorStatus status)>&
-        handler)
-{
-    this->watcher->Register(this->sysfsRoot / path("status"), [&, handler](filesystem::path p,
-                                                         const char* data) {
-        enum RegulatorStatus status = this->DecodeStatus(string(data));
-        if (status == INVALID) {
-            log_err(this->name + ": Got invalid status string '"+string(data)+"'");
-        }
-        log_debug(this->name + ": sysfsnotify on 'status': '"+StatusToString(status)+"'");
-
-        handler(status);
-    });
-}
-
-void VoltageRegulatorSysfs::RegisterStateCallback(
-    const std::function<void(const enum RegulatorState state)>&
-        handler)
-{
-    this->watcher->Register(this->sysfsConsumerRoot / path("state"),
-                   [&, handler](filesystem::path p, const char* data) {
-        enum RegulatorState state = this->DecodeState(string(data));
-        log_debug(this->name + ": sysfsnotify on 'state': " + to_string(state));
-        handler(state);
-    });
-}
-
 VoltageRegulatorSysfs::VoltageRegulatorSysfs(boost::asio::io_context& io,
                                              struct ConfigRegulator* cfg, string root) :
-    watcher(GetSysFsWatcher(io)), name(cfg->Name)
+    name(cfg->Name)
 {
     string consumerRoot;
 

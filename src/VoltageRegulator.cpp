@@ -248,33 +248,6 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
     // Sync internal status with the current regulator status
     this->ApplyStatus(this->control.DecodeStatus());
 
-    // Register sysfs watchers
-    // The STATUS reflects the current operating mode of the regulator.
-    // It might not be in sync with the consumer state, as it could have been
-    // disabled due to an error.
-    // Under normal operating conditions the status changes after some time
-    // following the state.
-    this->control.RegisterStatusCallback([&](const enum RegulatorStatus status) {
-        if (this->statusShadow == status)
-        {
-            io.post([&]() {
-                string statusText = this->control.ReadStatus();
-                enum RegulatorStatus status2 = this->control.DecodeStatus(statusText);
-                if (status2 == INVALID) {
-                    log_err(this->name + ": Got invalid status string '"+statusText+"'");
-                }
-                this->ApplyStatus(status2);
-            });
-        } else {
-            this->ApplyStatus(status);
-        }
-    });
-    // The state is the variable that can be controlled by this application.
-    // It sets the operating mode the regulator SHOULD be in
-    this->control.RegisterStateCallback([&](const enum RegulatorState state) {
-        this->enabled->SetLevel(state == ENABLED);
-    });
-
     netlink = GetNetlinkRegulatorEvents(io);
     if (netlink) {
         netlink->Register(this->name, [&](std::string name, uint64_t events) {
@@ -288,11 +261,23 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
                 // ConfirmStatusAfterTimeout does the same, but even slower.
                 io.post([&]() {
                     string statusText = this->control.ReadStatus();
-                    enum RegulatorStatus status2 = this->control.DecodeStatus(statusText);
-                    if (status2 == INVALID) {
+                    enum RegulatorStatus status = this->control.DecodeStatus(statusText);
+                    if (status == INVALID) {
                         log_err(this->name + ": Got invalid status string '"+statusText+"'");
                     }
-                    this->ApplyStatus(status2);
+                    if (this->statusShadow == status)
+                    {
+                        io.post([&]() {
+                            string statusText = this->control.ReadStatus();
+                            enum RegulatorStatus status2 = this->control.DecodeStatus(statusText);
+                            if (status2 == INVALID) {
+                                log_err(this->name + ": Got invalid status string '"+statusText+"'");
+                            }
+                            this->ApplyStatus(status2);
+                        });
+                    } else {
+                        this->ApplyStatus(status);
+                    }
                 });
                 if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_ENABLE)
                 {

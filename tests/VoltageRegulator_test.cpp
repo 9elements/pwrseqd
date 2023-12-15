@@ -75,38 +75,6 @@ TEST(Regulator, FindSignals)
     remove_all(root);
 }
 
-TEST(Regulator, EventParsing)
-{
-    boost::asio::io_context io;
-    int result;
-
-    struct Config cfg;
-    cfg.Regulators.push_back((struct ConfigRegulator){
-        .Name = "abcde",
-    });
-    SignalProvider sp(cfg);
-    path root = path(std::tmpnam(nullptr));
-    create_directories(root);
-    create_directories(root / path("consumer"));
-
-    WriteFile(root / path("name"), "abcde");
-    WriteFile(root / path("state"), "disabled");
-    WriteFile(root / path("status"), "off");
-    WriteFile(root / path("consumer") / path("modalias"),
-              "reg-userspace-consumer");
-    WriteFile(root / path("consumer") / path("state"), "disabled");
-
-    VoltageRegulator vr(io, &cfg.Regulators[0], sp, root.string());
-    EXPECT_EQ(vr.control.DecodeRegulatorEvent("0"), 0);
-    EXPECT_EQ(vr.control.DecodeRegulatorEvent("1"), 1);
-    EXPECT_EQ(vr.control.DecodeRegulatorEvent("0x2"), 2);
-    EXPECT_EQ(vr.control.DecodeRegulatorEvent("0x100"), 256);
-    EXPECT_EQ(vr.control.DecodeRegulatorEvent("-1000"), -1000);
-    EXPECT_EQ(vr.control.DecodeRegulatorEvent("0xffff\n"), 0xffff);
-
-    remove_all(root);
-}
-
 TEST(Regulator, StatusParsing)
 {
     boost::asio::io_context io;
@@ -141,75 +109,6 @@ TEST(Regulator, StatusParsing)
     EXPECT_EQ(vr.control.DecodeStatus("normal"), NORMAL);
     EXPECT_EQ(vr.control.DecodeStatus("idle"), IDLE);
     EXPECT_EQ(vr.control.DecodeStatus("standby"), STANDBY);
-
-    remove_all(root);
-}
-
-TEST(Regulator, Inotify)
-{
-    boost::asio::io_context io;
-    struct Config cfg;
-    cfg.Regulators.push_back((struct ConfigRegulator){
-        .Name = "abcde",
-    });
-    SignalProvider sp(cfg);
-
-    path root = path(std::tmpnam(nullptr));
-    create_directories(root);
-    create_directories(root / path("consumer"));
-
-    WriteFile(root / path("name"), "abcde");
-    WriteFile(root / path("state"), "disabled");
-    WriteFile(root / path("status"), "off");
-    WriteFile(root / path("consumer") / path("modalias"),
-              "reg-userspace-consumer");
-    WriteFile(root / path("consumer") / path("state"), "disabled");
-
-    VoltageRegulator vr(io, &cfg.Regulators[0], sp, root.string());
-
-    Signal* on = sp.Find("abcde_On");
-    Signal* pg = sp.Find("abcde_PowerGood");
-    Signal* fa = sp.Find("abcde_Fault");
-    Signal* en = sp.Find("abcde_Enabled");
-
-    on->SetLevel(true);
-    vr.Update();
-    vr.Apply();
-    EXPECT_EQ(ReadFile(root / path("consumer") / path("state")), "enabled");
-    // Emulate sysfs change event
-    WriteFile(root / path("state"), "enabled");
-    WriteFile(root / path("status"), "on");
-
-    on->SetLevel(false);
-    vr.Update();
-    vr.Apply();
-    EXPECT_EQ(ReadFile(root / path("consumer") / path("state")), "disabled");
-    // Emulate sysfs change event
-    WriteFile(root / path("state"), "disabled");
-    WriteFile(root / path("status"), "off");
-
-    on->SetLevel(true);
-    vr.Update();
-    vr.Apply();
-    // Emulate sysfs change event
-    WriteFile(root / path("state"), "enabled");
-    WriteFile(root / path("status"), "on");
-
-    EXPECT_EQ(en->GetLevel(), true);
-    EXPECT_EQ(pg->GetLevel(), true);
-    EXPECT_EQ(fa->GetLevel(), false);
-
-    WriteFile(root / path("status"), "off");
-
-    EXPECT_EQ(en->GetLevel(), false);
-    EXPECT_EQ(pg->GetLevel(), false);
-    EXPECT_EQ(fa->GetLevel(), false);
-
-    WriteFile(root / path("status"), "error");
-
-    EXPECT_EQ(en->GetLevel(), true);
-    EXPECT_EQ(pg->GetLevel(), false);
-    EXPECT_EQ(fa->GetLevel(), true);
 
     remove_all(root);
 }

@@ -2,7 +2,6 @@
 
 #include "Config.hpp"
 #include "Logging.hpp"
-#include "SysFsWatcher.hpp"
 
 #include <boost/asio.hpp>
 #include <boost/filesystem.hpp>
@@ -76,14 +75,6 @@ class VoltageRegulatorSysfs
                           struct ConfigRegulator* cfg, string root = "");
     ~VoltageRegulatorSysfs();
 
-     void RegisterStateCallback(
-         const std::function<void(const enum RegulatorState state)>&
-             handler);
-
-     void RegisterStatusCallback(
-         const std::function<void(const enum RegulatorStatus status)>&
-             handler);
-
     // DecodeState converts the value read from
     // /sys/class/regulator/.../state
     enum RegulatorState DecodeState(string);
@@ -119,8 +110,6 @@ class VoltageRegulatorSysfs
 
     // SetState writes to /sys/class/regulator/.../state
     void SetState(const enum RegulatorState);
-
-    SysFsWatcher* watcher;
 
     string name;
 

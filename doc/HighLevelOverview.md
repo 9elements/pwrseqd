@@ -63,7 +63,7 @@ in_c--o|--------|  | AND    |-----(Active Low)----- Output
 ```
 
 - The pwrseqd state sequencer will use interrupts to detect GPIO state changes.
-- The pwrseqd state sequencer will use sysfs notify to detect regulator state changes.
+- The pwrseqd state sequencer will use NETLINK regulator events to detect regulator state changes.
 - On external state change or timeouts the internal state machine is run.
   The state machine is run in a loop until no more signal changes.
   When this happens the new output is driven to the GPIOs marked as output/regulator

@@ -48,7 +48,7 @@ set(FILES main.cpp Signal_test.cpp StateMachine_test.cpp  Logic_test.cpp Voltage
 		../src/Config.cpp ../src/StateMachine.cpp ../src/GpioInput.cpp ../src/GpioOutput.cpp ../src/Signal.cpp
   		../src/SignalProvider.cpp ../src/Logic.cpp ../src/LogicInput.cpp ../src/NullInput.cpp ../src/NullOutput.cpp
 		../src/VoltageRegulator.cpp ../src/VoltageRegulatorSysfs.cpp  ../src/ACPIStates.cpp ../src/Dbus.cpp
-		../src/SysFsWatcher.cpp ../src/LED.cpp ../src/InventoryItemPresence.cpp ../src/Netlink.cpp)
+		../src/LED.cpp ../src/InventoryItemPresence.cpp ../src/Netlink.cpp)
 set(LIBRARIES ${YAML_CPP_LIBRARIES} ${GPIODCXX_LIBRARY} Threads::Threads)
 if(SDBUSPLUSPLUS_FOUND)
 	set(LIBRARIES ${LIBRARIES} sdbusplus -lsystemd)
@@ -67,7 +67,7 @@ set(FILES main.cpp LogicRuntimeTest.cpp
 		../src/Config.cpp ../src/StateMachine.cpp ../src/GpioInput.cpp ../src/GpioOutput.cpp ../src/Signal.cpp
   		../src/SignalProvider.cpp ../src/Logic.cpp ../src/LogicInput.cpp ../src/NullInput.cpp ../src/NullOutput.cpp
 		../src/VoltageRegulator.cpp ../src/VoltageRegulatorSysfs.cpp ../src/ACPIStates.cpp ../src/Dbus.cpp
-		../src/SysFsWatcher.cpp ../src/LED.cpp ../src/InventoryItemPresence.cpp ../src/Netlink.cpp)
+		../src/LED.cpp ../src/InventoryItemPresence.cpp ../src/Netlink.cpp)
 set(LIBRARIES ${YAML_CPP_LIBRARIES} ${GPIODCXX_LIBRARY} Threads::Threads)
 if(SDBUSPLUSPLUS_FOUND)
 	set(LIBRARIES ${LIBRARIES} sdbusplus -lsystemd)
