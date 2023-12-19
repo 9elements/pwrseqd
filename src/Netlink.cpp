@@ -98,7 +98,7 @@ NetlinkRegulatorEvents::NetlinkRegulatorEvents(boost::asio::io_context& io) :
     io(&io), callbacks(), nlsock(nullptr), cb(nullptr), streamDesc(io)
 {
     int family_id, group_id;
-    log_debug("Starting Generic Netlink Multicast Receiver...\n");
+    log_debug("Starting Generic Netlink Multicast Receiver...");
 
     // Initialize Netlink library and socket
     log_debug("Allocating Netlink socket...");
