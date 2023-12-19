@@ -14,6 +14,19 @@ using SELCreated =
 
 #endif
 #include <iostream>
+#include <chrono>
+using namespace std::chrono;
+
+static inline std::string timestamp()
+{
+  auto now = system_clock::now();
+  auto timeT = system_clock::to_time_t(now);
+  std::stringstream ss;
+  ss << std::put_time(std::localtime(&timeT), "%a %b %d %Y %T")
+      << '.' << std::setfill('0') << std::setw(3)
+      << duration_cast<milliseconds>(now.time_since_epoch()).count() % 1000;
+  return ss.str();
+}
 
 static inline void log_debug(const std::string& s)
 {
@@ -22,7 +35,7 @@ static inline void log_debug(const std::string& s)
 #ifdef WITH_PHOSPHOR_LOGGING
         phosphor::logging::log<level::DEBUG>(s.c_str());
 #endif
-        std::cout << "DBG : " << s << std::endl;
+        std::cout << "[" << timestamp() << "]DBG : " << s << std::endl;
     }
 }
 
@@ -33,7 +46,7 @@ static inline void log_info(const std::string& s)
 #ifdef WITH_PHOSPHOR_LOGGING
         phosphor::logging::log<level::INFO>(s.c_str());
 #endif
-        std::cout << "INFO : " << s << std::endl;
+        std::cout << "[" << timestamp() << "]INFO : " << s << std::endl;
     }
 }
 
@@ -42,7 +55,7 @@ static inline void log_err(const std::string& s)
 #ifdef WITH_PHOSPHOR_LOGGING
     phosphor::logging::log<level::ERR>(s.c_str());
 #endif
-    std::cout << "ERR : " << s << std::endl;
+    std::cout << "[" << timestamp() << "]ERR : " << s << std::endl;
 }
 
 

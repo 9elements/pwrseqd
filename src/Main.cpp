@@ -5,6 +5,7 @@
 #include "SignalProvider.hpp"
 #include "StateMachine.hpp"
 
+#include <chrono>
 #include <getopt.h>
 #include <iostream>
 
@@ -67,6 +68,7 @@ int main(int argc, char * const argv[])
     int opt;
     int option_index = 0;
     string config_option;
+    std::time_t now = std::time(nullptr);
 
     _loglevel = 1;
 
@@ -76,7 +78,7 @@ int main(int argc, char * const argv[])
         return 1;
     }
 
-    log_info("Starting " + string(argv[0]) + " ....");
+    log_info("Starting " + string(argv[0]) + "....");
 
     try
     {
