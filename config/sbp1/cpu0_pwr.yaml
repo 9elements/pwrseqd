@@ -459,6 +459,11 @@ power_sequencer:
   - CPU0_VR_PWRGD_Unit:
       in:
         and:
+          - name: "pvccfa_ehv_cpu0_Enabled"
+          - name: "pvccfa_ehv_fivra_cpu0_Enabled"
+          - name: "pvccinfaon_cpu0_Enabled"
+          - name: "pvnn_main_cpu0_Enabled"
+          - name: "pvccin_cpu0_Enabled"
           - name: "pvccfa_ehv_cpu0_PowerGood"
           - name: "pvccfa_ehv_fivra_cpu0_PowerGood"
           - name: "pvccinfaon_cpu0_PowerGood"
@@ -522,6 +527,12 @@ power_sequencer:
           - name: "pvnn_main_cpu0_Enabled"
           - name: "pvccin_cpu0_Enabled"
           - name: "pvpp_hbm_cpu0_Enabled"
+          - name: "pvccfa_ehv_cpu0_PowerGood"
+          - name: "pvccfa_ehv_fivra_cpu0_PowerGood"
+          - name: "pvccinfaon_cpu0_PowerGood"
+          - name: "pvnn_main_cpu0_PowerGood"
+          - name: "pvccin_cpu0_PowerGood"
+          - name: "pvpp_hbm_cpu0_PowerGood"
       out:
         name: "CPU0_VR_Off"
         active_low: true
