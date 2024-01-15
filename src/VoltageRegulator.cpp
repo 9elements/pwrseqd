@@ -159,14 +159,10 @@ void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
             }
         }
     } else {
-        if (status == ERROR && !this->stateShadow) {
-            if (this->statusShadow == OFF) {
-                // Regulator should be off, ignore errors as OUT OF REGULATION or UNDERVOLATE is unlikely
-                // but expected when regulator was turned off or is turned off.
-                return;
-            } else if (this->statusShadow == ON) {
-                status = OFF;
-            }
+        if (status == ERROR && this->stateShadow == DISABLED) {
+            // Regulator should be off, ignore errors as OUT OF REGULATION or UNDERVOLATE is unlikely,
+            // but expected when regulator was turned off or is being turned off.
+            return;
         }
         if (status == ERROR) {
             log_err(this->name + ": Got unexpected regulator status! Requested no state change, got status " + this->control.StatusToString(status));
@@ -186,10 +182,11 @@ void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
     }
     else if (status == ERROR)
     {
-        // Errors might get cleared by interrupt handlers before we can
-        // read them...
         this->powergood->SetLevel(false);
         this->fault->SetLevel(true);
+        // The state is not updated here to prevent oscillations.
+        // It's the kernel responsibility to turn off regulators with
+        // fault interrupt handlers!
     }
     else if (status == ON)
     {
