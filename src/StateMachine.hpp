@@ -67,6 +67,12 @@ class StateMachine : Validator
         work_guard;
     boost::asio::io_context* io;
 
+    // Error handler for voltage regulator failures
+    void CatchVoltageRegulatorError(VoltageRegulator* vr);
+
+    // Reference to dbus to initiate host transition on errors
+    Dbus* dbus;
+
     vector<OutputDriver*> outputDrivers;
     vector<NullOutput*> nullOutputs;
     vector<NullInput*> nullInputs;

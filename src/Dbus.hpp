@@ -25,6 +25,12 @@ enum class HostState
     diagnosticMode,
 };
 
+enum class HostTransition
+{
+    off,
+    on,
+};
+
 enum class OSState
 {
     inactive,
@@ -139,6 +145,20 @@ static constexpr std::string_view getHostState(const HostState state)
             break;
     }
 };
+
+static constexpr std::string_view getHostTransition(const HostTransition state)
+{
+    switch (state)
+    {
+        case HostTransition::off:
+            return "xyz.openbmc_project.State.Host.Transition.Off";
+        case HostTransition::on:
+            return "xyz.openbmc_project.State.Host.Transition.On";
+        default:
+            return "";
+            break;
+    }
+};
 } // namespace dbus
 
 // The Dbus class handles the DBUS interface
@@ -152,6 +172,7 @@ class Dbus
     void SetBootState(const dbus::BootProgress progress);
     void SetChassisState(const bool IsOn);
     void SetLEDState(string name, bool state);
+    void RequestHostTransition(const dbus::HostTransition state);
 
     void RegisterItemPresentCallback(
         const std::string& inventoryPath,

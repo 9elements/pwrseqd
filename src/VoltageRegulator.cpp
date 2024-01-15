@@ -184,6 +184,9 @@ void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
     {
         this->powergood->SetLevel(false);
         this->fault->SetLevel(true);
+        if (errorCallback) {
+            this->errorCallback (this);
+        }
         // The state is not updated here to prevent oscillations.
         // It's the kernel responsibility to turn off regulators with
         // fault interrupt handlers!
@@ -218,9 +221,11 @@ void VoltageRegulator::Poll(void)
 
 VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
                                    struct ConfigRegulator* cfg,
-                                   SignalProvider& prov, string root) :
+                                   SignalProvider& prov, string root,
+                                   function<void(VoltageRegulator*)> const& lamda) :
     statusShadow(NOCHANGE), name(cfg->Name) , stateChangeTimeoutUsec(cfg->TimeoutUsec), timerStateCheck(io),
-    pendingLevelChange(false), pendingNewLevel(DISABLED), timerPoll(io), control(io,  cfg, root)
+    pendingLevelChange(false), pendingNewLevel(DISABLED), timerPoll(io), control(io, cfg, root),
+    errorCallback(lamda)
 {
     this->in = prov.FindOrAdd(cfg->Name + "_On");
     this->in->AddReceiver(this);

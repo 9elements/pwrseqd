@@ -14,7 +14,8 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
                            boost::asio::io_service& io,
                            Dbus& dbus) :
     io{&io},
-    work_guard{io.get_executor()}
+    work_guard{io.get_executor()},
+    dbus(&dbus)
 {
 
     prov.SetDirtyBitEvent([&](void) { this->OnDirtySet(); });
@@ -79,7 +80,8 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
     for (int i = 0; i < cfg.Regulators.size(); i++)
     {
         VoltageRegulator* v =
-            new VoltageRegulator(io, &cfg.Regulators[i], prov);
+            new VoltageRegulator(io, &cfg.Regulators[i], prov, "",
+                [&](VoltageRegulator* vr) { this->CatchVoltageRegulatorError(vr); });
         this->voltageRegulators.push_back(v);
         this->outputDrivers.push_back(v);
         prov.AddDriver(v);
@@ -92,6 +94,15 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
 StateMachine::~StateMachine(void)
 {
     this->work_guard.reset();
+}
+
+void StateMachine::CatchVoltageRegulatorError(VoltageRegulator* vr)
+{
+    log_err("Switching off host due to failure of regulator " + vr->Name());
+
+    // Turn off host. The PCH will do the same anyways, but it might try to
+    // power on the CPU(s) again after a timeout.
+    this->dbus->RequestHostTransition(dbus::HostTransition::off);
 }
 
 void StateMachine::InjectRegulatorError(string name)

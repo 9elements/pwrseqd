@@ -170,12 +170,12 @@ void ACPIStates::Update(void)
 bool ACPIStates::RequestedHostTransition(const std::string& requested,
                                          std::string& resp)
 {
-    if (requested == "xyz.openbmc_project.State.Host.Transition.Off")
+    if (requested == dbus::getHostTransition(dbus::HostTransition::off))
     {
         this->RequestHost(false);
         // Leave chassis as is. Platform managment might even run in ACPI_S5.
     }
-    else if (requested == "xyz.openbmc_project.State.Host.Transition.On")
+    else if (requested == dbus::getHostTransition(dbus::HostTransition::on))
     {
         this->RequestChassis(true);
         this->RequestHost(true);

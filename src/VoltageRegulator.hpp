@@ -46,7 +46,9 @@ class VoltageRegulator :
     vector<Signal*> Signals(void);
 
     VoltageRegulator(boost::asio::io_context& io, struct ConfigRegulator* cfg,
-                     SignalProvider& prov, string root = "");
+                     SignalProvider& prov, string root = "",
+                     function<void(VoltageRegulator*)> const& lamda = nullptr);
+
     ~VoltageRegulator();
 
   protected:
@@ -89,6 +91,8 @@ class VoltageRegulator :
 
     VoltageRegulatorSysfs control;
     NetlinkRegulatorEvents *netlink;
+
+    function<void(VoltageRegulator*)> errorCallback;
 
 #ifdef WITH_GOOGLE_TEST
     FRIEND_TEST(Regulator, EventParsing);

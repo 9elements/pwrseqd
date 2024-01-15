@@ -127,6 +127,16 @@ void Dbus::SetLEDState(string name, bool state)
 #endif
 }
 
+void Dbus::RequestHostTransition(const dbus::HostTransition state)
+{
+#ifdef WITH_SDBUSPLUSPLUS
+    this->hostIface->set_property("RequestedHostTransition",
+                                  std::string(getHostTransition(state)));
+
+    log_debug("DBUS RequestedHostTransition " + std::string(getHostTransition(state)));
+#endif
+}
+
 void Dbus::SetHostState(const dbus::HostState state)
 {
 #ifdef WITH_SDBUSPLUSPLUS
