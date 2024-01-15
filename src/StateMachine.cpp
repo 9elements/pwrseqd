@@ -94,6 +94,16 @@ StateMachine::~StateMachine(void)
     this->work_guard.reset();
 }
 
+void StateMachine::InjectRegulatorError(string name)
+{
+    for (auto it : this->voltageRegulators) {
+      if (it->Name() == name) {
+          log_debug(name + ": Injecting error event!");
+          it->ApplyStatus(ERROR);
+      }
+    }
+}
+
 // Validate checks if the current config is sane
 void StateMachine::Validate(void)
 {

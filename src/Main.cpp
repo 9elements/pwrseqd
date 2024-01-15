@@ -21,9 +21,11 @@ static struct option long_options[] =
         {"quiet",         no_argument,       &_loglevel, 0},
         /* These options don’t set a flag.
         We distinguish them by their indices. */
-        {"help",                 no_argument,       0, 'h'},
-        {"config",               required_argument, 0, 'c'},
-        {"dump_signals_folder",  required_argument, 0, 'd'},
+        {"help",                  no_argument,       0, 'h'},
+        {"config",                required_argument, 0, 'c'},
+        {"dump_signals_folder",   required_argument, 0, 'd'},
+        {"reg_error_inj_name",    required_argument, 0, 'r'},
+        {"reg_error_inj_timeout", required_argument, 0, 't'},
         {0, 0, 0, 0}
 };
 
@@ -54,7 +56,10 @@ void help(void)
             args += "Path to dump signal.txt [DEBUGGING ONLY]";
         else if (long_options[i].name == "help")
             args += "Produce this help message";
-
+        else if (long_options[i].name == "reg_error_inj_name")
+            args += "Regulator name to inject an error after <x> seconds";
+        else if (long_options[i].name == "reg_error_inj_timeout")
+            args += "The number of seconds after the error should be injected";
         args += "\n";
     }
     log_err(args);
@@ -67,8 +72,11 @@ int main(int argc, char * const argv[])
     boost::asio::io_service io;
     int opt;
     int option_index = 0;
+    int errorTimeout = 0;
     string config_option;
     std::time_t now = std::time(nullptr);
+    boost::asio::deadline_timer timerTestErrorEvent(io);
+    string errorRegulatorName;
 
     _loglevel = 1;
 
@@ -84,7 +92,7 @@ int main(int argc, char * const argv[])
     {
         opterr = 0;
 
-        while ((opt = getopt_long(argc, argv, "hc:d:eq", long_options, &option_index)) != -1 ) {
+        while ((opt = getopt_long(argc, argv, "hc:d:eqt:r:", long_options, &option_index)) != -1 ) {
             switch (opt) {
                 case 0:
                     break;
@@ -96,6 +104,12 @@ int main(int argc, char * const argv[])
                     break;
                 case 'd':
                     dumpSignalsFolder = string(optarg);
+                    break;
+                case 't':
+                    errorTimeout = atoi(optarg);
+                    break;
+                case 'r':
+                    errorRegulatorName = string(optarg);
                     break;
                 case '?':  // unknown option...
                     log_err(string("Unknown option: '") + char(optopt) + string("'!"));
@@ -137,6 +151,13 @@ int main(int argc, char * const argv[])
         log_info("Validating config ...");
 
         sm.Validate();
+        if (errorRegulatorName != "" && errorTimeout > 0) {
+            log_info("Starting error inject timer for " + errorRegulatorName + "...");
+            timerTestErrorEvent.expires_from_now(boost::posix_time::seconds(errorTimeout));
+            timerTestErrorEvent.async_wait([&](const boost::system::error_code& err) {
+                sm.InjectRegulatorError(errorRegulatorName);
+            });
+        }
 
         log_info("Starting main loop.");
 

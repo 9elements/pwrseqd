@@ -49,6 +49,9 @@ class StateMachine : Validator
     // Validates checks if the current config is sane
     void Validate(void);
 
+    // FOR TESTING ONLY: Sets the regulator to error state.
+    void InjectRegulatorError(string name);
+
   protected:
     vector<NullOutput*> GetNullOutputs(void);
     vector<NullInput*> GetNullInputs(void);

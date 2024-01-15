@@ -49,13 +49,16 @@ class VoltageRegulator :
                      SignalProvider& prov, string root = "");
     ~VoltageRegulator();
 
-  private:
-    // Read the regulator status sysfs file
-    void Poll(void);
-
+  protected:
     // ApplyStatus updates the signals from the regulator status
     // Regulator status can be set from sysfs or events
     void ApplyStatus(enum RegulatorStatus);
+
+    friend class StateMachine;
+
+  private:
+    // Read the regulator status sysfs file
+    void Poll(void);
 
     // Compare the requested state against the actual state. On mismatch the error signal is set.
     void ConfirmStatusAfterTimeout(void);
