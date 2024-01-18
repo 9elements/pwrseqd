@@ -92,6 +92,8 @@ power_sequencer:
             invert: true
           - name: "STATE_REQ_CHASSIS_ON"
             input_stable_usec: 100  # EGB: min 1 usec
+          - name: "PCH_VR_Fault_Shutdown"
+            invert: true
         or:
           - name: "p1v8_pch_aux_PowerGood"
             input_stable_usec: 100
@@ -107,6 +109,8 @@ power_sequencer:
           - name: "p3v3_pch_PowerGood"
             input_stable_usec: 100  # EGB: min 2 usec
           - name: "p3v3_pch_PowerGood"
+          - name: "PCH_VR_Fault_Shutdown"
+            invert: true
         or:
           - name: "p1v05_pch_aux_PowerGood"
             input_stable_usec: 100
@@ -122,12 +126,47 @@ power_sequencer:
           - name: "p1v8_pch_aux_PowerGood"
             input_stable_usec: 100  # EGB: min 2 usec
           - name: "p1v8_pch_aux_PowerGood"
+          - name: "PCH_VR_Fault_Shutdown"
+            invert: true
         or:
           - name: "PCH_PWROK"
             input_stable_usec: 100  # min 100usec
         and_then_or: true
       out:
         name: "p1v05_pch_aux_On"
+
+  - PCH_VR_Off_Unit:
+      in:
+        or:
+          - name: "p1v05_pch_aux_Enabled"
+          - name: "p1v8_pch_aux_Enabled"
+          - name: "p3v3_pch_Enabled"
+          - name: "p1v05_pch_aux_PowerGood"
+          - name: "p1v8_pch_aux_PowerGood"
+          - name: "p3v3_pch_PowerGood"
+      out:
+        name: "PCH_VR_Off"
+        active_low: true
+
+  - PCH_VR_Fault_Unit:
+      in:
+        or:
+          - name: "p1v05_pch_aux_Fault"
+          - name: "p1v8_pch_aux_Fault"
+          - name: "p3v3_pch_Fault"
+      out:
+        name: "PCH_VR_Fault"
+
+  - PCH_VR_Fault_Keep_Unit:
+      in:
+        or:
+          - name: "PCH_VR_Fault"
+          - name: "PCH_VR_Fault_Shutdown"
+        and:
+          - name: "PCH_VR_Off"
+            invert: true
+      out:
+        name: "PCH_VR_Fault_Shutdown"
 
   - RSMRST_Unit:  # When not asserted then AUX power is on and system is in S5, else G3
       in:
@@ -144,6 +183,8 @@ power_sequencer:
           - name: "p1v05_pch_aux_PowerGood"
             input_stable_usec: 10000  # LBG:BT3 min 10 msec
           - name: "p1v05_pch_aux_PowerGood"
+          - name: "PCH_VR_Fault_Shutdown"
+            invert: true
       out:
         active_low: true
         name: "RSMRST"
@@ -296,11 +337,4 @@ regulators:
   - name: "p5v"
 
 floating_signals:
-  - "p1v05_pch_aux_Enabled"
-  - "p1v05_pch_aux_Fault"
-  - "p1v8_pch_aux_Enabled"
-  - "p1v8_pch_aux_Fault"
-  - "p3v3_pch_Enabled"
-  - "p3v3_pch_Fault"
   - "p5v_Enabled"
-  - "p5v_Fault"

@@ -562,6 +562,7 @@ power_sequencer:
   - CPU1_VR_Fault_Unit:
       in:
         or:
+          - name: "p5v_Fault"
           - name: "pvccfa_ehv_cpu1_Fault"
           - name: "pvccfa_ehv_fivra_cpu1_Fault"
           - name: "pvccinfaon_cpu1_Fault"
