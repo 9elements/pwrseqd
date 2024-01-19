@@ -156,6 +156,7 @@ struct convert<ConfigInput>
         c.GateInput = false;
         c.GatedIdleHigh = false;
         c.GatedIdleLow = false;
+        c.GatedOutputODLow = false;
         for (auto it : node)
         {
             string key = it.first.as<string>();
