@@ -178,7 +178,12 @@ bool ACPIStates::RequestedHostTransition(const std::string& requested,
     else if (requested == dbus::getHostTransition(dbus::HostTransition::on))
     {
         this->RequestChassis(true);
-        this->RequestHost(true);
+        // Give statemachine some time to drive GPIOs before changing host state
+        this->io->post([this] {
+            this->io->post([this] {
+                this->RequestHost(true);
+            });
+        });
     }
     else
     {
@@ -197,7 +202,12 @@ bool ACPIStates::RequestedPowerTransition(const std::string& requested,
     if (requested == "xyz.openbmc_project.State.Chassis.Transition.Off")
     {
         this->RequestHost(false);
-        this->RequestChassis(false);
+        // Give statemachine some time to drive GPIOs before changing chassis state
+        this->io->post([this] {
+            this->io->post([this] {
+                this->RequestChassis(false);
+            });
+        });
     }
     else if (requested == "xyz.openbmc_project.State.Chassis.Transition.On")
     {
@@ -248,7 +258,7 @@ bool ACPIStates::RequestedPowerTransition(const std::string& requested,
 ACPIStates::ACPIStates(Config& cfg, SignalProvider& sp,
                        boost::asio::io_service& io,
                        Dbus& d) :
-    sp{&sp},
+    io(&io), sp{&sp},
     dbus(&d), powerCycleTimer(io)
 {
 

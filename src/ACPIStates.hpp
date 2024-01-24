@@ -50,6 +50,8 @@ class ACPIStates : public SignalDriver, SignalReceiver
                                   std::string& resp);
     bool RequestedHostTransition(const std::string& requested,
                                  std::string& resp);
+    boost::asio::io_context* io;
+
     SignalProvider* sp;
     Signal* signalChassisState;
     Signal* signalHostState;
