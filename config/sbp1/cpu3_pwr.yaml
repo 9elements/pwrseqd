@@ -538,6 +538,7 @@ power_sequencer:
           - name: "pvnn_main_cpu3_PowerGood"
           - name: "pvccin_cpu3_PowerGood"
           - name: "pvpp_hbm_cpu3_PowerGood"
+          - name: "CPU3_VR_Fault"
       out:
         name: "CPU3_VR_Off"
         active_low: true

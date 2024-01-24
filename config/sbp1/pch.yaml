@@ -144,6 +144,7 @@ power_sequencer:
           - name: "p1v05_pch_aux_PowerGood"
           - name: "p1v8_pch_aux_PowerGood"
           - name: "p3v3_pch_PowerGood"
+          - name: "PCH_VR_Fault" # Faults are cleared when the regulator reaches status OFF
       out:
         name: "PCH_VR_Off"
         active_low: true
