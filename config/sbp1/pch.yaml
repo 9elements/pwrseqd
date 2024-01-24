@@ -131,6 +131,14 @@ power_sequencer:
         or:
           - name: "PCH_PWROK"
             input_stable_usec: 100  # min 100usec
+          - name: "CPU0_VR_Off" # Wait until all CPUs are turned off before shutting down PCH
+            invert: true
+          - name: "CPU1_VR_Off"
+            invert: true
+          - name: "CPU2_VR_Off"
+            invert: true
+          - name: "CPU3_VR_Off"
+            invert: true
         and_then_or: true
       out:
         name: "p1v05_pch_aux_On"

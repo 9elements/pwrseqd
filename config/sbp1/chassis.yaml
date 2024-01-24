@@ -6,7 +6,8 @@ power_sequencer:
       in:
         or:
           - name: "STATE_REQ_CHASSIS_ON"
-          - name: "p3v3_pch_Enabled"
+          - name: "PCH_VR_Off"
+            invert: true
       out:
         name: "bcm1_On"
 
@@ -14,7 +15,8 @@ power_sequencer:
       in:
         or:
           - name: "STATE_REQ_CHASSIS_ON"
-          - name: "p3v3_pch_Enabled"
+          - name: "PCH_VR_Off"
+            invert: true
       out:
         name: "bcm2_On"
 
@@ -22,7 +24,8 @@ power_sequencer:
       in:
         or:
           - name: "STATE_REQ_CHASSIS_ON"
-          - name: "p3v3_pch_Enabled"
+          - name: "PCH_VR_Off"
+            invert: true
       out:
         name: "bcm3_On"
 
