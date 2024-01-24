@@ -8,6 +8,16 @@ This software is meant to be used on [OpenBmc](https://github.com/openbmc/openbm
 
 Detailed implementation can be found in [HighLevelOverview](doc/HighLevelOverview.md).
 
+The whole application is designed around Linux kernel features and requires the
+following options to be enabled:
+```
+CONFIG_REGULATOR=y
+CONFIG_REGULATOR_NETLINK_EVENTS=y
+CONFIG_REGULATOR_USERSPACE_CONSUMER=y
+CONFIG_GPIO=y
+CONFIG_GPIO_CDEV=y
+```
+
 # How to build
 
 ```bash
