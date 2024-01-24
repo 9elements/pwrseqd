@@ -254,6 +254,9 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
     if (netlink) {
         netlink->Register(this->name, [&](std::string name, uint64_t events) {
             log_debug(this->name + ": Got NETLINK event: " + to_string(events));
+            if ((events & REGULATOR_EVENT_FAILURE) && (events & REGULATOR_EVENT_DISABLE)) {
+                this->ApplyStatus(ERROR);
+            }
             if (events & REGULATOR_EVENT_EN_DIS)
             {
                 // The enable/disable event indicates that the status will change soon,
