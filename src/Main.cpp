@@ -4,6 +4,7 @@
 #include "Logging.hpp"
 #include "SignalProvider.hpp"
 #include "StateMachine.hpp"
+#include "Netlink.hpp"
 
 #include <chrono>
 #include <getopt.h>
@@ -26,6 +27,7 @@ static struct option long_options[] =
         {"dump_signals_folder",   required_argument, 0, 'd'},
         {"reg_error_inj_name",    required_argument, 0, 'r'},
         {"reg_error_inj_timeout", required_argument, 0, 't'},
+        {"netlink_events",        no_argument,       0, 'n'},
         {0, 0, 0, 0}
 };
 
@@ -60,6 +62,9 @@ void help(void)
             args += "Regulator name to inject an error after <x> seconds";
         else if (long_options[i].name == "reg_error_inj_timeout")
             args += "The number of seconds after the error should be injected";
+        else if (long_options[i].name == "netlink_events")
+            args += "Only dump regulator NETLINK events";
+
         args += "\n";
     }
     log_err(args);
@@ -73,6 +78,7 @@ int main(int argc, char * const argv[])
     int opt;
     int option_index = 0;
     int errorTimeout = 0;
+    int netlinkEvents = 0;
     string config_option;
     std::time_t now = std::time(nullptr);
     boost::asio::deadline_timer timerTestErrorEvent(io);
@@ -92,7 +98,7 @@ int main(int argc, char * const argv[])
     {
         opterr = 0;
 
-        while ((opt = getopt_long(argc, argv, "hc:d:eqt:r:", long_options, &option_index)) != -1 ) {
+        while ((opt = getopt_long(argc, argv, "hc:d:eqt:r:n", long_options, &option_index)) != -1 ) {
             switch (opt) {
                 case 0:
                     break;
@@ -110,6 +116,9 @@ int main(int argc, char * const argv[])
                     break;
                 case 'r':
                     errorRegulatorName = string(optarg);
+                    break;
+                case 'n':
+                    netlinkEvents = 1;
                     break;
                 case '?':  // unknown option...
                     log_err(string("Unknown option: '") + char(optopt) + string("'!"));
@@ -139,6 +148,18 @@ int main(int argc, char * const argv[])
         return EXIT_FAILURE;
     }
     log_info("Loaded config files.");
+
+    if (netlinkEvents) {
+        NetlinkRegulatorEvents *netlink = GetNetlinkRegulatorEvents(io);
+        for (auto it : cfg.Regulators)
+        {
+            netlink->Register(it.Name, [&](std::string name, uint64_t events) {
+                std::cout << name + ": Got NETLINK event: " + to_string(events);
+            });
+        }
+        io.run();
+        return 0;
+    }
 
     try
     {
