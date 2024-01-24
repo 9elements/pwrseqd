@@ -6,6 +6,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD01_PRESENT"
       out:
@@ -14,6 +15,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD02_PRESENT"
       out:
@@ -22,6 +24,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD03_PRESENT"
       out:
@@ -30,6 +33,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD04_PRESENT"
       out:
@@ -38,6 +42,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD05_PRESENT"
       out:
@@ -46,6 +51,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD06_PRESENT"
       out:
@@ -54,6 +60,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD07_PRESENT"
       out:
@@ -62,6 +69,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD08_PRESENT"
       out:
@@ -70,6 +78,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD09_PRESENT"
       out:
@@ -78,6 +87,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD10_PRESENT"
       out:
@@ -86,6 +96,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD11_PRESENT"
       out:
@@ -94,6 +105,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD12_PRESENT"
       out:
@@ -102,6 +114,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD13_PRESENT"
       out:
@@ -110,6 +123,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD14_PRESENT"
       out:
@@ -118,6 +132,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD15_PRESENT"
       out:
@@ -126,6 +141,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD16_PRESENT"
       out:
@@ -134,6 +150,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD17_PRESENT"
       out:
@@ -142,6 +159,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD18_PRESENT"
       out:
@@ -150,6 +168,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD19_PRESENT"
       out:
@@ -158,6 +177,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD20_PRESENT"
       out:
@@ -166,6 +186,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD21_PRESENT"
       out:
@@ -174,6 +195,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD22_PRESENT"
       out:
@@ -182,6 +204,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD23_PRESENT"
       out:
@@ -190,6 +213,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD24_PRESENT"
       out:
@@ -198,6 +222,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD25_PRESENT"
       out:
@@ -206,6 +231,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD26_PRESENT"
       out:
@@ -214,6 +240,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD27_PRESENT"
       out:
@@ -222,6 +249,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD28_PRESENT"
       out:
@@ -230,6 +258,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD29_PRESENT"
       out:
@@ -238,6 +267,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD30_PRESENT"
       out:
@@ -246,6 +276,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD31_PRESENT"
       out:
@@ -254,6 +285,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD32_PRESENT"
       out:
@@ -263,6 +295,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD01_PRESENT"
             input_stable_usec: 10000
@@ -272,6 +305,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD02_PRESENT"
             input_stable_usec: 10000
@@ -281,6 +315,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD03_PRESENT"
             input_stable_usec: 10000
@@ -290,6 +325,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD04_PRESENT"
             input_stable_usec: 10000
@@ -299,6 +335,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD05_PRESENT"
             input_stable_usec: 10000
@@ -308,6 +345,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD06_PRESENT"
             input_stable_usec: 10000
@@ -317,6 +355,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD07_PRESENT"
             input_stable_usec: 10000
@@ -326,6 +365,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD08_PRESENT"
             input_stable_usec: 10000
@@ -335,6 +375,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD09_PRESENT"
             input_stable_usec: 10000
@@ -344,6 +385,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD10_PRESENT"
             input_stable_usec: 10000
@@ -353,6 +395,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD11_PRESENT"
             input_stable_usec: 10000
@@ -362,6 +405,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD12_PRESENT"
             input_stable_usec: 10000
@@ -371,6 +415,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD13_PRESENT"
             input_stable_usec: 10000
@@ -380,6 +425,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD14_PRESENT"
             input_stable_usec: 10000
@@ -389,6 +435,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD15_PRESENT"
             input_stable_usec: 10000
@@ -398,6 +445,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD16_PRESENT"
             input_stable_usec: 10000
@@ -407,6 +455,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD17_PRESENT"
             input_stable_usec: 10000
@@ -416,6 +465,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD18_PRESENT"
             input_stable_usec: 10000
@@ -425,6 +475,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD19_PRESENT"
             input_stable_usec: 10000
@@ -434,6 +485,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD20_PRESENT"
             input_stable_usec: 10000
@@ -443,6 +495,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD21_PRESENT"
             input_stable_usec: 10000
@@ -452,6 +505,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD22_PRESENT"
             input_stable_usec: 10000
@@ -461,6 +515,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD23_PRESENT"
             input_stable_usec: 10000
@@ -470,6 +525,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD24_PRESENT"
             input_stable_usec: 10000
@@ -479,6 +535,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD25_PRESENT"
             input_stable_usec: 10000
@@ -488,6 +545,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD26_PRESENT"
             input_stable_usec: 10000
@@ -497,6 +555,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD27_PRESENT"
             input_stable_usec: 10000
@@ -506,6 +565,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD28_PRESENT"
             input_stable_usec: 10000
@@ -515,6 +575,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD29_PRESENT"
             input_stable_usec: 10000
@@ -524,6 +585,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD30_PRESENT"
             input_stable_usec: 10000
@@ -533,6 +595,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD31_PRESENT"
             input_stable_usec: 10000
@@ -542,6 +605,7 @@ power_sequencer:
       in:
         and:
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 1000
           - name: "PCH_PWROK"
           - name: "RSSD32_PRESENT"
             input_stable_usec: 10000
@@ -910,7 +974,7 @@ power_sequencer:
           - name: "RSSD01_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -930,7 +994,7 @@ power_sequencer:
           - name: "RSSD02_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -950,7 +1014,7 @@ power_sequencer:
           - name: "RSSD03_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -970,7 +1034,7 @@ power_sequencer:
           - name: "RSSD04_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -990,7 +1054,7 @@ power_sequencer:
           - name: "RSSD05_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -1010,7 +1074,7 @@ power_sequencer:
           - name: "RSSD06_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -1030,7 +1094,7 @@ power_sequencer:
           - name: "RSSD07_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -1050,7 +1114,7 @@ power_sequencer:
           - name: "RSSD08_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -1070,7 +1134,7 @@ power_sequencer:
           - name: "RSSD09_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -1090,7 +1154,7 @@ power_sequencer:
           - name: "RSSD10_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -1110,7 +1174,7 @@ power_sequencer:
           - name: "RSSD11_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -1130,7 +1194,7 @@ power_sequencer:
           - name: "RSSD12_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -1150,7 +1214,7 @@ power_sequencer:
           - name: "RSSD13_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -1170,7 +1234,7 @@ power_sequencer:
           - name: "RSSD14_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -1190,7 +1254,7 @@ power_sequencer:
           - name: "RSSD15_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -1210,7 +1274,7 @@ power_sequencer:
           - name: "RSSD16_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR0_EN"
             invert: true
@@ -1230,7 +1294,7 @@ power_sequencer:
           - name: "RSSD17_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1250,7 +1314,7 @@ power_sequencer:
           - name: "RSSD18_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1270,7 +1334,7 @@ power_sequencer:
           - name: "RSSD19_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1290,7 +1354,7 @@ power_sequencer:
           - name: "RSSD20_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1310,7 +1374,7 @@ power_sequencer:
           - name: "RSSD21_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1330,7 +1394,7 @@ power_sequencer:
           - name: "RSSD22_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1350,7 +1414,7 @@ power_sequencer:
           - name: "RSSD23_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1370,7 +1434,7 @@ power_sequencer:
           - name: "RSSD24_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1390,7 +1454,7 @@ power_sequencer:
           - name: "RSSD25_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1410,7 +1474,7 @@ power_sequencer:
           - name: "RSSD26_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1430,7 +1494,7 @@ power_sequencer:
           - name: "RSSD27_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1450,7 +1514,7 @@ power_sequencer:
           - name: "RSSD28_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1470,7 +1534,7 @@ power_sequencer:
           - name: "RSSD29_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1490,7 +1554,7 @@ power_sequencer:
           - name: "RSSD30_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1510,7 +1574,7 @@ power_sequencer:
           - name: "RSSD31_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true
@@ -1530,7 +1594,7 @@ power_sequencer:
           - name: "RSSD32_POWER_EN"
             invert: true
             input_stable_usec: 100000
-          - name: "STATE_REQ_HOST_ON"
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
             invert: true
           - name: "FM_SSD_CLK_DRVR1_EN"
             invert: true

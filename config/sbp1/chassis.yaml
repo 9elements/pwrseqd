@@ -30,7 +30,6 @@ power_sequencer:
       in:
         and:
           - name: "PCH_PWROK"
-          - name: "STATE_REQ_HOST_ON"
         or:
           - name: "PLUG_DETECT_M2_SSD_CARRIER1"
           - name: "PLUG_DETECT_M2_SSD1"
@@ -42,7 +41,6 @@ power_sequencer:
       in:
         and:
           - name: "PCH_PWROK"
-          - name: "STATE_REQ_HOST_ON"
         or:
           - name: "PLUG_DETECT_M2_SSD_CARRIER2"
           - name: "PLUG_DETECT_M2_SSD2"
@@ -55,8 +53,6 @@ power_sequencer:
         or:
           - name: "FM_SLPS3"
           - name: "RSMRST"
-          - name: "STATE_REQ_HOST_ON"
-            invert: true
           - name: "p3v3_m2_ssd1_PowerGood"
             input_stable_usec: 100000  # PCIe spec: 100msec
             invert: true
@@ -71,8 +67,6 @@ power_sequencer:
         or:
           - name: "FM_SLPS3"
           - name: "RSMRST"
-          - name: "STATE_REQ_HOST_ON"
-            invert: true
           - name: "p3v3_m2_ssd2_PowerGood"
             input_stable_usec: 100000  # PCIe spec: 100msec
             invert: true

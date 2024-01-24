@@ -172,9 +172,11 @@ power_sequencer:
   - RSMRST_Unit:  # When not asserted then AUX power is on and system is in S5, else G3
       in:
         and:
-          - name: "STATE_REQ_CHASSIS_ON"
           # As SLP_SUS# can't be read using a GPIO wait maximum timeout of 100msec
           # DSW is tied to P3V3_PCH
+          - name: "p3v3_pch_Enabled"
+          - name: "p1v8_pch_aux_Enabled"
+          - name: "p1v05_pch_aux_Enabled"
           - name: "p3v3_pch_PowerGood"
             input_stable_usec: 100000  # LBG:BT3 min 10 msec. SLP_SUS# timeout: 100msec
           - name: "p3v3_pch_PowerGood"
@@ -198,7 +200,7 @@ power_sequencer:
             invert: true
           - name: "FM_SLPS3"
             invert: true
-            input_stable_usec: 1000000 # glitch filter
+            input_stable_usec: 1000000 # PCH glitch filter
           - name: "FM_SLPS3"
             invert: true
           - name: "FM_DB2000_DEV_EN" # Ext clocks are stable
@@ -215,6 +217,7 @@ power_sequencer:
           - name: "FM_SLPS4"
             invert: true
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 10000
           - name: "CPU0_VR_Fault_Shutdown"
             input_stable_usec: 1000
             invert: true
@@ -235,6 +238,7 @@ power_sequencer:
         and:
           - name: "PCH_PWROK"
           - name: "STATE_REQ_HOST_ON"
+            input_stable_usec: 10000
           - name: "CPU0_VR_Fault_Shutdown"
             input_stable_usec: 1000
             invert: true
@@ -253,6 +257,7 @@ power_sequencer:
   # SYS_PWROK is an indication that *ALL* VRs are running fault free.
   # SYS_PWROK must latch after PWRGD_CPUPWRGD goes high.
   # PWRGD_CPUPWRGD is not an input of SYS_PWROK!
+  # Must have no input_stable_usec here to drive it first!
   - SYS_PWROK_Unit:
       in:
         and:
