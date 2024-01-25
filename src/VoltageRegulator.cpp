@@ -219,13 +219,39 @@ void VoltageRegulator::Poll(void)
     });
 }
 
+void VoltageRegulator::CheckStatus(bool later)
+{
+    if (later) {
+        this->io->post([&]() { this->CheckStatus(false); });
+        return;
+    }
+    string statusText = this->control.ReadStatus();
+    enum RegulatorStatus status = this->control.DecodeStatus(statusText);
+    if (status == INVALID) {
+        log_err(this->name + ": Got invalid status string '"+statusText+"'");
+    }
+    if (this->statusShadow == status)
+    {
+        this->io->post([&]() {
+            string statusText = this->control.ReadStatus();
+            enum RegulatorStatus status2 = this->control.DecodeStatus(statusText);
+            if (status2 == INVALID) {
+                log_err(this->name + ": Got invalid status string '"+statusText+"'");
+            }
+            this->ApplyStatus(status2);
+        });
+    } else {
+        this->ApplyStatus(status);
+    }
+}
+
 VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
                                    struct ConfigRegulator* cfg,
                                    SignalProvider& prov, string root,
                                    function<void(VoltageRegulator*)> const& lamda) :
-    statusShadow(NOCHANGE), name(cfg->Name) , stateChangeTimeoutUsec(cfg->TimeoutUsec), timerStateCheck(io),
-    pendingLevelChange(false), pendingNewLevel(DISABLED), timerPoll(io), control(io, cfg, root),
-    errorCallback(lamda)
+    io(&io), statusShadow(NOCHANGE), name(cfg->Name) , stateChangeTimeoutUsec(cfg->TimeoutUsec),
+    timerStateCheck(io), pendingLevelChange(false), pendingNewLevel(DISABLED), timerPoll(io),
+    control(io, cfg, root), errorCallback(lamda)
 {
     this->in = prov.FindOrAdd(cfg->Name + "_On");
     this->in->AddReceiver(this);
@@ -254,7 +280,7 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
     if (netlink) {
         netlink->Register(this->name, [&](std::string name, uint64_t events) {
             log_debug(this->name + ": Got NETLINK event: " + to_string(events));
-            if ((events & REGULATOR_EVENT_FAILURE) && (events & REGULATOR_EVENT_DISABLE)) {
+            if (events & REGULATOR_EVENT_FAILURE) {
                 this->ApplyStatus(ERROR);
             }
             if (events & REGULATOR_EVENT_EN_DIS)
@@ -264,36 +290,34 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
                 //
                 // Reschedule a status read check as the regulator is slow.
                 // ConfirmStatusAfterTimeout does the same, but even slower.
-                io.post([&]() {
-                    string statusText = this->control.ReadStatus();
-                    enum RegulatorStatus status = this->control.DecodeStatus(statusText);
-                    if (status == INVALID) {
-                        log_err(this->name + ": Got invalid status string '"+statusText+"'");
-                    }
-                    if (this->statusShadow == status)
-                    {
-                        io.post([&]() {
-                            string statusText = this->control.ReadStatus();
-                            enum RegulatorStatus status2 = this->control.DecodeStatus(statusText);
-                            if (status2 == INVALID) {
-                                log_err(this->name + ": Got invalid status string '"+statusText+"'");
+                this->io->post([&, events]() {
+                    // When the regulator indicated a failure at the same time
+                    // give the statemachine some time to run the error handler
+                    // before clearing the error flag inside the regulator.
+                    if (events & REGULATOR_EVENT_FAILURE) {
+                        this->CheckStatus(true);
+                        this->io->post([&, events]() {
+                            if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_ENABLE)
+                            {
+                                this->enabled->SetLevel(true);
                             }
-                            this->ApplyStatus(status2);
+                            else if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_DISABLE)
+                            {
+                                this->enabled->SetLevel(false);
+                            }
                         });
                     } else {
-                        this->ApplyStatus(status);
+                        this->CheckStatus(false);
+                        if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_ENABLE)
+                        {
+                            this->enabled->SetLevel(true);
+                        }
+                        else if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_DISABLE)
+                        {
+                            this->enabled->SetLevel(false);
+                        }
                     }
                 });
-                if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_ENABLE)
-                {
-                    this->enabled->SetLevel(true);
-                }
-                else if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_DISABLE)
-                {
-                    this->enabled->SetLevel(false);
-                }
-            } else if (events & REGULATOR_EVENT_FAILURE) {
-                this->ApplyStatus(ERROR);
             }
         });
     }

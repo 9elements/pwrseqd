@@ -64,6 +64,9 @@ class VoltageRegulator :
 
     // Compare the requested state against the actual state. On mismatch the error signal is set.
     void ConfirmStatusAfterTimeout(void);
+    // Read the status from sysfs and update the internal state
+    void CheckStatus(bool later);
+    boost::asio::io_context *io;
 
     enum RegulatorState stateShadow;
     enum RegulatorStatus statusShadow;
