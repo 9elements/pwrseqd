@@ -100,9 +100,8 @@ void StateMachine::CatchVoltageRegulatorError(VoltageRegulator* vr)
 {
     log_err("Switching off host due to failure of regulator " + vr->Name());
 
-    // Turn off host. The PCH will do the same anyways, but it might try to
-    // power on the CPU(s) again after a timeout.
-    this->dbus->RequestHostTransition(dbus::HostTransition::off);
+    // Turn off everything
+    this->dbus->RequestedPowerTransition(dbus::ChassisTransition::off);
 }
 
 void StateMachine::InjectRegulatorError(string name)

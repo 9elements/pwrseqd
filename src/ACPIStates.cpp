@@ -199,7 +199,7 @@ bool ACPIStates::RequestedPowerTransition(const std::string& requested,
                                           std::string& resp)
 {
 
-    if (requested == "xyz.openbmc_project.State.Chassis.Transition.Off")
+    if (requested == dbus::getChassisTransition(dbus::ChassisTransition::off))
     {
         this->RequestHost(false);
         // Give statemachine some time to drive GPIOs before changing chassis state
@@ -209,13 +209,13 @@ bool ACPIStates::RequestedPowerTransition(const std::string& requested,
             });
         });
     }
-    else if (requested == "xyz.openbmc_project.State.Chassis.Transition.On")
+    else if (requested == dbus::getChassisTransition(dbus::ChassisTransition::on))
     {
         this->RequestChassis(true);
         // Leave host as is. It might turn on automatically.
     }
     else if (requested ==
-             "xyz.openbmc_project.State.Chassis.Transition.PowerCycle")
+             dbus::getChassisTransition(dbus::ChassisTransition::power_cycle))
     {
         if (this->GetCurrent() == ACPI_G3)
         {

@@ -31,6 +31,13 @@ enum class HostTransition
     on,
 };
 
+enum class ChassisTransition
+{
+    off,
+    on,
+    power_cycle,
+};
+
 enum class OSState
 {
     inactive,
@@ -159,6 +166,22 @@ static constexpr std::string_view getHostTransition(const HostTransition state)
             break;
     }
 };
+
+static constexpr std::string_view getChassisTransition(const ChassisTransition state)
+{
+    switch (state)
+    {
+        case ChassisTransition::off:
+            return "xyz.openbmc_project.State.Chassis.Transition.Off";
+        case ChassisTransition::on:
+            return "xyz.openbmc_project.State.Chassis.Transition.On";
+        case ChassisTransition::power_cycle:
+            return "xyz.openbmc_project.State.Chassis.Transition.PowerCycle";
+        default:
+            return "";
+            break;
+    }
+};
 } // namespace dbus
 
 // The Dbus class handles the DBUS interface
@@ -173,6 +196,7 @@ class Dbus
     void SetChassisState(const bool IsOn);
     void SetLEDState(string name, bool state);
     void RequestHostTransition(const dbus::HostTransition state);
+    void RequestedPowerTransition(const dbus::ChassisTransition state);
 
     void RegisterItemPresentCallback(
         const std::string& inventoryPath,

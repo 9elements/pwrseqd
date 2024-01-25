@@ -127,6 +127,16 @@ void Dbus::SetLEDState(string name, bool state)
 #endif
 }
 
+void Dbus::RequestedPowerTransition(const dbus::ChassisTransition state)
+{
+#ifdef WITH_SDBUSPLUSPLUS
+    this->chassisIface->set_property("RequestedPowerTransition",
+                                  std::string(getChassisTransition(state)));
+
+    log_debug("DBUS RequestedPowerTransition " + std::string(getChassisTransition(state)));
+#endif
+}
+
 void Dbus::RequestHostTransition(const dbus::HostTransition state)
 {
 #ifdef WITH_SDBUSPLUSPLUS
@@ -198,7 +208,7 @@ void Dbus::RegisterRequestedHostTransition(
 
     this->hostIface->register_property(
         "RequestedHostTransition",
-        std::string("xyz.openbmc_project.State.Host.Transition.Off"),
+        std::string(getHostTransition(dbus::HostTransition::off)),
         [handler](const std::string& requested, std::string& resp) {
             return handler(requested, resp);
         });
@@ -212,7 +222,7 @@ void Dbus::RegisterRequestedPowerTransition(
 #ifdef WITH_SDBUSPLUSPLUS
     this->chassisIface->register_property(
         "RequestedPowerTransition",
-        std::string("xyz.openbmc_project.State.Chassis.Transition.Off"),
+        std::string(getChassisTransition(dbus::ChassisTransition::off)),
         [handler](const std::string& requested, std::string& resp) {
             return handler(requested, resp);
         });
