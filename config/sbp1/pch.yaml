@@ -129,8 +129,6 @@ power_sequencer:
           - name: "PCH_VR_Fault_Shutdown"
             invert: true
         or:
-          - name: "PCH_PWROK"
-            input_stable_usec: 100  # min 100usec
           - name: "CPU0_VR_Off" # Wait until all CPUs are turned off before shutting down PCH
             invert: true
           - name: "CPU1_VR_Off"
