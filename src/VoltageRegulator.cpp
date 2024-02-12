@@ -282,6 +282,7 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
             log_debug(this->name + ": Got NETLINK event: " + to_string(events));
             if (events & REGULATOR_EVENT_FAILURE) {
                 this->ApplyStatus(ERROR);
+		log_sel(this->name + ": " + this->control.EventsToString(events), "", false);
             }
             if (events & REGULATOR_EVENT_EN_DIS)
             {

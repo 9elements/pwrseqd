@@ -61,6 +61,7 @@ static inline void log_err(const std::string& s)
 
 static inline void log_sel(const string& data, const std::string& path, const bool& assert) {
 #ifdef WITH_PHOSPHOR_LOGGING
+/*
     using namespace xyz::openbmc_project::Logging::SEL;
     using namespace xyz::openbmc_project::Logging;
     // Generate System event record, BMC firmware
@@ -68,5 +69,8 @@ static inline void log_sel(const string& data, const std::string& path, const bo
         Created::RECORD_TYPE(2), Created::GENERATOR_ID(0x41),
         Created::SENSOR_DATA(data.c_str()), Created::EVENT_DIR(assert),
         Created::SENSOR_PATH(path.c_str()));
+*/
+	//commit(data.c_str(), 4);
+	phosphor::logging::details::commit(data.c_str());
 #endif
 }
