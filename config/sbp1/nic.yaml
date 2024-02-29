@@ -133,6 +133,8 @@ power_sequencer:
       in:
         or:
           - name: "FM_NIC1_RST"
+          - name: "FM_NIC1_RST"
+            input_stable_usec: 10000
           - name: "FM_DB2000_DEV_EN"
             invert: true
             input_stable_usec: 100000
@@ -147,6 +149,8 @@ power_sequencer:
       in:
         or:
           - name: "FM_NIC1_RST"
+          - name: "FM_NIC1_RST"
+            input_stable_usec: 10000
           - name: "FM_DB2000_DEV_EN"
             invert: true
           - name: "FM_DB2000_DEV_EN"
@@ -163,6 +167,8 @@ power_sequencer:
       in:
         or:
           - name: "FM_NIC1_RST"
+          - name: "FM_NIC1_RST"
+            input_stable_usec: 10000
           - name: "FM_DB2000_DEV_EN"
             invert: true
           - name: "FM_DB2000_DEV_EN"
@@ -179,6 +185,8 @@ power_sequencer:
       in:
         or:
           - name: "FM_NIC1_RST"
+          - name: "FM_NIC1_RST"
+            input_stable_usec: 10000
           - name: "FM_DB2000_DEV_EN"
             invert: true
           - name: "FM_DB2000_DEV_EN"
@@ -195,6 +203,8 @@ power_sequencer:
       in:
         or:
           - name: "FM_NIC2_RST"
+          - name: "FM_NIC2_RST"
+            input_stable_usec: 10000
           - name: "FM_DB2000_DEV_EN"
             invert: true
           - name: "FM_DB2000_DEV_EN"
@@ -211,6 +221,8 @@ power_sequencer:
       in:
         or:
           - name: "FM_NIC2_RST"
+          - name: "FM_NIC2_RST"
+            input_stable_usec: 10000
           - name: "FM_DB2000_DEV_EN"
             invert: true
           - name: "FM_DB2000_DEV_EN"
@@ -227,6 +239,8 @@ power_sequencer:
       in:
         or:
           - name: "FM_NIC2_RST"
+          - name: "FM_NIC2_RST"
+            input_stable_usec: 10000
           - name: "FM_DB2000_DEV_EN"
             invert: true
           - name: "FM_DB2000_DEV_EN"
@@ -243,6 +257,8 @@ power_sequencer:
       in:
         or:
           - name: "FM_NIC2_RST"
+          - name: "FM_NIC2_RST"
+            input_stable_usec: 10000
           - name: "FM_DB2000_DEV_EN"
             invert: true
           - name: "FM_DB2000_DEV_EN"
