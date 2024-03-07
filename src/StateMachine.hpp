@@ -28,7 +28,7 @@ class StateMachine : Validator
 {
   public:
     // Create statemachine from config
-    StateMachine(Config&, SignalProvider&, boost::asio::io_service& io, Dbus& dbus);
+    StateMachine(Config&, SignalProvider&, boost::asio::io_service&, boost::asio::io_service&, Dbus&);
     ~StateMachine();
 
     // Run starts the internal state machine.
@@ -56,16 +56,12 @@ class StateMachine : Validator
     vector<NullOutput*> GetNullOutputs(void);
     vector<NullInput*> GetNullInputs(void);
 
-    // ApplyOutputSignalLevel applies the new signal state.
-    // This will change the output of GPIO pins or enable/disable voltage
-    // regulators.
-    void ApplyOutputSignalLevel(void);
-
   private:
     // The work guard protects the io_context from returning on idle
     boost::asio::executor_work_guard<boost::asio::io_context::executor_type>
         work_guard;
     boost::asio::io_context* io;
+    boost::asio::io_context* ioOutput;
 
     // Error handler for voltage regulator failures
     void CatchVoltageRegulatorError(VoltageRegulator* vr);
@@ -101,11 +97,6 @@ class StateMachineTester
         return sm->GetNullInputs();
     }
     StateMachineTester(StateMachine* sm) : sm{sm} {};
-
-    void ApplyOutputSignalLevel(void)
-    {
-        sm->ApplyOutputSignalLevel();
-    }
 
   private:
     StateMachine* sm;

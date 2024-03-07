@@ -5,6 +5,7 @@
 #include "Signal.hpp"
 
 #include <gpiod.hpp>
+#include <boost/asio/io_service.hpp>
 
 #include <vector>
 
@@ -25,10 +26,13 @@ class GpioOutput : SignalReceiver, public OutputDriver
     // SignalReceiver's Update method for signal changes
     void Update(void);
 
-    GpioOutput(struct ConfigOutput* cfg, SignalProvider& prov);
+    GpioOutput(boost::asio::io_service *IoOutput,
+               struct ConfigOutput* cfg,
+               SignalProvider& prov);
     ~GpioOutput();
 
   private:
+    boost::asio::io_service *ioOutput;
     int level;
     int newLevel;
     bool activeLow;

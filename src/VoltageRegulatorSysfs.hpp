@@ -71,8 +71,7 @@ enum RegulatorStatus
 class VoltageRegulatorSysfs
 {
   public:
-    VoltageRegulatorSysfs(boost::asio::io_context& io,
-                          struct ConfigRegulator* cfg, string root = "");
+    VoltageRegulatorSysfs(struct ConfigRegulator* cfg, string root = "");
     ~VoltageRegulatorSysfs();
 
     // DecodeState converts the value read from

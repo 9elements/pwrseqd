@@ -75,6 +75,7 @@ int main(int argc, char * const argv[])
     Config cfg;
     string dumpSignalsFolder;
     boost::asio::io_service io;
+    boost::asio::io_service IoOutput;
     int opt;
     int option_index = 0;
     int errorTimeout = 0;
@@ -149,6 +150,12 @@ int main(int argc, char * const argv[])
     }
     log_info("Loaded config files.");
 
+    std::thread OutputThread{[&IoOutput](){
+        boost::asio::executor_work_guard<boost::asio::io_context::executor_type>
+            work_guard(IoOutput.get_executor());
+        IoOutput.run();
+    }};
+
     if (netlinkEvents) {
         NetlinkRegulatorEvents *netlink = GetNetlinkRegulatorEvents(io);
         for (auto it : cfg.Regulators)
@@ -167,7 +174,7 @@ int main(int argc, char * const argv[])
         Dbus dbus(cfg, io);
         ACPIStates states(cfg, signalprovider, io, dbus);
         signalprovider.AddDriver(&states);
-        StateMachine sm(cfg, signalprovider, io, dbus);
+        StateMachine sm(cfg, signalprovider, io, IoOutput, dbus);
 
         log_info("Validating config ...");
 

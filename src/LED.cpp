@@ -23,10 +23,13 @@ void LED::Apply(void)
 void LED::Update(void)
 {
     this->newLevel = this->in->GetLevel() ^ this->activeLow;
+    ioOutput->post([this]() {
+        this->Apply();
+    });
 }
 
-LED::LED(Dbus& d, struct ConfigOutput* cfg, SignalProvider& prov) :
-    level(false), newLevel(false), activeLow(cfg->ActiveLow), name(cfg->Name), dbus(&d)
+LED::LED(boost::asio::io_service *IoOutput, Dbus& d, struct ConfigOutput* cfg, SignalProvider& prov) :
+    ioOutput(IoOutput), level(false), newLevel(false), activeLow(cfg->ActiveLow), name(cfg->Name), dbus(&d)
 {
     this->in = prov.FindOrAdd(cfg->SignalName);
     this->in->AddReceiver(this);

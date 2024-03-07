@@ -12,8 +12,9 @@ using namespace placeholders;
 // Create statemachine from config
 StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
                            boost::asio::io_service& io,
+                           boost::asio::io_service& IoOutput,
                            Dbus& dbus) :
-    io{&io},
+    io{&io}, ioOutput{&IoOutput},
     work_guard{io.get_executor()},
     dbus(&dbus)
 {
@@ -31,7 +32,7 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
     {
         if (cfg.Inputs[i].InputType == INPUT_TYPE_GPIO)
         {
-            GpioInput* g = new GpioInput(io, &cfg.Inputs[i], prov);
+            GpioInput* g = new GpioInput(io, IoOutput, &cfg.Inputs[i], prov);
             this->gpioInputs.push_back(g);
             prov.AddDriver(g);
             log_debug("pushing gpio input " + cfg.Inputs[i].SignalName);
@@ -56,21 +57,21 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
     {
         if (cfg.Outputs[i].OutputType == OUTPUT_TYPE_GPIO)
         {
-            GpioOutput* g = new GpioOutput(&cfg.Outputs[i], prov);
+            GpioOutput* g = new GpioOutput(&IoOutput, &cfg.Outputs[i], prov);
             this->gpioOutputs.push_back(g);
             this->outputDrivers.push_back(g);
             log_debug("using gpio output " + cfg.Outputs[i].SignalName);
         }
         else if (cfg.Outputs[i].OutputType == OUTPUT_TYPE_LED)
         {
-            LED* l = new LED(dbus, &cfg.Outputs[i], prov);
+            LED* l = new LED(&IoOutput, dbus, &cfg.Outputs[i], prov);
             this->ledOutputs.push_back(l);
             this->outputDrivers.push_back(l);
             log_debug("using LED output " + cfg.Outputs[i].SignalName);
         }
         else if (cfg.Outputs[i].OutputType == OUTPUT_TYPE_NULL)
         {
-            NullOutput* n = new NullOutput(&cfg.Outputs[i], prov);
+            NullOutput* n = new NullOutput(&IoOutput, &cfg.Outputs[i], prov);
             this->nullOutputs.push_back(n);
             this->outputDrivers.push_back(n);
             log_debug("using null output " + cfg.Outputs[i].SignalName);
@@ -80,7 +81,7 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
     for (int i = 0; i < cfg.Regulators.size(); i++)
     {
         VoltageRegulator* v =
-            new VoltageRegulator(io, &cfg.Regulators[i], prov, "",
+            new VoltageRegulator(io, IoOutput, &cfg.Regulators[i], prov, "",
                 [&](VoltageRegulator* vr) { this->CatchVoltageRegulatorError(vr); });
         this->voltageRegulators.push_back(v);
         this->outputDrivers.push_back(v);
@@ -118,15 +119,6 @@ void StateMachine::InjectRegulatorError(string name)
 void StateMachine::Validate(void)
 {
     this->sp->Validate();
-}
-
-// ApplyOutputSignalLevel writes signal state to outputs
-void StateMachine::ApplyOutputSignalLevel(void)
-{
-    for (auto it : this->outputDrivers)
-    {
-        it->Apply();
-    }
 }
 
 // OnDirtySet is invoked when a signal dirty bit is set
@@ -167,10 +159,6 @@ void StateMachine::EvaluateState(void)
         log_err("Failed to evaluate stable state, trying again...");
         this->OnDirtySet();
     }
-
-    // State is stable
-    if (dirty)
-        this->ApplyOutputSignalLevel();
 }
 
 // Run does work on the io_queue.

@@ -22,7 +22,9 @@ class GpioInput : SignalReceiver, public SignalDriver
 
     void Poll(const boost::system::error_code& e);
 
-    GpioInput(boost::asio::io_context& io, struct ConfigInput* cfg,
+    GpioInput(boost::asio::io_context& io,
+              boost::asio::io_context& ioOutput,
+              struct ConfigInput* cfg,
               SignalProvider& prov);
 
     ~GpioInput();
@@ -34,6 +36,7 @@ class GpioInput : SignalReceiver, public SignalDriver
 
   private:
     boost::asio::io_context* io;
+    boost::asio::io_context* ioOutput;
     void OnEvent(gpiod::line_event line_event);
     void WaitForGPIOEvent(void);
     void Release(void);

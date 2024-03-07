@@ -6,6 +6,7 @@
 #include "Dbus.hpp"
 
 #include <boost/asio.hpp>
+#include <boost/asio/io_service.hpp>
 
 using namespace std;
 
@@ -24,9 +25,10 @@ class LED : SignalReceiver, public OutputDriver
     // SignalReceiver's Update method for signal changes
     void Update(void);
 
-    LED(Dbus& d, struct ConfigOutput* cfg, SignalProvider& prov);
+    LED(boost::asio::io_service *IoOutput, Dbus& d, struct ConfigOutput* cfg, SignalProvider& prov);
 
   private:
+    boost::asio::io_service *ioOutput;
     bool level;
     bool newLevel;
     bool activeLow;

@@ -30,7 +30,7 @@ bool NullOutput::GetLevel(void)
     return this->active;
 }
 
-NullOutput::NullOutput(struct ConfigOutput* cfg, SignalProvider& prov)
+NullOutput::NullOutput(boost::asio::io_service *IoOutput, struct ConfigOutput* cfg, SignalProvider& prov)
 {
     this->in = prov.FindOrAdd(cfg->SignalName);
     this->in->AddReceiver(this);

@@ -9,7 +9,7 @@
 
 #include <boost/asio.hpp>
 #include <boost/filesystem.hpp>
-#include <boost/thread/lock_guard.hpp>
+#include <boost/thread/mutex.hpp>
 #include <boost/asio/deadline_timer.hpp>
 
 #include <filesystem>
@@ -45,7 +45,9 @@ class VoltageRegulator :
     // Signals returns the list of signals that are feed with data
     vector<Signal*> Signals(void);
 
-    VoltageRegulator(boost::asio::io_context& io, struct ConfigRegulator* cfg,
+    VoltageRegulator(boost::asio::io_context& io,
+                     boost::asio::io_service& IoOutput,
+                     struct ConfigRegulator* cfg,
                      SignalProvider& prov, string root = "",
                      function<void(VoltageRegulator*)> const& lamda = nullptr);
 
@@ -67,6 +69,9 @@ class VoltageRegulator :
     // Read the status from sysfs and update the internal state
     void CheckStatus(bool later);
     boost::asio::io_context *io;
+    boost::asio::io_context *ioOutput;
+
+    boost::mutex lock;
 
     enum RegulatorState stateShadow;
     enum RegulatorStatus statusShadow;

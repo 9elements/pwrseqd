@@ -218,8 +218,7 @@ static string SysFsConsumerDir(path root)
     return "";
 }
 
-VoltageRegulatorSysfs::VoltageRegulatorSysfs(boost::asio::io_context& io,
-                                             struct ConfigRegulator* cfg, string root) :
+VoltageRegulatorSysfs::VoltageRegulatorSysfs(struct ConfigRegulator* cfg, string root) :
     name(cfg->Name)
 {
     string consumerRoot;

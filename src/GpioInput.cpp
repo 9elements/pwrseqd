@@ -149,18 +149,24 @@ void GpioInput::Release(void)
     log_debug("input gpio " + this->Name() + " reads as " +
               to_string(newLevel ? 1 : 0));
 
-    this->out->SetLevel(newLevel);
+    this->io->post([&]() {
+        this->out->SetLevel(newLevel);
+    });
 }
 
 void GpioInput::Update(void)
 {
     if (this->enable->GetLevel() && this->gated)
     {
-        this->Acquire();
+        this->ioOutput->post([&]() {
+            this->Acquire();
+        });
     }
     else if (!this->enable->GetLevel() && !this->gated)
     {
-        this->Release();
+        this->ioOutput->post([&]() {
+            this->Release();
+        });
     }
 }
 
@@ -193,9 +199,11 @@ void GpioInput::WaitForGPIOEvent(void)
         });
 }
 
-GpioInput::GpioInput(boost::asio::io_context& io, struct ConfigInput* cfg,
+GpioInput::GpioInput(boost::asio::io_context& io,
+                     boost::asio::io_context& ioOutput,
+                     struct ConfigInput* cfg,
                      SignalProvider& prov) :
-    io(&io),
+    io(&io), ioOutput(&ioOutput),
     GatedIdleHigh(cfg->GatedIdleHigh), GatedIdleLow(cfg->GatedIdleLow),
     GatedOutputODLow(cfg->GatedOutputODLow),
     out(NULL), enable(NULL), streamDesc(io), ActiveLow(cfg->ActiveLow),

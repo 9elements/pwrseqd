@@ -4,6 +4,8 @@
 #include "IODriver.hpp"
 #include "Signal.hpp"
 
+#include <boost/asio/io_service.hpp>
+
 using namespace std;
 
 class SignalProvider;
@@ -21,7 +23,9 @@ class NullOutput : SignalReceiver, public OutputDriver
     void Update(void);
 
     bool GetLevel(void);
-    NullOutput(struct ConfigOutput* cfg, SignalProvider& prov);
+    NullOutput(boost::asio::io_service *IoOutput,
+               struct ConfigOutput* cfg,
+               SignalProvider& prov);
     ~NullOutput();
 
   private:

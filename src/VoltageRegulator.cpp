@@ -4,6 +4,8 @@
 #include "Logging.hpp"
 #include "SignalProvider.hpp"
 
+#include <boost/thread/lock_guard.hpp>
+
 #include <filesystem>
 #include <fstream>
 
@@ -46,9 +48,11 @@ void VoltageRegulator::Apply(void)
                 this->ConfirmStatusAfterTimeout();
             }
         });
-
-        // This might glitch if regulator needs some time to disable
-        this->enabled->SetLevel(this->stateShadow == ENABLED);
+        bool enabled = this->stateShadow == ENABLED;
+        io->post([this, enabled]() {
+            // This might glitch if regulator needs some time to disable
+            this->enabled->SetLevel(enabled);
+        });
     }
 }
 
@@ -66,6 +70,9 @@ vector<Signal*> VoltageRegulator::Signals(void)
 void VoltageRegulator::Update(void)
 {
     this->newLevel = this->in->GetLevel();
+    ioOutput->post([this]() {
+        this->Apply();
+    });
 }
 
 void VoltageRegulator::ConfirmStatusAfterTimeout(void)
@@ -109,14 +116,13 @@ void VoltageRegulator::ConfirmStatusAfterTimeout(void)
 
         this->pendingLevelChange = false;
         this->ApplyStatus(ERROR);
-        // Something is wrong. Turn off regulator.
-        this->newLevel = false;
-        this->Apply();
     }
 }
 
 void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
 {
+    boost::lock_guard<boost::mutex> guard(this->lock);
+
     // If status is undefined regulator is not in error state.
     // Assume it's on when state is set to enabled, else off.
     // TODO: Fix the linux driver to return proper status.
@@ -174,29 +180,31 @@ void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
     }
     this->statusShadow = status;
 
-    if (status == OFF)
-    {
-        this->enabled->SetLevel(false);
-        this->powergood->SetLevel(false);
-        this->fault->SetLevel(false);
-    }
-    else if (status == ERROR)
-    {
-        this->powergood->SetLevel(false);
-        this->fault->SetLevel(true);
-        if (errorCallback) {
-            this->errorCallback (this);
+    this->io->post([this, status]() {
+        if (status == OFF)
+        {
+            this->enabled->SetLevel(false);
+            this->powergood->SetLevel(false);
+            this->fault->SetLevel(false);
         }
-        // The state is not updated here to prevent oscillations.
-        // It's the kernel responsibility to turn off regulators with
-        // fault interrupt handlers!
-    }
-    else if (status == ON)
-    {
-        this->enabled->SetLevel(true);
-        this->powergood->SetLevel(true);
-        this->fault->SetLevel(false);
-    }
+        else if (status == ERROR)
+        {
+            this->powergood->SetLevel(false);
+            this->fault->SetLevel(true);
+            if (errorCallback) {
+                this->errorCallback (this);
+            }
+            // The state is not updated here to prevent oscillations.
+            // It's the kernel responsibility to turn off regulators with
+            // fault interrupt handlers!
+        }
+        else if (status == ON)
+        {
+            this->enabled->SetLevel(true);
+            this->powergood->SetLevel(true);
+            this->fault->SetLevel(false);
+        }
+    });
 }
 
 void VoltageRegulator::Poll(void)
@@ -246,12 +254,14 @@ void VoltageRegulator::CheckStatus(bool later)
 }
 
 VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
+                                   boost::asio::io_service& IoOutput,
                                    struct ConfigRegulator* cfg,
                                    SignalProvider& prov, string root,
                                    function<void(VoltageRegulator*)> const& lamda) :
-    io(&io), statusShadow(NOCHANGE), name(cfg->Name) , stateChangeTimeoutUsec(cfg->TimeoutUsec),
-    timerStateCheck(io), pendingLevelChange(false), pendingNewLevel(DISABLED), timerPoll(io),
-    control(io, cfg, root), errorCallback(lamda)
+    io(&io), ioOutput(&IoOutput), statusShadow(NOCHANGE), name(cfg->Name),
+    stateChangeTimeoutUsec(cfg->TimeoutUsec),
+    timerStateCheck(IoOutput), pendingLevelChange(false), pendingNewLevel(DISABLED), timerPoll(IoOutput),
+    control(cfg, root), errorCallback(lamda)
 {
     this->in = prov.FindOrAdd(cfg->Name + "_On");
     this->in->AddReceiver(this);
@@ -276,13 +286,13 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
     // Sync internal status with the current regulator status
     this->ApplyStatus(this->control.DecodeStatus());
 
-    netlink = GetNetlinkRegulatorEvents(io);
+    netlink = GetNetlinkRegulatorEvents(IoOutput);
     if (netlink) {
         netlink->Register(this->name, [&](std::string name, uint64_t events) {
             log_debug(this->name + ": Got NETLINK event: " + to_string(events));
             if (events & REGULATOR_EVENT_FAILURE) {
                 this->ApplyStatus(ERROR);
-		log_sel(this->name + ": " + this->control.EventsToString(events), "", false);
+                log_sel(this->name + ": " + this->control.EventsToString(events), "", false);
             }
             if (events & REGULATOR_EVENT_EN_DIS)
             {
