@@ -64,7 +64,7 @@ include_directories(../src ${YAML_CPP_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${GPIOD
 package_add_test_with_libraries(test_all "${FILES}" "${LIBRARIES}")
 
 set(FILES main.cpp LogicRuntimeTest.cpp
-		../src/Config.cpp ../src/StateMachine.cpp ../src/GpioInput.cpp ../src/GpioOutput.cpp ../src/Signal.cpp
+		../src/Config.cpp ../src/Logging.cpp ../src/StateMachine.cpp ../src/GpioInput.cpp ../src/GpioOutput.cpp ../src/Signal.cpp
   		../src/SignalProvider.cpp ../src/Logic.cpp ../src/LogicInput.cpp ../src/NullInput.cpp ../src/NullOutput.cpp
 		../src/VoltageRegulator.cpp ../src/VoltageRegulatorSysfs.cpp ../src/ACPIStates.cpp ../src/Dbus.cpp
 		../src/LED.cpp ../src/InventoryItemPresence.cpp ../src/Netlink.cpp)
