@@ -5,12 +5,9 @@ power_sequencer:
   # Power on if PCH request S0 and user requests S0
   - NIC_POWER_ENABLE_Unit:
       in:
-        and:
-          - name: "PCH_PWROK"
-          - name: "STATE_REQ_HOST_ON"
         or:
           - name: "NIC_POWER_ENABLE_Hold"
-        and_then_or: true
+          - name: "SYS_PWROK"
       out:
         name: "NIC_POWER_ENABLE"
 

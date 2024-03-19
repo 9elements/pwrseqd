@@ -5,288 +5,224 @@ power_sequencer:
   - RSSD01_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD01_PRESENT"
       out:
         name: "rssd01_3v3_On"
   - RSSD02_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD02_PRESENT"
       out:
         name: "rssd02_3v3_On"
   - RSSD03_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD03_PRESENT"
       out:
         name: "rssd03_3v3_On"
   - RSSD04_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD04_PRESENT"
       out:
         name: "rssd04_3v3_On"
   - RSSD05_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD05_PRESENT"
       out:
         name: "rssd05_3v3_On"
   - RSSD06_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD06_PRESENT"
       out:
         name: "rssd06_3v3_On"
   - RSSD07_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD07_PRESENT"
       out:
         name: "rssd07_3v3_On"
   - RSSD08_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD08_PRESENT"
       out:
         name: "rssd08_3v3_On"
   - RSSD09_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD09_PRESENT"
       out:
         name: "rssd09_3v3_On"
   - RSSD10_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD10_PRESENT"
       out:
         name: "rssd10_3v3_On"
   - RSSD11_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD11_PRESENT"
       out:
         name: "rssd11_3v3_On"
   - RSSD12_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD12_PRESENT"
       out:
         name: "rssd12_3v3_On"
   - RSSD13_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD13_PRESENT"
       out:
         name: "rssd13_3v3_On"
   - RSSD14_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD14_PRESENT"
       out:
         name: "rssd14_3v3_On"
   - RSSD15_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD15_PRESENT"
       out:
         name: "rssd15_3v3_On"
   - RSSD16_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD16_PRESENT"
       out:
         name: "rssd16_3v3_On"
   - RSSD17_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD17_PRESENT"
       out:
         name: "rssd17_3v3_On"
   - RSSD18_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD18_PRESENT"
       out:
         name: "rssd18_3v3_On"
   - RSSD19_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD19_PRESENT"
       out:
         name: "rssd19_3v3_On"
   - RSSD20_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD20_PRESENT"
       out:
         name: "rssd20_3v3_On"
   - RSSD21_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD21_PRESENT"
       out:
         name: "rssd21_3v3_On"
   - RSSD22_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD22_PRESENT"
       out:
         name: "rssd22_3v3_On"
   - RSSD23_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD23_PRESENT"
       out:
         name: "rssd23_3v3_On"
   - RSSD24_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD24_PRESENT"
       out:
         name: "rssd24_3v3_On"
   - RSSD25_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD25_PRESENT"
       out:
         name: "rssd25_3v3_On"
   - RSSD26_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD26_PRESENT"
       out:
         name: "rssd26_3v3_On"
   - RSSD27_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD27_PRESENT"
       out:
         name: "rssd27_3v3_On"
   - RSSD28_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD28_PRESENT"
       out:
         name: "rssd28_3v3_On"
   - RSSD29_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD29_PRESENT"
       out:
         name: "rssd29_3v3_On"
   - RSSD30_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD30_PRESENT"
       out:
         name: "rssd30_3v3_On"
   - RSSD31_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD31_PRESENT"
       out:
         name: "rssd31_3v3_On"
   - RSSD32_3v3_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD32_PRESENT"
       out:
         name: "rssd32_3v3_On"
@@ -294,9 +230,7 @@ power_sequencer:
   - RSSD01_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD01_PRESENT"
             input_stable_usec: 10000
       out:
@@ -304,9 +238,7 @@ power_sequencer:
   - RSSD02_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD02_PRESENT"
             input_stable_usec: 10000
       out:
@@ -314,9 +246,7 @@ power_sequencer:
   - RSSD03_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD03_PRESENT"
             input_stable_usec: 10000
       out:
@@ -324,9 +254,7 @@ power_sequencer:
   - RSSD04_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD04_PRESENT"
             input_stable_usec: 10000
       out:
@@ -334,9 +262,7 @@ power_sequencer:
   - RSSD05_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD05_PRESENT"
             input_stable_usec: 10000
       out:
@@ -344,9 +270,7 @@ power_sequencer:
   - RSSD06_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD06_PRESENT"
             input_stable_usec: 10000
       out:
@@ -354,9 +278,7 @@ power_sequencer:
   - RSSD07_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD07_PRESENT"
             input_stable_usec: 10000
       out:
@@ -364,9 +286,7 @@ power_sequencer:
   - RSSD08_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD08_PRESENT"
             input_stable_usec: 10000
       out:
@@ -374,9 +294,7 @@ power_sequencer:
   - RSSD09_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD09_PRESENT"
             input_stable_usec: 10000
       out:
@@ -384,9 +302,7 @@ power_sequencer:
   - RSSD10_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD10_PRESENT"
             input_stable_usec: 10000
       out:
@@ -394,9 +310,7 @@ power_sequencer:
   - RSSD11_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD11_PRESENT"
             input_stable_usec: 10000
       out:
@@ -404,9 +318,7 @@ power_sequencer:
   - RSSD12_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD12_PRESENT"
             input_stable_usec: 10000
       out:
@@ -414,9 +326,7 @@ power_sequencer:
   - RSSD13_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD13_PRESENT"
             input_stable_usec: 10000
       out:
@@ -424,9 +334,7 @@ power_sequencer:
   - RSSD14_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD14_PRESENT"
             input_stable_usec: 10000
       out:
@@ -434,9 +342,7 @@ power_sequencer:
   - RSSD15_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD15_PRESENT"
             input_stable_usec: 10000
       out:
@@ -444,9 +350,7 @@ power_sequencer:
   - RSSD16_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD16_PRESENT"
             input_stable_usec: 10000
       out:
@@ -454,9 +358,7 @@ power_sequencer:
   - RSSD17_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD17_PRESENT"
             input_stable_usec: 10000
       out:
@@ -464,9 +366,7 @@ power_sequencer:
   - RSSD18_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD18_PRESENT"
             input_stable_usec: 10000
       out:
@@ -474,9 +374,7 @@ power_sequencer:
   - RSSD19_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD19_PRESENT"
             input_stable_usec: 10000
       out:
@@ -484,9 +382,7 @@ power_sequencer:
   - RSSD20_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD20_PRESENT"
             input_stable_usec: 10000
       out:
@@ -494,9 +390,7 @@ power_sequencer:
   - RSSD21_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD21_PRESENT"
             input_stable_usec: 10000
       out:
@@ -504,9 +398,7 @@ power_sequencer:
   - RSSD22_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD22_PRESENT"
             input_stable_usec: 10000
       out:
@@ -514,9 +406,7 @@ power_sequencer:
   - RSSD23_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD23_PRESENT"
             input_stable_usec: 10000
       out:
@@ -524,9 +414,7 @@ power_sequencer:
   - RSSD24_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD24_PRESENT"
             input_stable_usec: 10000
       out:
@@ -534,9 +422,7 @@ power_sequencer:
   - RSSD25_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD25_PRESENT"
             input_stable_usec: 10000
       out:
@@ -544,9 +430,7 @@ power_sequencer:
   - RSSD26_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD26_PRESENT"
             input_stable_usec: 10000
       out:
@@ -554,9 +438,7 @@ power_sequencer:
   - RSSD27_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD27_PRESENT"
             input_stable_usec: 10000
       out:
@@ -564,9 +446,7 @@ power_sequencer:
   - RSSD28_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD28_PRESENT"
             input_stable_usec: 10000
       out:
@@ -574,9 +454,7 @@ power_sequencer:
   - RSSD29_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD29_PRESENT"
             input_stable_usec: 10000
       out:
@@ -584,9 +462,7 @@ power_sequencer:
   - RSSD30_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD30_PRESENT"
             input_stable_usec: 10000
       out:
@@ -594,9 +470,7 @@ power_sequencer:
   - RSSD31_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD31_PRESENT"
             input_stable_usec: 10000
       out:
@@ -604,9 +478,7 @@ power_sequencer:
   - RSSD32_12v_Enable_Unit:
       in:
         and:
-          - name: "STATE_REQ_HOST_ON"
-            input_stable_usec: 1000
-          - name: "PCH_PWROK"
+          - name: "SYS_PWROK"
           - name: "RSSD32_PRESENT"
             input_stable_usec: 10000
       out:
