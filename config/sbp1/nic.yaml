@@ -52,7 +52,7 @@ power_sequencer:
       out:
         name: "pvcore_nic2_On"
 
-  - p1v2_nic_Unit:
+  - p1v8_nic_Unit:
       in:
         and:
           - name: "pvcore_nic1_PowerGood"
@@ -66,13 +66,13 @@ power_sequencer:
           - name: "p3v3_nic_PowerGood"
           - name: "NIC_POWER_ENABLE"
         or:
-          - name: "p1v8_nic_Enabled"
+          - name: "p1v2_nic_Enabled"
             input_stable_usec: 1000 # FIXME
         and_then_or: true
       out:
-        name: "p1v2_nic_On"
+        name: "p1v8_nic_On"
 
-  - p1v8_nic_Unit:
+  - p1v2_nic_Unit:
       in:
         and:
           - name: "pvcore_nic1_PowerGood"
@@ -80,16 +80,16 @@ power_sequencer:
           - name: "pvcore_nic1_PowerGood"
           - name: "pvcore_nic2_PowerGood"
             input_stable_usec: 10000 # FIXME
-          - name: "pvcore_nic2_PowerGood"
-          - name: "p1v2_nic_PowerGood"
+          - name: "p1v8_nic_PowerGood"
             input_stable_usec: 10000 # FIXME
-          - name: "p1v2_nic_PowerGood"
+          - name: "p1v8_nic_PowerGood"
+          - name: "pvcore_nic2_PowerGood"
           - name: "p3v3_nic_PowerGood"
             input_stable_usec: 10000 # FIXME
           - name: "p3v3_nic_PowerGood"
           - name: "NIC_POWER_ENABLE"
       out:
-        name: "p1v8_nic_On"
+        name: "p1v2_nic_On"
 
   - p3v3_nic_Unit:
       in:
