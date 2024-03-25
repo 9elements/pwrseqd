@@ -77,12 +77,20 @@ outputs:
     active_low: true
     open_drain: true
     description: >
-      Signal from BMC to PCH indicating an overheat condition. PCH will got to S5
+      Signal from BMC to PCH indicating an overheat condition. PCH will go to S5
       without following normal transition flow.
     comment: >
       PCH will immediately drive CPUPWRGD low and assert PLTRST_N, SLP_S3_N,
       SLP_S4_N, SLP_S5_N.
-  
+  - name: "H_LVT1_MEMTRIP_N"
+    type: "gpio"
+    signal_name: "MEMTRIP"
+    open_drain: true
+    active_low: true
+    description: >
+      Signal from BMC to PCH indicating a memory overheat condition. PCH will go to S5
+      without following normal transition flow.
+
 power_sequencer:
   # P3V3 provides AUX power to PCH as well. Always drive it when not in G3
   - P3V3_Unit:
@@ -326,6 +334,16 @@ power_sequencer:
           - name: "CPU3_THERMTRIP"
       out:
         name: "THRMTRIP"
+
+  - H_LVT1_MEMTRIP_Unit:
+      in:
+        or:
+          - name: "CPU0_MEMTRIP"
+          - name: "CPU1_MEMTRIP"
+          - name: "CPU2_MEMTRIP"
+          - name: "CPU3_MEMTRIP"
+      out:
+        name: "MEMTRIP"
 
   - P5V_Unit:
       in:

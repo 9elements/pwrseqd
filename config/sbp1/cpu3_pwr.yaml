@@ -14,6 +14,14 @@ inputs:
     gate_input: true
     gated_idle_high: true
 
+  - name: "H_LVT3_CPU3_MEMTRIP_OUT_N"
+    signal_name: "H_LVT3_CPU3_MEMTRIP"
+    type: "gpio"
+    active_low: true
+    pullup: true
+    gate_input: true
+    gated_idle_high: true
+
   - name: "system/chassis/motherboard/cpu3"
     type: "dbus_presence"
     pullup: true
@@ -616,6 +624,24 @@ power_sequencer:
           - name: "pvnn_main_cpu3_PowerGood"
       out:
         name: "H_LVT3_CPU3_THERMTRIP_OUT_N_On"
+
+  - CPU3_MEMTRIP_Unit:
+      in:
+        and:
+          - name: "H_LVT3_CPU3_MEMTRIP"
+          - name: "CPU3_VR_PWRGD" # PDG: Ignore MEMTRIP until power is good
+            input_stable_usec: 1500
+          - name: "CPU3_VR_PWRGD"
+      out:
+        name: "CPU3_MEMTRIP"
+
+  - H_LVT3_CPU0_MEMTRIP_OUT_N_Enable_Unit:
+      in:
+        and:
+          - name: "pvnn_main_cpu3_On"
+          - name: "pvnn_main_cpu3_PowerGood"
+      out:
+        name: "H_LVT3_CPU3_MEMTRIP_OUT_N_On"
 
 regulators:
   - name: "pvccd_hv_cpu3"
