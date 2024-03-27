@@ -241,6 +241,11 @@ power_sequencer:
       in:
         and:
           - name: "CPU2_VR_PWRGD"
+          - name: "PWRGD_CPUPWRGD"
+        or:
+          - name: "PWRGD_LVC3_CPU2_AB_DRAM_G"
+            input_stable_usec: 10000
+        and_then_or: true
       out:
         name: "PWRGD_CHA_CPU2_On"
 
@@ -248,6 +253,11 @@ power_sequencer:
       in:
         and:
           - name: "CPU2_VR_PWRGD"
+          - name: "PWRGD_CPUPWRGD"
+        or:
+          - name: "PWRGD_LVC3_CPU2_AB_DRAM_G"
+            input_stable_usec: 10000
+        and_then_or: true
       out:
         name: "PWRGD_CHB_CPU2_On"
 
@@ -255,6 +265,11 @@ power_sequencer:
       in:
         and:
           - name: "CPU2_VR_PWRGD"
+          - name: "PWRGD_CPUPWRGD"
+        or:
+          - name: "PWRGD_LVC3_CPU2_CD_DRAM_G"
+            input_stable_usec: 10000
+        and_then_or: true
       out:
         name: "PWRGD_CHC_CPU2_On"
 
@@ -262,6 +277,11 @@ power_sequencer:
       in:
         and:
           - name: "CPU2_VR_PWRGD"
+          - name: "PWRGD_CPUPWRGD"
+        or:
+          - name: "PWRGD_LVC3_CPU2_CD_DRAM_G"
+            input_stable_usec: 10000
+        and_then_or: true
       out:
         name: "PWRGD_CHD_CPU2_On"
 
@@ -269,6 +289,11 @@ power_sequencer:
       in:
         and:
           - name: "CPU2_VR_PWRGD"
+          - name: "PWRGD_CPUPWRGD"
+        or:
+          - name: "PWRGD_LVC3_CPU2_EF_DRAM_G"
+            input_stable_usec: 10000
+        and_then_or: true
       out:
         name: "PWRGD_CHE_CPU2_On"
 
@@ -276,6 +301,11 @@ power_sequencer:
       in:
         and:
           - name: "CPU2_VR_PWRGD"
+          - name: "PWRGD_CPUPWRGD"
+        or:
+          - name: "PWRGD_LVC3_CPU2_EF_DRAM_G"
+            input_stable_usec: 10000
+        and_then_or: true
       out:
         name: "PWRGD_CHF_CPU2_On"
 
@@ -283,6 +313,11 @@ power_sequencer:
       in:
         and:
           - name: "CPU2_VR_PWRGD"
+          - name: "PWRGD_CPUPWRGD"
+        or:
+          - name: "PWRGD_LVC3_CPU2_GH_DRAM_G"
+            input_stable_usec: 10000
+        and_then_or: true
       out:
         name: "PWRGD_CHG_CPU2_On"
 
@@ -290,9 +325,13 @@ power_sequencer:
       in:
         and:
           - name: "CPU2_VR_PWRGD"
+          - name: "PWRGD_CPUPWRGD"
+        or:
+          - name: "PWRGD_LVC3_CPU2_GH_DRAM_G"
+            input_stable_usec: 10000
+        and_then_or: true
       out:
         name: "PWRGD_CHH_CPU2_On"
-
   # DDR & CPU VRs
 
   # PVCCD_HV must be equal or higher than Vdd at all times.
@@ -423,13 +462,21 @@ power_sequencer:
           - name: "pvpp_hbm_cpu2_Enabled"
           - name: "pvpp_hbm_cpu2_PowerGood"
             input_stable_usec: 1000
-          - name: "PWRGD_LVC3_CPU2_AB_DRAM_G"
+          - name: "PWRGD_CHA_CPU2_On"
             input_stable_usec: 10000
-          - name: "PWRGD_LVC3_CPU2_CD_DRAM_G"
+          - name: "PWRGD_CHB_CPU2_On"
             input_stable_usec: 10000
-          - name: "PWRGD_LVC3_CPU2_EF_DRAM_G"
+          - name: "PWRGD_CHC_CPU2_On"
             input_stable_usec: 10000
-          - name: "PWRGD_LVC3_CPU2_GH_DRAM_G"
+          - name: "PWRGD_CHD_CPU2_On"
+            input_stable_usec: 10000
+          - name: "PWRGD_CHE_CPU2_On"
+            input_stable_usec: 10000
+          - name: "PWRGD_CHF_CPU2_On"
+            input_stable_usec: 10000
+          - name: "PWRGD_CHG_CPU2_On"
+            input_stable_usec: 10000
+          - name: "PWRGD_CHH_CPU2_On"
             input_stable_usec: 10000
         and_then_or: true
       out:
