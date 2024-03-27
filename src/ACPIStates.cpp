@@ -145,7 +145,7 @@ void ACPIStates::Update(void)
                 this->dbus->SetHostState(dbus::HostState::standby);
             this->dbus->SetChassisState(true);
             this->dbus->SetOSState(dbus::OSState::inactive);
-	    this->dbus->SetBootState(dbus::BootProgress::Unspecified);
+            this->dbus->SetBootState(dbus::BootProgress::Unspecified);
             break;
         case ACPI_S5:
             if (this->signalHostState->GetLevel())
@@ -154,7 +154,7 @@ void ACPIStates::Update(void)
                 this->dbus->SetHostState(dbus::HostState::off);
             this->dbus->SetChassisState(true);
             this->dbus->SetOSState(dbus::OSState::inactive);
-	    this->dbus->SetBootState(dbus::BootProgress::Unspecified);
+            this->dbus->SetBootState(dbus::BootProgress::Unspecified);
             break;
         case ACPI_G3:
             this->powerCycleTimer.cancel();
@@ -162,7 +162,7 @@ void ACPIStates::Update(void)
             this->dbus->SetChassisState(false);
             this->dbus->SetHostState(dbus::HostState::off);
             this->dbus->SetOSState(dbus::OSState::inactive);
-	    this->dbus->SetBootState(dbus::BootProgress::Unspecified);
+            this->dbus->SetBootState(dbus::BootProgress::Unspecified);
             break;
     }
 }
