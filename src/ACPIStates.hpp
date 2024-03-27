@@ -58,5 +58,7 @@ class ACPIStates : public SignalDriver, SignalReceiver
     Signal* signalPostDone;
     unordered_map<enum ACPILevel, Signal*> outputs;
     Dbus *dbus;
+    enum ACPILevel lastLevel;
     boost::asio::deadline_timer powerCycleTimer;
+    boost::asio::deadline_timer idleTimer;
 };

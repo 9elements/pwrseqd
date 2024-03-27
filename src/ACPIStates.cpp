@@ -117,9 +117,11 @@ enum ACPILevel ACPIStates::GetCurrent(void)
 
 void ACPIStates::Update(void)
 {
-    switch (this->GetCurrent())
+    enum ACPILevel newLevel = this->GetCurrent();
+    switch (newLevel)
     {
         case ACPI_S0:
+            this->idleTimer.cancel();
             if (this->signalHostState->GetLevel())
                 this->dbus->SetHostState(dbus::HostState::running);
             else
@@ -139,6 +141,7 @@ void ACPIStates::Update(void)
             }
             break;
         case ACPI_S3:
+            this->idleTimer.cancel();
             if (this->signalHostState->GetLevel())
                 this->dbus->SetHostState(dbus::HostState::transitionToRunning);
             else
@@ -148,6 +151,19 @@ void ACPIStates::Update(void)
             this->dbus->SetBootState(dbus::BootProgress::Unspecified);
             break;
         case ACPI_S5:
+            if (this->lastLevel != ACPI_G3 && this->lastLevel != ACPI_S5) {
+                this->idleTimer.expires_from_now(boost::posix_time::seconds(30));
+                this->idleTimer.async_wait([&](const boost::system::error_code& err) {
+                    if (err != boost::asio::error::operation_aborted)
+                    {
+                        if (this->GetCurrent() == ACPI_S5)
+                        {
+                            this->dbus->RequestedPowerTransition(dbus::ChassisTransition::off);
+                            log_info("Turning off chassis due to idle host");
+                        }
+                    }
+                });
+            }
             if (this->signalHostState->GetLevel())
                 this->dbus->SetHostState(dbus::HostState::transitionToRunning);
             else
@@ -157,6 +173,7 @@ void ACPIStates::Update(void)
             this->dbus->SetBootState(dbus::BootProgress::Unspecified);
             break;
         case ACPI_G3:
+            this->idleTimer.cancel();
             this->powerCycleTimer.cancel();
 
             this->dbus->SetChassisState(false);
@@ -165,6 +182,7 @@ void ACPIStates::Update(void)
             this->dbus->SetBootState(dbus::BootProgress::Unspecified);
             break;
     }
+    this->lastLevel = newLevel;
 }
 
 bool ACPIStates::RequestedHostTransition(const std::string& requested,
@@ -223,7 +241,13 @@ bool ACPIStates::RequestedPowerTransition(const std::string& requested,
         }
         else
         {
-            this->RequestChassis(false);
+            this->RequestHost(false);
+            // Give statemachine some time to drive GPIOs before changing chassis state
+            this->io->post([this] {
+                this->io->post([this] {
+                    this->RequestChassis(false);
+                });
+            });
 
             this->powerCycleTimer.expires_from_now(
                 boost::posix_time::seconds(10));
@@ -239,6 +263,7 @@ bool ACPIStates::RequestedPowerTransition(const std::string& requested,
                     else
                     {
                         this->RequestChassis(true);
+                        this->RequestHost(true);
                     }
                 }
             });
@@ -259,7 +284,7 @@ ACPIStates::ACPIStates(Config& cfg, SignalProvider& sp,
                        boost::asio::io_service& io,
                        Dbus& d) :
     io(&io), sp{&sp},
-    dbus(&d), powerCycleTimer(io)
+    dbus(&d), lastLevel{ACPI_G3}, powerCycleTimer(io), idleTimer(io)
 {
 
     for (auto it : ObservedStates)
