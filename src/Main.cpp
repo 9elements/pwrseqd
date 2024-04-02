@@ -160,7 +160,7 @@ int main(int argc, char * const argv[])
         NetlinkRegulatorEvents *netlink = GetNetlinkRegulatorEvents(io);
         for (auto it : cfg.Regulators)
         {
-            netlink->Register(it.Name, [&](std::string name, uint64_t events) {
+            netlink->Register(it.Name, [](std::string name, uint64_t events) {
                 std::cout << name + ": Got NETLINK event: " + to_string(events);
             });
         }
@@ -182,7 +182,7 @@ int main(int argc, char * const argv[])
         if (errorRegulatorName != "" && errorTimeout > 0) {
             log_info("Starting error inject timer for " + errorRegulatorName + "...");
             timerTestErrorEvent.expires_from_now(boost::posix_time::seconds(errorTimeout));
-            timerTestErrorEvent.async_wait([&](const boost::system::error_code& err) {
+            timerTestErrorEvent.async_wait([&sm, &errorRegulatorName](const boost::system::error_code& err) {
                 sm.InjectRegulatorError(errorRegulatorName);
             });
         }

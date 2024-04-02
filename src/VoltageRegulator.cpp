@@ -42,7 +42,7 @@ void VoltageRegulator::Apply(void)
         this->pendingNewLevel = s;
         this->retries = 10;
         this->timerStateCheck.expires_from_now(boost::posix_time::microseconds(this->stateChangeTimeoutUsec / this->retries));
-        this->timerStateCheck.async_wait([&](const boost::system::error_code& err) {
+        this->timerStateCheck.async_wait([this](const boost::system::error_code& err) {
             if (err != boost::asio::error::operation_aborted)
             {
                 this->ConfirmStatusAfterTimeout();
@@ -102,7 +102,7 @@ void VoltageRegulator::ConfirmStatusAfterTimeout(void)
         if (this->retries > 0) {
             log_err(this->name + ": State didn't change yet to " + ((this->pendingNewLevel == ENABLED) ? "ON" : "OFF") + ", is " + this->control.StatusToString(status));
             this->timerStateCheck.expires_from_now(boost::posix_time::microseconds(this->stateChangeTimeoutUsec / this->retries));
-            this->timerStateCheck.async_wait([&](const boost::system::error_code& err) {
+            this->timerStateCheck.async_wait([this](const boost::system::error_code& err) {
                 if (err != boost::asio::error::operation_aborted)
                 {
                     this->ConfirmStatusAfterTimeout();
@@ -212,7 +212,7 @@ void VoltageRegulator::Poll(void)
     // Regulators do not propagate their status changes through IRQs.
     // Only errors are passed through state change....
     this->timerPoll.expires_from_now(boost::posix_time::seconds(1));
-    this->timerPoll.async_wait([&](const boost::system::error_code& err) {
+    this->timerPoll.async_wait([this](const boost::system::error_code& err) {
         if (err != boost::asio::error::operation_aborted)
         {
             string statusText =  this->control.ReadStatus();
@@ -230,7 +230,7 @@ void VoltageRegulator::Poll(void)
 void VoltageRegulator::CheckStatus(bool later)
 {
     if (later) {
-        this->io->post([&]() { this->CheckStatus(false); });
+        this->io->post([this]() { this->CheckStatus(false); });
         return;
     }
     string statusText = this->control.ReadStatus();
@@ -240,7 +240,7 @@ void VoltageRegulator::CheckStatus(bool later)
     }
     if (this->statusShadow == status)
     {
-        this->io->post([&]() {
+        this->io->post([this]() {
             string statusText = this->control.ReadStatus();
             enum RegulatorStatus status2 = this->control.DecodeStatus(statusText);
             if (status2 == INVALID) {
@@ -288,7 +288,7 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
 
     netlink = GetNetlinkRegulatorEvents(IoOutput);
     if (netlink) {
-        netlink->Register(this->name, [&](std::string name, uint64_t events) {
+        netlink->Register(this->name, [this](std::string name, uint64_t events) {
             log_debug(this->name + ": Got NETLINK event: " + to_string(events));
             if (events & REGULATOR_EVENT_FAILURE) {
                 this->ApplyStatus(ERROR);
@@ -301,13 +301,13 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
                 //
                 // Reschedule a status read check as the regulator is slow.
                 // ConfirmStatusAfterTimeout does the same, but even slower.
-                this->io->post([&, events]() {
+                this->io->post([this, events]() {
                     // When the regulator indicated a failure at the same time
                     // give the statemachine some time to run the error handler
                     // before clearing the error flag inside the regulator.
                     if (events & REGULATOR_EVENT_FAILURE) {
                         this->CheckStatus(true);
-                        this->io->post([&, events]() {
+                        this->io->post([this, events]() {
                             if ((events & REGULATOR_EVENT_EN_DIS) == REGULATOR_EVENT_ENABLE)
                             {
                                 this->enabled->SetLevel(true);

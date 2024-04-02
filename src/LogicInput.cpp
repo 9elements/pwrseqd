@@ -33,7 +33,7 @@ bool LogicInput::GetLevel()
             // necessary, will schedule another timer.
             this->timer.expires_from_now(boost::posix_time::microseconds(
                 this->inputStableUsec - usec.count()));
-            this->timer.async_wait([&](const boost::system::error_code& err) {
+            this->timer.async_wait([this](const boost::system::error_code& err) {
                 if (!err)
                 {
                     this->parent->Update();

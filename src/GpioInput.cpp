@@ -95,7 +95,7 @@ void GpioInput::Acquire(void)
     // Read initial level once ready.
     // If Release() is called before initial level could be read this will throw
     // an exception.
-    this->ioOutput->post([&] {
+    this->ioOutput->post([this] {
         int val;
         if (this->gated)
         {
@@ -154,7 +154,7 @@ void GpioInput::Release(void)
     log_debug("input gpio " + this->Name() + " reads as " +
               to_string(newLevel ? 1 : 0));
 
-    this->io->post([&]() {
+    this->io->post([this, newLevel]() {
         this->out->SetLevel(newLevel);
         if (this->enabled)
             this->enabled->SetLevel(false);
@@ -165,13 +165,13 @@ void GpioInput::Update(void)
 {
     if (this->enable->GetLevel() && this->gated)
     {
-        this->ioOutput->post([&]() {
+        this->ioOutput->post([this]() {
             this->Acquire();
         });
     }
     else if (!this->enable->GetLevel() && !this->gated)
     {
-        this->ioOutput->post([&]() {
+        this->ioOutput->post([this]() {
             this->Release();
         });
     }
@@ -182,7 +182,7 @@ void GpioInput::WaitForGPIOEvent(void)
 {
     this->streamDesc.async_wait(
         boost::asio::posix::stream_descriptor::wait_read,
-        [&](const boost::system::error_code ec) {
+        [this](const boost::system::error_code ec) {
             gpiod::line_event line_event;
             if (ec)
             {

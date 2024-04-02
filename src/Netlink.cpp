@@ -81,7 +81,7 @@ void NetlinkRegulatorEvents::WaitForEvent(void)
 {
     this->streamDesc.async_wait(
         boost::asio::posix::stream_descriptor::wait_read,
-        [&](const boost::system::error_code ec) {
+        [this](const boost::system::error_code ec) {
             int ret;
             if (ec)
             {

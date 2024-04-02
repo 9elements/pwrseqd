@@ -19,7 +19,7 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
     dbus(&dbus)
 {
 
-    prov.SetDirtyBitEvent([&](void) { this->OnDirtySet(); });
+    prov.SetDirtyBitEvent([this](void) { this->OnDirtySet(); });
 
     for (int i = 0; i < cfg.Logic.size(); i++)
     {
@@ -82,7 +82,7 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
     {
         VoltageRegulator* v =
             new VoltageRegulator(io, IoOutput, &cfg.Regulators[i], prov, "",
-                [&](VoltageRegulator* vr) { this->CatchVoltageRegulatorError(vr); });
+                [this](VoltageRegulator* vr) { this->CatchVoltageRegulatorError(vr); });
         this->voltageRegulators.push_back(v);
         this->outputDrivers.push_back(v);
         prov.AddDriver(v);
@@ -124,7 +124,7 @@ void StateMachine::Validate(void)
 // OnDirtySet is invoked when a signal dirty bit is set
 void StateMachine::OnDirtySet(void)
 {
-    this->io->post([&]() { this->EvaluateState(); });
+    this->io->post([this]() { this->EvaluateState(); });
 }
 
 // EvaluateState runs until no more signals change
@@ -164,8 +164,8 @@ void StateMachine::EvaluateState(void)
 // Run does work on the io_queue.
 void StateMachine::Run(void)
 {
-    this->io->post([&]() { this->EvaluateState(); });
-    this->io->post([&]() { this->sp->PrintSignals(); });
+    this->io->post([this]() { this->EvaluateState(); });
+    this->io->post([this]() { this->sp->PrintSignals(); });
 
     this->io->run();
 }

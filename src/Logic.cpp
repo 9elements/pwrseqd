@@ -183,7 +183,7 @@ Logic::Logic(boost::asio::io_context& io, SignalProvider& prov,
     this->delayOutputUsec = cfg->DelayOutputUsec;
     this->outputActiveLow = cfg->Out.ActiveLow;
 
-    io.post([&]() { this->Update(); });
+    io.post([this]() { this->Update(); });
 }
 
 Logic::~Logic()
