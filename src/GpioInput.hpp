@@ -59,7 +59,9 @@ class GpioInput : SignalReceiver, public SignalDriver
     // Signal enable tells wether to gate the input (drive a constant level)
     // Only used when cfg->GateInput is set
     Signal* enable;
-
+    // Signal enabled is updated by the IO thread after enable was changed.
+    // Depending on the IO queue length it might take several seconds to be set.
+    Signal* enabled;
     // gpiod config
     gpiod::line line;
     gpiod::chip chip;

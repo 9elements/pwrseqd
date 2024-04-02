@@ -481,6 +481,10 @@ floating_signals:
   - "IRQ_NIC1_OVT_SHTDN"
   - "IRQ_NIC2_OVT_SHTDN"
   - "p3v3_nic_Enabled"
+  - "IRQ_NIC2_OVT_SHTDN_Enabled"
+  - "IRQ_NIC1_OVT_SHTDN_Enabled"
+  - "IRQ_NIC2_OVT_WRNG_Enabled"
+  - "IRQ_NIC1_OVT_WRNG_Enabled"
 
 immutables:
   - signal_name: "FM_NIC1_FLASH_PRSNT"

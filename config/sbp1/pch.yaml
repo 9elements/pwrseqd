@@ -368,3 +368,8 @@ regulators:
 
 floating_signals:
   - "p5v_Enabled"
+  - "FM_BIOS_POST_CMPLT_N_Enabled"
+  - "RST_PLTRST_N_Enabled"
+  - "FM_SLPS3_N_Enabled"
+  - "FM_SLPS4_N_Enabled"
+  - "PWRGD_CPUPWRGD_Enabled"

@@ -239,8 +239,9 @@ power_sequencer:
   - PWRGD_CHA_CPU3_Enable_Unit:
       in:
         and:
+          - name: "CPU_POWER"
           - name: "CPU3_VR_PWRGD"
-          - name: "PWRGD_CPUPWRGD"
+          - name: "CPU3_DDR_PWRGD"
         or:
           - name: "PWRGD_LVC3_CPU3_AB_DRAM_G"
             input_stable_usec: 10000
@@ -251,8 +252,9 @@ power_sequencer:
   - PWRGD_CHB_CPU3_Enable_Unit:
       in:
         and:
+          - name: "CPU_POWER"
           - name: "CPU3_VR_PWRGD"
-          - name: "PWRGD_CPUPWRGD"
+          - name: "CPU3_DDR_PWRGD"
         or:
           - name: "PWRGD_LVC3_CPU3_AB_DRAM_G"
             input_stable_usec: 10000
@@ -263,8 +265,9 @@ power_sequencer:
   - PWRGD_CHC_CPU3_Enable_Unit:
       in:
         and:
+          - name: "CPU_POWER"
           - name: "CPU3_VR_PWRGD"
-          - name: "PWRGD_CPUPWRGD"
+          - name: "CPU3_DDR_PWRGD"
         or:
           - name: "PWRGD_LVC3_CPU3_CD_DRAM_G"
             input_stable_usec: 10000
@@ -275,8 +278,9 @@ power_sequencer:
   - PWRGD_CHD_CPU3_Enable_Unit:
       in:
         and:
+          - name: "CPU_POWER"
           - name: "CPU3_VR_PWRGD"
-          - name: "PWRGD_CPUPWRGD"
+          - name: "CPU3_DDR_PWRGD"
         or:
           - name: "PWRGD_LVC3_CPU3_CD_DRAM_G"
             input_stable_usec: 10000
@@ -287,8 +291,9 @@ power_sequencer:
   - PWRGD_CHE_CPU3_Enable_Unit:
       in:
         and:
+          - name: "CPU_POWER"
           - name: "CPU3_VR_PWRGD"
-          - name: "PWRGD_CPUPWRGD"
+          - name: "CPU3_DDR_PWRGD"
         or:
           - name: "PWRGD_LVC3_CPU3_EF_DRAM_G"
             input_stable_usec: 10000
@@ -299,8 +304,9 @@ power_sequencer:
   - PWRGD_CHF_CPU3_Enable_Unit:
       in:
         and:
+          - name: "CPU_POWER"
           - name: "CPU3_VR_PWRGD"
-          - name: "PWRGD_CPUPWRGD"
+          - name: "CPU3_DDR_PWRGD"
         or:
           - name: "PWRGD_LVC3_CPU3_EF_DRAM_G"
             input_stable_usec: 10000
@@ -311,8 +317,9 @@ power_sequencer:
   - PWRGD_CHG_CPU3_Enable_Unit:
       in:
         and:
+          - name: "CPU_POWER"
           - name: "CPU3_VR_PWRGD"
-          - name: "PWRGD_CPUPWRGD"
+          - name: "CPU3_DDR_PWRGD"
         or:
           - name: "PWRGD_LVC3_CPU3_GH_DRAM_G"
             input_stable_usec: 10000
@@ -323,8 +330,9 @@ power_sequencer:
   - PWRGD_CHH_CPU3_Enable_Unit:
       in:
         and:
+          - name: "CPU_POWER"
           - name: "CPU3_VR_PWRGD"
-          - name: "PWRGD_CPUPWRGD"
+          - name: "CPU3_DDR_PWRGD"
         or:
           - name: "PWRGD_LVC3_CPU3_GH_DRAM_G"
             input_stable_usec: 10000
@@ -478,6 +486,14 @@ power_sequencer:
             input_stable_usec: 10000
           - name: "PWRGD_CHH_CPU3_On"
             input_stable_usec: 10000
+          - name: "PWRGD_CHA_CPU3_Enabled"
+          - name: "PWRGD_CHB_CPU3_Enabled"
+          - name: "PWRGD_CHC_CPU3_Enabled"
+          - name: "PWRGD_CHD_CPU3_Enabled"
+          - name: "PWRGD_CHE_CPU3_Enabled"
+          - name: "PWRGD_CHF_CPU3_Enabled"
+          - name: "PWRGD_CHG_CPU3_Enabled"
+          - name: "PWRGD_CHH_CPU3_Enabled"
         and_then_or: true
       out:
         name: "pvccin_cpu3_On"
@@ -570,6 +586,14 @@ power_sequencer:
         and:
           - name: "CPU3_VR_PWRGD"
           - name: "CPU3_DDR_PWRGD"
+          - name: "PWRGD_CHA_CPU3_Enabled"
+          - name: "PWRGD_CHB_CPU3_Enabled"
+          - name: "PWRGD_CHC_CPU3_Enabled"
+          - name: "PWRGD_CHD_CPU3_Enabled"
+          - name: "PWRGD_CHE_CPU3_Enabled"
+          - name: "PWRGD_CHF_CPU3_Enabled"
+          - name: "PWRGD_CHG_CPU3_Enabled"
+          - name: "PWRGD_CHH_CPU3_Enabled"
         or:
           - name: "FM_CPU3_SKTOCC"
             invert: true
@@ -696,3 +720,6 @@ regulators:
   - name: "pvccin_cpu3"
   - name: "pvpp_hbm_cpu3"
 
+floating_signals:
+  - "H_LVT3_CPU3_MEMTRIP_OUT_N_Enabled"
+  - "H_LVT3_CPU3_THERMTRIP_OUT_N_Enabled"

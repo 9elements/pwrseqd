@@ -90,10 +90,12 @@ void GpioInput::Acquire(void)
 
     log_debug("using gpio " + this->Name() + " as input");
 
+    this->gated = false;
+
     // Read initial level once ready.
     // If Release() is called before initial level could be read this will throw
     // an exception.
-    this->io->post([&] {
+    this->ioOutput->post([&] {
         int val;
         if (this->gated)
         {
@@ -109,10 +111,13 @@ void GpioInput::Acquire(void)
             log_debug("GPIO line " + this->Name() + ": " + exc.what());
             return;
         }
-        this->out->SetLevel(val != 0);
-    });
 
-    this->gated = false;
+        this->io->post([this, val]() {
+            this->out->SetLevel(val != 0);
+            if (this->enabled)
+                this->enabled->SetLevel(true);
+        });
+    });
 }
 
 // Release removes the interrupt from the GPIO
@@ -151,6 +156,8 @@ void GpioInput::Release(void)
 
     this->io->post([&]() {
         this->out->SetLevel(newLevel);
+        if (this->enabled)
+            this->enabled->SetLevel(false);
     });
 }
 
@@ -206,7 +213,7 @@ GpioInput::GpioInput(boost::asio::io_context& io,
     io(&io), ioOutput(&ioOutput),
     GatedIdleHigh(cfg->GatedIdleHigh), GatedIdleLow(cfg->GatedIdleLow),
     GatedOutputODLow(cfg->GatedOutputODLow),
-    out(NULL), enable(NULL), streamDesc(io), ActiveLow(cfg->ActiveLow),
+    out(NULL), enable(NULL), enabled(NULL), streamDesc(io), ActiveLow(cfg->ActiveLow),
     gpiodFlags(0), gated(true)
 {
 
@@ -256,7 +263,9 @@ GpioInput::GpioInput(boost::asio::io_context& io,
     else
     {
         this->enable = prov.FindOrAdd(cfg->Name + "_On");
+        this->enabled = prov.FindOrAdd(cfg->Name + "_Enabled");
         this->enable->AddReceiver(this);
+        this->enabled->SetLevel(false);
 
         if (this->GatedIdleHigh)
         {
@@ -287,6 +296,9 @@ vector<Signal*> GpioInput::Signals(void)
 {
     vector<Signal*> vec;
     vec.push_back(this->out);
+    if (this->enabled)
+        vec.push_back(this->enabled);
+
     return vec;
 }
 
