@@ -25,8 +25,7 @@ void GpioInput::OnEvent(gpiod::line_event line_event)
     bool high = line_event.event_type == gpiod::line_event::RISING_EDGE;
     high ^= this->ActiveLow;
 
-    log_debug("input gpio " + this->Name() + " changed to " +
-              to_string(high ? 1 : 0));
+    log_debug("input gpio " + this->Name() + " changed to " + (high ? "1" : "0"));
 
     this->out->SetLevel(line_event.event_type ==
                         gpiod::line_event::RISING_EDGE);

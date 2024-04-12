@@ -18,7 +18,7 @@ void GpioOutput::Apply(void)
     {
         this->level = this->newLevel;
         log_debug("output gpio " + this->Name() + " changed to " +
-            to_string(this->level ^ this->activeLow));
+            ((this->level ^ this->activeLow) ? "1" : "0"));
         this->line.set_value(this->level);
     }
 }
