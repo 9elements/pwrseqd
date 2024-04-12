@@ -151,7 +151,8 @@ void ACPIStates::Update(void)
             this->dbus->SetBootState(dbus::BootProgress::Unspecified);
             break;
         case ACPI_S5:
-            if (this->lastLevel != ACPI_G3 && this->lastLevel != ACPI_S5) {
+            if (acpi_g3_on_host_shutdown &&
+                this->lastLevel != ACPI_G3 && this->lastLevel != ACPI_S5) {
                 this->idleTimer.expires_from_now(boost::posix_time::seconds(30));
                 this->idleTimer.async_wait([&](const boost::system::error_code& err) {
                     if (err != boost::asio::error::operation_aborted)
@@ -282,9 +283,10 @@ bool ACPIStates::RequestedPowerTransition(const std::string& requested,
 
 ACPIStates::ACPIStates(Config& cfg, SignalProvider& sp,
                        boost::asio::io_service& io,
-                       Dbus& d) :
+                       Dbus& d, bool auto_acpi_g3_on_shutdown) :
     io(&io), sp{&sp},
-    dbus(&d), lastLevel{ACPI_G3}, powerCycleTimer(io), idleTimer(io)
+    dbus(&d), lastLevel{ACPI_G3}, powerCycleTimer(io), idleTimer(io),
+    acpi_g3_on_host_shutdown(auto_acpi_g3_on_shutdown)
 {
 
     for (auto it : ObservedStates)

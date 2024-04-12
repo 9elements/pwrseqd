@@ -172,7 +172,7 @@ int main(int argc, char * const argv[])
     {
         SignalProvider signalprovider(cfg, dumpSignalsFolder);
         Dbus dbus(cfg, io);
-        ACPIStates states(cfg, signalprovider, io, dbus);
+        ACPIStates states(cfg, signalprovider, io, dbus, false);
         signalprovider.AddDriver(&states);
         StateMachine sm(cfg, signalprovider, io, IoOutput, dbus);
 
