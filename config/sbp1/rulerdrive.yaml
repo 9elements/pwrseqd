@@ -6,6 +6,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD01_PRESENT"
       out:
         name: "rssd01_3v3_On"
@@ -13,6 +14,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD02_PRESENT"
       out:
         name: "rssd02_3v3_On"
@@ -20,6 +22,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD03_PRESENT"
       out:
         name: "rssd03_3v3_On"
@@ -27,6 +30,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD04_PRESENT"
       out:
         name: "rssd04_3v3_On"
@@ -34,6 +38,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD05_PRESENT"
       out:
         name: "rssd05_3v3_On"
@@ -41,6 +46,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD06_PRESENT"
       out:
         name: "rssd06_3v3_On"
@@ -48,6 +54,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD07_PRESENT"
       out:
         name: "rssd07_3v3_On"
@@ -55,6 +62,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD08_PRESENT"
       out:
         name: "rssd08_3v3_On"
@@ -62,6 +70,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD09_PRESENT"
       out:
         name: "rssd09_3v3_On"
@@ -69,6 +78,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD10_PRESENT"
       out:
         name: "rssd10_3v3_On"
@@ -76,6 +86,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD11_PRESENT"
       out:
         name: "rssd11_3v3_On"
@@ -83,6 +94,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD12_PRESENT"
       out:
         name: "rssd12_3v3_On"
@@ -90,6 +102,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD13_PRESENT"
       out:
         name: "rssd13_3v3_On"
@@ -97,6 +110,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD14_PRESENT"
       out:
         name: "rssd14_3v3_On"
@@ -104,6 +118,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD15_PRESENT"
       out:
         name: "rssd15_3v3_On"
@@ -111,6 +126,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD16_PRESENT"
       out:
         name: "rssd16_3v3_On"
@@ -118,6 +134,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD17_PRESENT"
       out:
         name: "rssd17_3v3_On"
@@ -125,6 +142,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD18_PRESENT"
       out:
         name: "rssd18_3v3_On"
@@ -132,6 +150,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD19_PRESENT"
       out:
         name: "rssd19_3v3_On"
@@ -139,6 +158,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD20_PRESENT"
       out:
         name: "rssd20_3v3_On"
@@ -146,6 +166,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD21_PRESENT"
       out:
         name: "rssd21_3v3_On"
@@ -153,6 +174,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD22_PRESENT"
       out:
         name: "rssd22_3v3_On"
@@ -160,6 +182,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD23_PRESENT"
       out:
         name: "rssd23_3v3_On"
@@ -167,6 +190,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD24_PRESENT"
       out:
         name: "rssd24_3v3_On"
@@ -174,6 +198,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD25_PRESENT"
       out:
         name: "rssd25_3v3_On"
@@ -181,6 +206,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD26_PRESENT"
       out:
         name: "rssd26_3v3_On"
@@ -188,6 +214,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD27_PRESENT"
       out:
         name: "rssd27_3v3_On"
@@ -195,6 +222,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD28_PRESENT"
       out:
         name: "rssd28_3v3_On"
@@ -202,6 +230,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD29_PRESENT"
       out:
         name: "rssd29_3v3_On"
@@ -209,6 +238,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD30_PRESENT"
       out:
         name: "rssd30_3v3_On"
@@ -216,6 +246,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD31_PRESENT"
       out:
         name: "rssd31_3v3_On"
@@ -223,6 +254,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD32_PRESENT"
       out:
         name: "rssd32_3v3_On"
@@ -231,6 +263,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD01_PRESENT"
             input_stable_usec: 10000
       out:
@@ -239,6 +272,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD02_PRESENT"
             input_stable_usec: 10000
       out:
@@ -247,6 +281,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD03_PRESENT"
             input_stable_usec: 10000
       out:
@@ -255,6 +290,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD04_PRESENT"
             input_stable_usec: 10000
       out:
@@ -263,6 +299,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD05_PRESENT"
             input_stable_usec: 10000
       out:
@@ -271,6 +308,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD06_PRESENT"
             input_stable_usec: 10000
       out:
@@ -279,6 +317,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD07_PRESENT"
             input_stable_usec: 10000
       out:
@@ -287,6 +326,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD08_PRESENT"
             input_stable_usec: 10000
       out:
@@ -295,6 +335,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD09_PRESENT"
             input_stable_usec: 10000
       out:
@@ -303,6 +344,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD10_PRESENT"
             input_stable_usec: 10000
       out:
@@ -311,6 +353,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD11_PRESENT"
             input_stable_usec: 10000
       out:
@@ -319,6 +362,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD12_PRESENT"
             input_stable_usec: 10000
       out:
@@ -327,6 +371,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD13_PRESENT"
             input_stable_usec: 10000
       out:
@@ -335,6 +380,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD14_PRESENT"
             input_stable_usec: 10000
       out:
@@ -343,6 +389,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD15_PRESENT"
             input_stable_usec: 10000
       out:
@@ -351,6 +398,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD16_PRESENT"
             input_stable_usec: 10000
       out:
@@ -359,6 +407,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD17_PRESENT"
             input_stable_usec: 10000
       out:
@@ -367,6 +416,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD18_PRESENT"
             input_stable_usec: 10000
       out:
@@ -375,6 +425,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD19_PRESENT"
             input_stable_usec: 10000
       out:
@@ -383,6 +434,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD20_PRESENT"
             input_stable_usec: 10000
       out:
@@ -391,6 +443,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD21_PRESENT"
             input_stable_usec: 10000
       out:
@@ -399,6 +452,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD22_PRESENT"
             input_stable_usec: 10000
       out:
@@ -407,6 +461,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD23_PRESENT"
             input_stable_usec: 10000
       out:
@@ -415,6 +470,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD24_PRESENT"
             input_stable_usec: 10000
       out:
@@ -423,6 +479,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD25_PRESENT"
             input_stable_usec: 10000
       out:
@@ -431,6 +488,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD26_PRESENT"
             input_stable_usec: 10000
       out:
@@ -439,6 +497,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD27_PRESENT"
             input_stable_usec: 10000
       out:
@@ -447,6 +506,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD28_PRESENT"
             input_stable_usec: 10000
       out:
@@ -455,6 +515,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD29_PRESENT"
             input_stable_usec: 10000
       out:
@@ -463,6 +524,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD30_PRESENT"
             input_stable_usec: 10000
       out:
@@ -471,6 +533,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD31_PRESENT"
             input_stable_usec: 10000
       out:
@@ -479,6 +542,7 @@ power_sequencer:
       in:
         and:
           - name: "SYS_PWROK"
+            input_stable_usec: 10000
           - name: "RSSD32_PRESENT"
             input_stable_usec: 10000
       out:
@@ -1032,6 +1096,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD01_PRESENT"
             invert: true
           - name: "RSSD01_POWER_EN"
@@ -1053,6 +1119,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD02_PRESENT"
             invert: true
           - name: "RSSD02_POWER_EN"
@@ -1074,6 +1142,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD03_PRESENT"
             invert: true
           - name: "RSSD03_POWER_EN"
@@ -1095,6 +1165,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD04_PRESENT"
             invert: true
           - name: "RSSD04_POWER_EN"
@@ -1116,6 +1188,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD05_PRESENT"
             invert: true
           - name: "RSSD05_POWER_EN"
@@ -1137,6 +1211,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD06_PRESENT"
             invert: true
           - name: "RSSD06_POWER_EN"
@@ -1158,6 +1234,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD07_PRESENT"
             invert: true
           - name: "RSSD07_POWER_EN"
@@ -1179,6 +1257,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD08_PRESENT"
             invert: true
           - name: "RSSD08_POWER_EN"
@@ -1200,6 +1280,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD09_PRESENT"
             invert: true
           - name: "RSSD09_POWER_EN"
@@ -1221,6 +1303,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD10_PRESENT"
             invert: true
           - name: "RSSD10_POWER_EN"
@@ -1242,6 +1326,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD11_PRESENT"
             invert: true
           - name: "RSSD11_POWER_EN"
@@ -1263,6 +1349,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD12_PRESENT"
             invert: true
           - name: "RSSD12_POWER_EN"
@@ -1284,6 +1372,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD13_PRESENT"
             invert: true
           - name: "RSSD13_POWER_EN"
@@ -1305,6 +1395,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD14_PRESENT"
             invert: true
           - name: "RSSD14_POWER_EN"
@@ -1326,6 +1418,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD15_PRESENT"
             invert: true
           - name: "RSSD15_POWER_EN"
@@ -1347,6 +1441,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD16_PRESENT"
             invert: true
           - name: "RSSD16_POWER_EN"
@@ -1368,6 +1464,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD17_PRESENT"
             invert: true
           - name: "RSSD17_POWER_EN"
@@ -1389,6 +1487,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD18_PRESENT"
             invert: true
           - name: "RSSD18_POWER_EN"
@@ -1410,6 +1510,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD19_PRESENT"
             invert: true
           - name: "RSSD19_POWER_EN"
@@ -1431,6 +1533,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD20_PRESENT"
             invert: true
           - name: "RSSD20_POWER_EN"
@@ -1452,6 +1556,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD21_PRESENT"
             invert: true
           - name: "RSSD21_POWER_EN"
@@ -1473,6 +1579,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD22_PRESENT"
             invert: true
           - name: "RSSD22_POWER_EN"
@@ -1494,6 +1602,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD23_PRESENT"
             invert: true
           - name: "RSSD23_POWER_EN"
@@ -1515,6 +1625,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD24_PRESENT"
             invert: true
           - name: "RSSD24_POWER_EN"
@@ -1536,6 +1648,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD25_PRESENT"
             invert: true
           - name: "RSSD25_POWER_EN"
@@ -1557,6 +1671,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD26_PRESENT"
             invert: true
           - name: "RSSD26_POWER_EN"
@@ -1578,6 +1694,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD27_PRESENT"
             invert: true
           - name: "RSSD27_POWER_EN"
@@ -1599,6 +1717,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD28_PRESENT"
             invert: true
           - name: "RSSD28_POWER_EN"
@@ -1620,6 +1740,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD29_PRESENT"
             invert: true
           - name: "RSSD29_POWER_EN"
@@ -1641,6 +1763,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD30_PRESENT"
             invert: true
           - name: "RSSD30_POWER_EN"
@@ -1662,6 +1786,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD31_PRESENT"
             invert: true
           - name: "RSSD31_POWER_EN"
@@ -1683,6 +1809,8 @@ power_sequencer:
       in:
         or:
           - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
           - name: "RSSD32_PRESENT"
             invert: true
           - name: "RSSD32_POWER_EN"
