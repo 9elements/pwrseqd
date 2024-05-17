@@ -108,7 +108,7 @@ power_sequencer:
 
   - FM_NIC1_ALLSTANDBY_Unit:
       in:
-        and:
+        or:
           - name: "FM_NIC1_PERST0"
           - name: "FM_NIC1_PERST1"
           - name: "FM_NIC1_PERST2"
@@ -118,7 +118,7 @@ power_sequencer:
 
   - FM_NIC2_ALLSTANDBY_Unit:
       in:
-        and:
+        or:
           - name: "FM_NIC2_PERST0"
           - name: "FM_NIC2_PERST1"
           - name: "FM_NIC2_PERST2"
