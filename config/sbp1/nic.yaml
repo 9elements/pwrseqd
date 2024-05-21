@@ -109,20 +109,38 @@ power_sequencer:
   - FM_NIC1_ALLSTANDBY_Unit:
       in:
         or:
-          - name: "FM_NIC1_PERST0"
-          - name: "FM_NIC1_PERST1"
-          - name: "FM_NIC1_PERST2"
-          - name: "FM_NIC1_PERST3"
+          - name: "FM_NIC1_RST"
+          - name: "FM_NIC1_RST"
+            input_stable_usec: 10000
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PLTRST"
+            input_stable_usec: 50000
       out:
         name: "FM_NIC1_ALLSTANDBY"
 
   - FM_NIC2_ALLSTANDBY_Unit:
       in:
         or:
-          - name: "FM_NIC2_PERST0"
-          - name: "FM_NIC2_PERST1"
-          - name: "FM_NIC2_PERST2"
-          - name: "FM_NIC2_PERST3"
+          - name: "FM_NIC2_RST"
+          - name: "FM_NIC2_RST"
+            input_stable_usec: 10000
+          - name: "FM_DB2000_DEV_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PLTRST"
+            input_stable_usec: 50000
       out:
         name: "FM_NIC2_ALLSTANDBY"
 
@@ -141,6 +159,9 @@ power_sequencer:
             invert: true
             input_stable_usec: 100000
           - name: "PLTRST"
+            input_stable_usec: 30000
+          - name: "FM_NIC1_ALLSTANDBY"
+            input_stable_usec: 10000
       out:
         name: "FM_NIC1_PERST0"
   - FM_NIC1_PERST1_Unit:
@@ -160,6 +181,9 @@ power_sequencer:
             invert: true
             input_stable_usec: 100000
           - name: "PLTRST"
+            input_stable_usec: 20000
+          - name: "FM_NIC1_PERST0"
+            input_stable_usec: 10000
       out:
         name: "FM_NIC1_PERST1"
   - FM_NIC1_PERST2_Unit:
@@ -179,6 +203,9 @@ power_sequencer:
             invert: true
             input_stable_usec: 100000
           - name: "PLTRST"
+            input_stable_usec: 10000
+          - name: "FM_NIC1_PERST1"
+            input_stable_usec: 10000
       out:
         name: "FM_NIC1_PERST2"
   - FM_NIC1_PERST3_Unit:
@@ -198,6 +225,8 @@ power_sequencer:
             invert: true
             input_stable_usec: 100000
           - name: "PLTRST"
+          - name: "FM_NIC1_PERST2"
+            input_stable_usec: 10000
       out:
         name: "FM_NIC1_PERST3"
   - FM_NIC2_PERST0_Unit:
@@ -217,6 +246,9 @@ power_sequencer:
             invert: true
             input_stable_usec: 100000
           - name: "PLTRST"
+            input_stable_usec: 30000
+          - name: "FM_NIC2_ALLSTANDBY"
+            input_stable_usec: 10000
       out:
         name: "FM_NIC2_PERST0"
   - FM_NIC2_PERST1_Unit:
@@ -236,6 +268,9 @@ power_sequencer:
             invert: true
             input_stable_usec: 100000
           - name: "PLTRST"
+            input_stable_usec: 20000
+          - name: "FM_NIC2_PERST0"
+            input_stable_usec: 10000
       out:
         name: "FM_NIC2_PERST1"
   - FM_NIC2_PERST2_Unit:
@@ -255,6 +290,9 @@ power_sequencer:
             invert: true
             input_stable_usec: 100000
           - name: "PLTRST"
+            input_stable_usec: 10000
+          - name: "FM_NIC2_PERST1"
+            input_stable_usec: 10000
       out:
         name: "FM_NIC2_PERST2"
   - FM_NIC2_PERST3_Unit:
@@ -274,6 +312,8 @@ power_sequencer:
             invert: true
             input_stable_usec: 100000
           - name: "PLTRST"
+          - name: "FM_NIC2_PERST2"
+            input_stable_usec: 10000
       out:
         name: "FM_NIC2_PERST3"
 
