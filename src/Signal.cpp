@@ -25,6 +25,8 @@ Signal::Signal(SignalProvider* parent, string name) :
 // GetLevel returns the internal active state
 bool Signal::GetLevel()
 {
+    boost::lock_guard<boost::mutex> guard(this->lock);
+
     return this->active;
 }
 
@@ -33,9 +35,9 @@ bool Signal::GetLevel()
 // It marks the signal as dirty in the parent SignalProvider.
 void Signal::SetLevel(bool newLevel)
 {
-    if (this->active != newLevel)
-    {
-        boost::lock_guard<boost::mutex> guard(this->lock);
+    boost::lock_guard<boost::mutex> guard(this->lock);
+
+    if (this->active != newLevel) {
         this->active = newLevel;
         this->dirty = true;
         this->lastLevelChangeTime = steady_clock::now();
