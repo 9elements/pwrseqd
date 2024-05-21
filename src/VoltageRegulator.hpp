@@ -29,7 +29,6 @@ class Signal;
 
 class VoltageRegulator :
     SignalReceiver,
-    public OutputDriver,
     public SignalDriver
 {
   public:

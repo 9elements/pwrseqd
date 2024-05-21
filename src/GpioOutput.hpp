@@ -14,7 +14,7 @@ using namespace std;
 class SignalProvider;
 class Signal;
 
-class GpioOutput : SignalReceiver, public OutputDriver
+class GpioOutput : SignalReceiver
 {
   public:
     // Name returns the instance name

@@ -13,7 +13,7 @@ using namespace std;
 class SignalProvider;
 class Signal;
 
-class LED : SignalReceiver, public OutputDriver
+class LED : SignalReceiver
 {
   public:
     // Name returns the instance name

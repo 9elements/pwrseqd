@@ -69,7 +69,6 @@ class StateMachine : Validator
     // Reference to dbus to initiate host transition on errors
     Dbus* dbus;
 
-    vector<OutputDriver*> outputDrivers;
     vector<NullOutput*> nullOutputs;
     vector<NullInput*> nullInputs;
     vector<LED*> ledOutputs;

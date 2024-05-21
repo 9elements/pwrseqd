@@ -59,21 +59,18 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
         {
             GpioOutput* g = new GpioOutput(&IoOutput, &cfg.Outputs[i], prov);
             this->gpioOutputs.push_back(g);
-            this->outputDrivers.push_back(g);
             log_debug("using gpio output " + cfg.Outputs[i].SignalName);
         }
         else if (cfg.Outputs[i].OutputType == OUTPUT_TYPE_LED)
         {
             LED* l = new LED(&IoOutput, dbus, &cfg.Outputs[i], prov);
             this->ledOutputs.push_back(l);
-            this->outputDrivers.push_back(l);
             log_debug("using LED output " + cfg.Outputs[i].SignalName);
         }
         else if (cfg.Outputs[i].OutputType == OUTPUT_TYPE_NULL)
         {
             NullOutput* n = new NullOutput(&IoOutput, &cfg.Outputs[i], prov);
             this->nullOutputs.push_back(n);
-            this->outputDrivers.push_back(n);
             log_debug("using null output " + cfg.Outputs[i].SignalName);
         }
     }
@@ -84,7 +81,6 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
             new VoltageRegulator(io, IoOutput, &cfg.Regulators[i], prov, "",
                 [this](VoltageRegulator* vr) { this->CatchVoltageRegulatorError(vr); });
         this->voltageRegulators.push_back(v);
-        this->outputDrivers.push_back(v);
         prov.AddDriver(v);
         log_debug("using voltage regulator " + cfg.Regulators[i].Name);
     }

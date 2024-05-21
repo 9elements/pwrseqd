@@ -20,11 +20,6 @@ The following output drivers are implemented:
 An input driver must fetch the hardware state and call the `SetLevel()` method
 of the connected signal. The method can be called asynchronously.
 
-An output driver must apply the current signal level only at call of the`Apply()`
-method. All `Apply()` methods are called at the same time to prevent glitches.
-
-An output driver implements the abstract calls `OutputDriver`.
-
 **GPIO driver:**
 The GPIO driver requires the GPIO pin to be present in the current system.
 A failure of finding the pin will terminate the application.

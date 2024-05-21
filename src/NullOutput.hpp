@@ -11,7 +11,7 @@ using namespace std;
 class SignalProvider;
 struct Config;
 
-class NullOutput : SignalReceiver, public OutputDriver
+class NullOutput : SignalReceiver
 {
   public:
     // Name returns the instance name
