@@ -21,7 +21,7 @@ class GpioOutput : SignalReceiver
     string Name(void);
 
     // Apply sets the new output state
-    void Apply(void);
+    void Apply(const int newLevel);
 
     // SignalReceiver's Update method for signal changes
     void Update(void);
@@ -34,7 +34,6 @@ class GpioOutput : SignalReceiver
   private:
     boost::asio::io_service *ioOutput;
     int level;
-    int newLevel;
     bool activeLow;
     gpiod::line line;
     gpiod::chip chip;

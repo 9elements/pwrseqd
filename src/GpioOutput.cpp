@@ -12,11 +12,11 @@ string GpioOutput::Name(void)
     return this->chip.name() + "/" + this->line.name();
 }
 
-void GpioOutput::Apply(void)
+void GpioOutput::Apply(const int newLevel)
 {
-    if (this->newLevel != this->level)
+    if (newLevel != this->level)
     {
-        this->level = this->newLevel;
+        this->level = newLevel;
         log_debug("output gpio " + this->Name() + " changed to " +
             ((this->level ^ this->activeLow) ? "1" : "0"));
         this->line.set_value(this->level);
@@ -25,15 +25,15 @@ void GpioOutput::Apply(void)
 
 void GpioOutput::Update(void)
 {
-    this->newLevel = this->in->GetLevel() ? 1 : 0;
+    const int newLevel = this->in->GetLevel() ? 1 : 0;
 
-    ioOutput->post([this]() {
-        this->Apply();
+    ioOutput->post([this, newLevel]() {
+        this->Apply(newLevel);
     });
 }
 
 GpioOutput::GpioOutput(boost::asio::io_service *IoOutput, struct ConfigOutput* cfg, SignalProvider& prov) :
-        ioOutput(IoOutput), level(-1), newLevel(-1), activeLow(cfg->ActiveLow)
+        ioOutput(IoOutput), level(-1), activeLow(cfg->ActiveLow)
 {
     ::std::bitset<32> flags = 0;
 
