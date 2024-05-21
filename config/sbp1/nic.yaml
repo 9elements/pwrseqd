@@ -140,7 +140,6 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU0_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "PLTRST"
       out:
         name: "FM_NIC1_PERST0"
   - FM_NIC1_PERST1_Unit:
@@ -159,7 +158,6 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU1_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "PLTRST"
       out:
         name: "FM_NIC1_PERST1"
   - FM_NIC1_PERST2_Unit:
@@ -178,7 +176,6 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU2_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "PLTRST"
       out:
         name: "FM_NIC1_PERST2"
   - FM_NIC1_PERST3_Unit:
@@ -197,7 +194,6 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU3_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "PLTRST"
       out:
         name: "FM_NIC1_PERST3"
   - FM_NIC2_PERST0_Unit:
@@ -216,7 +212,6 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU0_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "PLTRST"
       out:
         name: "FM_NIC2_PERST0"
   - FM_NIC2_PERST1_Unit:
@@ -235,7 +230,6 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU1_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "PLTRST"
       out:
         name: "FM_NIC2_PERST1"
   - FM_NIC2_PERST2_Unit:
@@ -254,7 +248,6 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU2_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "PLTRST"
       out:
         name: "FM_NIC2_PERST2"
   - FM_NIC2_PERST3_Unit:
@@ -273,7 +266,6 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU3_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "PLTRST"
       out:
         name: "FM_NIC2_PERST3"
 
