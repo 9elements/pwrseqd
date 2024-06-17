@@ -19,7 +19,18 @@ void GpioOutput::Apply(const int newLevel)
         this->level = newLevel;
         log_debug("output gpio " + this->Name() + " changed to " +
             ((this->level ^ this->activeLow) ? "1" : "0"));
+
         this->line.set_value(this->level);
+
+        if (this->line.get_value() != newLevel) {
+            this->line.update();
+            usleep(100000);
+            if (this->line.get_value() != newLevel) {
+                log_debug("GPIOSET_ERR: output gpio " + this->Name());
+                log_sel("Failed to set gpio " + this->Name() + " to " + ((newLevel ^ this->activeLow) ? "1" : "0"),
+                        "/xyz/openbmc_project/inventory/system/chassis/motherboard", true);
+            }
+        }
     }
 }
 
