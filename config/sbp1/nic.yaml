@@ -384,6 +384,22 @@ power_sequencer:
       out:
         name: "IRQ_NIC1_OVT_WRNG_On"
 
+  - FM_NIC1_FLASH_PRSNT_Unit:
+      in:
+        and:
+          - name: "FM_NIC1_FLASH_PRSNT_hold"
+          - name: "p3v3_nic_PowerGood"
+      out:
+        name: "FM_NIC1_FLASH_PRSNT"
+
+  - FM_NIC2_FLASH_PRSNT_Unit:
+      in:
+        and:
+          - name: "FM_NIC2_FLASH_PRSNT_hold"
+          - name: "p3v3_nic_PowerGood"
+      out:
+        name: "FM_NIC2_FLASH_PRSNT"
+
 regulators:
   - name: "p3v3_nic"
   - name: "pvcore_nic1"
@@ -517,7 +533,7 @@ floating_signals:
   - "IRQ_NIC1_OVT_WRNG_Enabled"
 
 immutables:
-  - signal_name: "FM_NIC1_FLASH_PRSNT"
+  - signal_name: "FM_NIC1_FLASH_PRSNT_hold"
     value: true
-  - signal_name: "FM_NIC2_FLASH_PRSNT"
+  - signal_name: "FM_NIC2_FLASH_PRSNT_hold"
     value: true
