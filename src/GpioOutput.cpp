@@ -25,6 +25,8 @@ void GpioOutput::Apply(const int newLevel)
 
 void GpioOutput::Update(void)
 {
+    if (this->in->GetLevel() < 0)
+        return;
     const int newLevel = this->in->GetLevel() ? 1 : 0;
 
     ioOutput->post([this, newLevel]() {

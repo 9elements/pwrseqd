@@ -22,6 +22,8 @@ void LED::Apply(void)
 
 void LED::Update(void)
 {
+    if (this->in->GetLevel() < 0)
+        return;
     this->newLevel = this->in->GetLevel() ^ this->activeLow;
     ioOutput->post([this]() {
         this->Apply();

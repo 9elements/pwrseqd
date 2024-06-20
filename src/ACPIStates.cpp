@@ -92,6 +92,9 @@ enum ACPILevel ACPIStates::GetCurrent(void)
     int levels = 0;
     for (auto it : this->outputs)
     {
+        if (it.second->GetLevel() < 0)
+            return ACPI_G3;
+
         if (it.second->GetLevel())
             levels++;
 

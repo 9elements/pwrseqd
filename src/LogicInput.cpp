@@ -13,7 +13,10 @@ using namespace std;
 // GetLevel is called by Logic when gathering it's new state
 bool LogicInput::GetLevel()
 {
-    if (this->inputStableUsec == 0)
+    if (this->input->GetLevel() < 0)
+    {
+        this->level = 0;
+    } else if (this->inputStableUsec == 0)
     {
         this->level = this->input->GetLevel() ^ this->invert;
     }

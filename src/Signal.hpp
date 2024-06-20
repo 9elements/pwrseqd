@@ -37,7 +37,7 @@ class Signal
     Signal(SignalProvider* parent, string name);
 
     // GetLevel returns the internal active state
-    bool GetLevel();
+    int8_t GetLevel();
 
     // SetLevel sets the internal active state.
     // It can be called by interrupt handlers.
@@ -77,7 +77,7 @@ class Signal
   private:
     SignalProvider* parent;
     // Internal state of the signal. Can only be modified by a call to Apply().
-    bool active;
+    int8_t active;
     bool dirty;
     string name;
 

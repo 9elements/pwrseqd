@@ -23,7 +23,7 @@ bool Logic::GetLevelOrInputs(void)
 
     for (auto it : this->orInputs)
     {
-        if (it->GetLevel())
+        if (it->GetLevel() > 0)
         {
             intermediate = true;
             break;
@@ -41,7 +41,7 @@ bool Logic::GetLevelAndInputs(void)
 
     for (auto it : this->andInputs)
     {
-        if (!it->GetLevel())
+        if (it->GetLevel() < 1)
         {
             intermediate = false;
             break;

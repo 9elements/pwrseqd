@@ -20,10 +20,13 @@ Signal::Signal(SignalProvider* parent, string name) :
     lastLevelChangeTime{steady_clock::now()}
 {
     parent->SetDirty(this);
+    this->active = -1;
+    log_debug("Signal::Signal " + this->Name() + " val: " + to_string(this->GetLevel()));
+
 }
 
 // GetLevel returns the internal active state
-bool Signal::GetLevel()
+int8_t Signal::GetLevel()
 {
     boost::lock_guard<boost::mutex> guard(this->lock);
 
