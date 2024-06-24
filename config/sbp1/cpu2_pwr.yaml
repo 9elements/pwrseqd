@@ -13,6 +13,7 @@ inputs:
       THERMTRIP_N is set on over tempertature condition or internal FIVR fault.
     gate_input: true
     gated_idle_high: true
+    alert: true
 
   - name: "H_LVT3_CPU2_MEMTRIP_OUT_N"
     signal_name: "H_LVT3_CPU2_MEMTRIP"
@@ -21,6 +22,7 @@ inputs:
     pullup: true
     gate_input: true
     gated_idle_high: true
+    alert: true
 
   - name: "system/chassis/motherboard/cpu2"
     type: "dbus_presence"
