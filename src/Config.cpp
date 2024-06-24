@@ -157,6 +157,7 @@ struct convert<ConfigInput>
         c.GatedIdleHigh = false;
         c.GatedIdleLow = false;
         c.GatedOutputODLow = false;
+        c.alert = false;
         for (auto it : node)
         {
             string key = it.first.as<string>();
@@ -208,6 +209,10 @@ struct convert<ConfigInput>
             else if (key == "gated_output_od_low")
             {
                 c.GatedOutputODLow = it.second.as<bool>();
+            }
+            else if (key == "alert")
+            {
+                c.alert = it.second.as<bool>();
             }
             else if (key == "type")
             {

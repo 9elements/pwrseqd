@@ -25,10 +25,16 @@ void GpioInput::OnEvent(gpiod::line_event line_event)
     bool high = line_event.event_type == gpiod::line_event::RISING_EDGE;
     high ^= this->ActiveLow;
 
-    log_debug("input gpio " + this->Name() + " changed to " + (high ? "1" : "0"));
+    log_debug("input gpio " + this->Name() + " changed to " + (high ? "1" : "0") + " activelow: " + to_string(this->ActiveLow));
 
     this->out->SetLevel(line_event.event_type ==
                         gpiod::line_event::RISING_EDGE);
+
+    if (this->alert && high) {
+        log_debug("ALERT: " + this->line.name() + " asserted");
+        log_sel("ALERT " + this->line.name() + " asserted",
+                "/xyz/openbmc_project/inventory/system/chassis/motherboard", true);
+    }
 }
 
 // Acquire adds the interrupt listener to the GPIO and releases it
@@ -289,6 +295,10 @@ GpioInput::GpioInput(boost::asio::io_context& io,
             }
         }
     }
+    
+    this->alert = cfg->alert;
+    if (this->alert)
+        log_debug("ALERT on:" + cfg->Name);
 }
 
 vector<Signal*> GpioInput::Signals(void)

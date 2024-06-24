@@ -53,6 +53,7 @@ class GpioInput : SignalReceiver, public SignalDriver
     bool GatedIdleLow;
     bool GatedOutputODLow;
     bool gated;
+    bool alert;
 
     // Signal out is set to the GPIO input value if not gated
     Signal* out;

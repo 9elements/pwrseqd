@@ -109,6 +109,9 @@ struct ConfigInput
     string Description;
     // Type specifies the input backend to use
     enum ConfigInputType InputType;
+
+    // Indicate to report alert when asserted
+    bool alert;
 };
 
 struct ConfigOutput
