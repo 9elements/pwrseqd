@@ -135,6 +135,11 @@ struct ConfigOutput
     string Description;
     // Type specifies the output backend to use
     enum ConfigOutputType OutputType;
+
+    // When set indicate to ignore doing gpio out check.
+    // This is perticularly needed when gpio is 3.3V open drain
+    // but signal is pullup to 1V which always read back as 0V or logic low.
+    bool DisableGpioOutCheck;
 };
 
 struct ConfigRegulator

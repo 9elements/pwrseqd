@@ -35,6 +35,7 @@ struct convert<ConfigOutput>
         c.PullUp = false;
         c.PullDown = false;
         c.DisableBias = false;
+        c.DisableGpioOutCheck = false;
         for (auto it : node)
         {
             string key = it.first.as<string>();
@@ -78,6 +79,10 @@ struct convert<ConfigOutput>
             else if (key == "disablebias")
             {
                 c.DisableBias = it.second.as<bool>();
+            }
+            else if (key == "disable_gpioout_check")
+            {
+                c.DisableGpioOutCheck = it.second.as<bool>();
             }
             else if (key == "type")
             {

@@ -76,6 +76,7 @@ outputs:
     type: "gpio"
     active_low: true
     open_drain: true
+    disable_gpioout_check: true
     description: >
       Signal from BMC to PCH indicating an overheat condition. PCH will go to S5
       without following normal transition flow.
@@ -86,6 +87,7 @@ outputs:
     type: "gpio"
     signal_name: "MEMTRIP"
     open_drain: true
+    disable_gpioout_check: true
     active_low: true
     description: >
       Signal from BMC to PCH indicating a memory overheat condition. PCH will go to S5

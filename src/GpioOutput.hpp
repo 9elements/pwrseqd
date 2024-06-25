@@ -35,6 +35,7 @@ class GpioOutput : SignalReceiver
     boost::asio::io_service *ioOutput;
     int level;
     bool activeLow;
+    bool DisableGpioOutCheck;
     gpiod::line line;
     gpiod::chip chip;
     Signal* in;

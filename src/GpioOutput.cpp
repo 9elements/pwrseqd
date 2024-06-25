@@ -22,7 +22,7 @@ void GpioOutput::Apply(const int newLevel)
 
         this->line.set_value(this->level);
 
-        if (this->line.get_value() != newLevel) {
+        if (!this->DisableGpioOutCheck && this->line.get_value() != newLevel) {
             this->line.update();
             usleep(100000);
             if (this->line.get_value() != newLevel) {
@@ -101,6 +101,8 @@ GpioOutput::GpioOutput(boost::asio::io_service *IoOutput, struct ConfigOutput* c
         throw runtime_error("Failed to request gpio line " + cfg->GpioChipName +
                             " " + cfg->Name + ": " + e.what());
     }
+
+    this->DisableGpioOutCheck = cfg->DisableGpioOutCheck;
 
     log_debug("using gpio " + this->Name() + " as output ");
 }
