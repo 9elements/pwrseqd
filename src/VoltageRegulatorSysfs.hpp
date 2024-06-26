@@ -111,7 +111,7 @@ class VoltageRegulatorSysfs
     void SetState(const enum RegulatorState);
 
     string name;
-
+    bool isDummy;
     path sysfsRoot;
     path sysfsConsumerRoot;
 };

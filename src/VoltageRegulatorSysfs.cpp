@@ -56,6 +56,9 @@ string VoltageRegulatorSysfs::StateToString(const enum RegulatorState state)
 
 void VoltageRegulatorSysfs::SetState(const enum RegulatorState state)
 {
+    if (this->isDummy)
+        return;
+
     ofstream outfile(sysfsConsumerRoot / path("state"));
     if (state == ENABLED)
         log_debug("enabled regulator " + this->name);
@@ -69,6 +72,11 @@ void VoltageRegulatorSysfs::SetState(const enum RegulatorState state)
 string VoltageRegulatorSysfs::ReadStatus()
 {
     string line;
+
+    if (this->isDummy)
+        return "off";
+
+
     ifstream infile(sysfsRoot / path("status"));
     getline(infile, line);
     infile.close();
@@ -116,6 +124,10 @@ enum RegulatorStatus VoltageRegulatorSysfs::DecodeStatus(void)
 string VoltageRegulatorSysfs::ReadState()
 {
     string line;
+
+    if (this->isDummy)
+        return "disabled";
+
     ifstream infile(sysfsRoot / path("state"));
     getline(infile, line);
     infile.close();
@@ -126,6 +138,10 @@ string VoltageRegulatorSysfs::ReadState()
 string VoltageRegulatorSysfs::ReadConsumerState()
 {
     string line;
+
+    if (this->isDummy)
+        return "disabled";
+
     ifstream infile(sysfsConsumerRoot / path("state"));
     getline(infile, line);
     infile.close();
@@ -234,12 +250,17 @@ VoltageRegulatorSysfs::VoltageRegulatorSysfs(struct ConfigRegulator* cfg, string
     consumerRoot = SysFsConsumerDir(root);
     if (consumerRoot == "")
     {
-        throw runtime_error("reg-userspace-consumer for regulator " +
-                            cfg->Name + " not found in sysfs");
+         log_debug("reg-userspace-consumer for regulator " +
+                            cfg->Name + " not found in sysfs.");
+        if (cfg->FallBackDummy) {
+            log_debug("Fallback to dummy regulator for: " + cfg->Name);
+            this->isDummy = true;
+        }
+    } else {
+        log_debug("Consumer sysfs path of regulator " + cfg->Name + " is " +
+                  consumerRoot);
+        this->sysfsConsumerRoot = path(consumerRoot);
     }
-    log_debug("Consumer sysfs path of regulator " + cfg->Name + " is " +
-              consumerRoot);
-    this->sysfsConsumerRoot = path(consumerRoot);
 }
 
 VoltageRegulatorSysfs::~VoltageRegulatorSysfs()

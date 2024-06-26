@@ -504,6 +504,9 @@ struct convert<ConfigRegulator>
             } else if (key == "timeout_usec")
             {
                 c.TimeoutUsec = it.second.as<unsigned long>();
+            } else if (key == "fallback_dummy")
+            {
+                c.FallBackDummy = it.second.as<bool>();
             }
         }
         if (c.Name == "")

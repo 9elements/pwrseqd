@@ -150,6 +150,10 @@ struct ConfigRegulator
     string Description;
     // Optional Timeout in microseconds to wait for regulator state to change
     unsigned long TimeoutUsec;
+
+    // Optional regulator failure failsafe fallback.
+    // This is to allow booting host when non-critical regulator had failed.
+    bool FallBackDummy;
 };
 
 struct ConfigImmutable
