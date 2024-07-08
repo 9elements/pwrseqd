@@ -17,6 +17,7 @@ class GpioInput;
 class NullOutput;
 class LogicInput;
 class VoltageRegulator;
+class NullVoltageRegulator;
 class ACPIStates;
 class LED;
 
@@ -71,6 +72,7 @@ class Signal
     friend NullOutput;
     friend LogicInput;
     friend VoltageRegulator;
+    friend NullVoltageRegulator;
     friend ACPIStates;
     friend LED;
 

@@ -150,6 +150,10 @@ struct ConfigRegulator
     string Description;
     // Optional Timeout in microseconds to wait for regulator state to change
     unsigned long TimeoutUsec;
+    // Use dummy regulator instead of real regulator
+    bool IsDummy;
+    // Allow regulator to be missing. A dummy regulator will be spawned instead.
+    bool AllowMissing;
 };
 
 struct ConfigImmutable

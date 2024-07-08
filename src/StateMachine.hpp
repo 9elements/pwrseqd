@@ -13,6 +13,7 @@
 #include "SignalProvider.hpp"
 #include "Validate.hpp"
 #include "VoltageRegulator.hpp"
+#include "NullVoltageRegulator.hpp"
 
 #include <boost/asio.hpp>
 #include <boost/asio/io_service.hpp>

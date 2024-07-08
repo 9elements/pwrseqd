@@ -77,12 +77,35 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
 
     for (int i = 0; i < cfg.Regulators.size(); i++)
     {
-        VoltageRegulator* v =
-            new VoltageRegulator(io, IoOutput, &cfg.Regulators[i], prov, "",
-                [this](VoltageRegulator* vr) { this->CatchVoltageRegulatorError(vr); });
-        this->voltageRegulators.push_back(v);
-        prov.AddDriver(v);
-        log_debug("using voltage regulator " + cfg.Regulators[i].Name);
+        if (cfg.Regulators[i].IsDummy)
+        {
+            NullVoltageRegulator* v =
+                new NullVoltageRegulator(io, IoOutput, &cfg.Regulators[i], prov);
+            prov.AddDriver(v);
+            log_debug("using dummy voltage regulator " + cfg.Regulators[i].Name);
+        } else{
+            try {
+                VoltageRegulator* v =
+                    new VoltageRegulator(io, IoOutput, &cfg.Regulators[i], prov, "",
+                        [this](VoltageRegulator* vr) { this->CatchVoltageRegulatorError(vr); });
+                this->voltageRegulators.push_back(v);
+                prov.AddDriver(v);
+            } catch (const std::exception& ex) {
+                if (cfg.Regulators[i].AllowMissing) {
+                    log_err("Failed to use regulator " + cfg.Regulators[i].Name + " : " + ex.what());
+                    log_sel("Failed to use regulator " + cfg.Regulators[i].Name + " : " + ex.what() + ". Using dummy regulator.",
+                            "/xyz/openbmc_project/inventory/system/chassis/motherboard", false);
+                    NullVoltageRegulator* v =
+                        new NullVoltageRegulator(io, IoOutput, &cfg.Regulators[i], prov);
+                    prov.AddDriver(v);
+                    log_debug("using dummy voltage regulator " + cfg.Regulators[i].Name);
+                } else {
+                    log_sel("Failed to use regulator " + cfg.Regulators[i].Name + " : " + ex.what(),
+                            "/xyz/openbmc_project/inventory/system/chassis/motherboard", false);
+                    throw;
+                }
+            }
+        }
     }
 
     this->sp = &prov;

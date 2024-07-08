@@ -488,7 +488,9 @@ struct convert<ConfigRegulator>
         }
 
         c.Name = "";
-	c.TimeoutUsec = 0;
+        c.TimeoutUsec = 0;
+        c.IsDummy = false;
+        c.AllowMissing = false;
 
         for (auto it : node)
         {
@@ -497,6 +499,14 @@ struct convert<ConfigRegulator>
             if (key == "name")
             {
                 c.Name = it.second.as<string>();
+            }
+            else if (key == "dummy")
+            {
+                c.IsDummy = it.second.as<bool>();
+            }
+            else if (key == "allow_missing")
+            {
+                c.AllowMissing = it.second.as<bool>();
             }
             else if (key == "description")
             {

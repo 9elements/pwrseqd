@@ -77,7 +77,7 @@ include_directories(src/ ${YAML_CPP_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${GPIOD_I
 
 add_executable(${CMAKE_PROJECT_NAME} src/Main.cpp src/Logging.cpp src/Config.cpp src/StateMachine.cpp src/GpioInput.cpp src/GpioOutput.cpp src/Signal.cpp
 	src/SignalProvider.cpp src/Logic.cpp src/LogicInput.cpp src/NullInput.cpp src/NullOutput.cpp src/VoltageRegulator.cpp src/LED.cpp
-	src/ACPIStates.cpp src/Dbus.cpp src/InventoryItemPresence.cpp src/VoltageRegulatorSysfs.cpp src/Netlink.cpp)
+	src/ACPIStates.cpp src/Dbus.cpp src/InventoryItemPresence.cpp src/VoltageRegulatorSysfs.cpp src/Netlink.cpp src/NullVoltageRegulator.cpp)
 
 target_link_libraries(${CMAKE_PROJECT_NAME} yaml-cpp )
 target_link_libraries(${CMAKE_PROJECT_NAME} ${GPIODCXX_LIBRARY})
