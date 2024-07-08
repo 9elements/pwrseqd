@@ -100,6 +100,8 @@ class VoltageRegulator :
     NetlinkRegulatorEvents *netlink;
 
     function<void(VoltageRegulator*)> errorCallback;
+    // A fault will not invoke errorCallback
+    bool noErrorCallback;
 
 #ifdef WITH_GOOGLE_TEST
     FRIEND_TEST(Regulator, EventParsing);

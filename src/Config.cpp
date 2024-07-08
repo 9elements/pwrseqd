@@ -491,6 +491,7 @@ struct convert<ConfigRegulator>
         c.TimeoutUsec = 0;
         c.IsDummy = false;
         c.AllowMissing = false;
+        c.AllowFaulting = false;
 
         for (auto it : node)
         {
@@ -507,6 +508,10 @@ struct convert<ConfigRegulator>
             else if (key == "allow_missing")
             {
                 c.AllowMissing = it.second.as<bool>();
+            }
+            else if (key == "allow_faulting")
+            {
+                c.AllowFaulting = it.second.as<bool>();
             }
             else if (key == "description")
             {

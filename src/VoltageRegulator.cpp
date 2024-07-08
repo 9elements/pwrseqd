@@ -175,8 +175,6 @@ void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
             log_sel(this->name + ": Got unexpected regulator status! Requested no state change, got status: " + this->control.StatusToString(status),
                 "/xyz/openbmc_project/inventory/system/chassis/motherboard", true);
         }
-        // Attempting to change it back is pointless.
-        // The power sequencing logic will likely shutdown the system anyways.
     }
     this->statusShadow = status;
 
@@ -190,8 +188,10 @@ void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
         else if (status == ERROR)
         {
             this->powergood->SetLevel(false);
-            this->fault->SetLevel(true);
-            if (errorCallback) {
+            if (!this->noErrorCallback) {
+                this->fault->SetLevel(true);
+            }
+            if (this->errorCallback && !this->noErrorCallback) {
                 this->errorCallback (this);
             }
             // The state is not updated here to prevent oscillations.
@@ -261,7 +261,7 @@ VoltageRegulator::VoltageRegulator(boost::asio::io_context& io,
     io(&io), ioOutput(&IoOutput), statusShadow(NOCHANGE), name(cfg->Name),
     stateChangeTimeoutUsec(cfg->TimeoutUsec),
     timerStateCheck(IoOutput), pendingLevelChange(false), pendingNewLevel(DISABLED), timerPoll(IoOutput),
-    control(cfg, root), errorCallback(lamda)
+    control(cfg, root), errorCallback(lamda), noErrorCallback(cfg->AllowFaulting)
 {
     this->in = prov.FindOrAdd(cfg->Name + "_On");
     this->in->AddReceiver(this);

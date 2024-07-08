@@ -154,6 +154,8 @@ struct ConfigRegulator
     bool IsDummy;
     // Allow regulator to be missing. A dummy regulator will be spawned instead.
     bool AllowMissing;
+    // Allow regulator to fault. A fault will not shut down the system to ACPI G3.
+    bool AllowFaulting;
 };
 
 struct ConfigImmutable
