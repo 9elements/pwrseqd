@@ -131,10 +131,15 @@ power_sequencer:
 
 regulators:
   - name: "bcm1"
+    allow_missing: true
   - name: "bcm2"
+    allow_missing: true
   - name: "bcm3"
+    allow_missing: true
   - name: "p3v3_m2_ssd1"
+    allow_missing: true
   - name: "p3v3_m2_ssd2"
+    allow_missing: true
 
 floating_signals:
   - "bcm1_PowerGood"
