@@ -188,9 +188,7 @@ void VoltageRegulator::ApplyStatus(enum RegulatorStatus status)
         else if (status == ERROR)
         {
             this->powergood->SetLevel(false);
-            if (!this->noErrorCallback) {
-                this->fault->SetLevel(true);
-            }
+            this->fault->SetLevel(true);
             if (this->errorCallback && !this->noErrorCallback) {
                 this->errorCallback (this);
             }
