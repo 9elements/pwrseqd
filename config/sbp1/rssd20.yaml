@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD20_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD20_PRESENT"
+          - name: "rssd20_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd20_3v3_On"
+  - RSSD20_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD20_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd20_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd20_12v_On"
+  - RSSD20_Fault_Unit:
+      in:
+        and:
+          - name: "rssd20_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD20_PRESENT"
+        or:
+          - name: "rssd20_3v3_Fault"
+          - name: "rssd20_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd20_FaultKeepOff"
+  - RSSD20_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD20_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd20_12v_Fault"
+            invert: true
+          - name: "rssd20_3v3_Fault"
+            invert: true
+          - name: "rssd20_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd20_12v_PowerGood"
+          - name: "rssd20_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd20_3v3_PowerGood"
+      out:
+        name: "RSSD20_POWER_EN"
+  - RSSD20_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD20_POWER_EN"
+            invert: true
+          - name: "RSSD20_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD20_SMBRST"
+  - RSSD20_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD20_SMBRST"
+          - name: "RSSD20_PRESENT"
+            invert: true
+          - name: "RSSD20_POWER_EN"
+            invert: true
+          - name: "RSSD20_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR1_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD20_RESET"
+  - RSSD20_LED_Unit:
+      in:
+        and:
+          - name: "RSSD20_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD20"
+regulators:
+  - name: "rssd20_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd20_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd20"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD20_PRESENT"
+outputs:
+  - name: "led_rssd20_power"
+    type: "led"
+    signal_name: "LED_RSSD20"
+  - name: "RSSD20_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD20_RESET"
+    active_low: true
+  - name: "RSSD20_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD20_POWER_EN"
+  - name: "RSSD20_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD20_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd20_3v3_Enabled"
+  - "rssd20_12v_Enabled"
+

@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD14_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD14_PRESENT"
+          - name: "rssd14_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd14_3v3_On"
+  - RSSD14_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD14_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd14_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd14_12v_On"
+  - RSSD14_Fault_Unit:
+      in:
+        and:
+          - name: "rssd14_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD14_PRESENT"
+        or:
+          - name: "rssd14_3v3_Fault"
+          - name: "rssd14_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd14_FaultKeepOff"
+  - RSSD14_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD14_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd14_12v_Fault"
+            invert: true
+          - name: "rssd14_3v3_Fault"
+            invert: true
+          - name: "rssd14_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd14_12v_PowerGood"
+          - name: "rssd14_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd14_3v3_PowerGood"
+      out:
+        name: "RSSD14_POWER_EN"
+  - RSSD14_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD14_POWER_EN"
+            invert: true
+          - name: "RSSD14_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD14_SMBRST"
+  - RSSD14_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD14_SMBRST"
+          - name: "RSSD14_PRESENT"
+            invert: true
+          - name: "RSSD14_POWER_EN"
+            invert: true
+          - name: "RSSD14_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR0_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD14_RESET"
+  - RSSD14_LED_Unit:
+      in:
+        and:
+          - name: "RSSD14_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD14"
+regulators:
+  - name: "rssd14_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd14_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd14"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD14_PRESENT"
+outputs:
+  - name: "led_rssd14_power"
+    type: "led"
+    signal_name: "LED_RSSD14"
+  - name: "RSSD14_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD14_RESET"
+    active_low: true
+  - name: "RSSD14_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD14_POWER_EN"
+  - name: "RSSD14_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD14_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd14_3v3_Enabled"
+  - "rssd14_12v_Enabled"
+

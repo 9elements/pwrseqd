@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD19_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD19_PRESENT"
+          - name: "rssd19_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd19_3v3_On"
+  - RSSD19_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD19_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd19_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd19_12v_On"
+  - RSSD19_Fault_Unit:
+      in:
+        and:
+          - name: "rssd19_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD19_PRESENT"
+        or:
+          - name: "rssd19_3v3_Fault"
+          - name: "rssd19_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd19_FaultKeepOff"
+  - RSSD19_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD19_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd19_12v_Fault"
+            invert: true
+          - name: "rssd19_3v3_Fault"
+            invert: true
+          - name: "rssd19_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd19_12v_PowerGood"
+          - name: "rssd19_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd19_3v3_PowerGood"
+      out:
+        name: "RSSD19_POWER_EN"
+  - RSSD19_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD19_POWER_EN"
+            invert: true
+          - name: "RSSD19_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD19_SMBRST"
+  - RSSD19_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD19_SMBRST"
+          - name: "RSSD19_PRESENT"
+            invert: true
+          - name: "RSSD19_POWER_EN"
+            invert: true
+          - name: "RSSD19_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR1_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD19_RESET"
+  - RSSD19_LED_Unit:
+      in:
+        and:
+          - name: "RSSD19_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD19"
+regulators:
+  - name: "rssd19_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd19_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd19"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD19_PRESENT"
+outputs:
+  - name: "led_rssd19_power"
+    type: "led"
+    signal_name: "LED_RSSD19"
+  - name: "RSSD19_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD19_RESET"
+    active_low: true
+  - name: "RSSD19_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD19_POWER_EN"
+  - name: "RSSD19_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD19_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd19_3v3_Enabled"
+  - "rssd19_12v_Enabled"
+

@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD22_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD22_PRESENT"
+          - name: "rssd22_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd22_3v3_On"
+  - RSSD22_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD22_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd22_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd22_12v_On"
+  - RSSD22_Fault_Unit:
+      in:
+        and:
+          - name: "rssd22_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD22_PRESENT"
+        or:
+          - name: "rssd22_3v3_Fault"
+          - name: "rssd22_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd22_FaultKeepOff"
+  - RSSD22_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD22_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd22_12v_Fault"
+            invert: true
+          - name: "rssd22_3v3_Fault"
+            invert: true
+          - name: "rssd22_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd22_12v_PowerGood"
+          - name: "rssd22_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd22_3v3_PowerGood"
+      out:
+        name: "RSSD22_POWER_EN"
+  - RSSD22_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD22_POWER_EN"
+            invert: true
+          - name: "RSSD22_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD22_SMBRST"
+  - RSSD22_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD22_SMBRST"
+          - name: "RSSD22_PRESENT"
+            invert: true
+          - name: "RSSD22_POWER_EN"
+            invert: true
+          - name: "RSSD22_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR1_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD22_RESET"
+  - RSSD22_LED_Unit:
+      in:
+        and:
+          - name: "RSSD22_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD22"
+regulators:
+  - name: "rssd22_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd22_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd22"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD22_PRESENT"
+outputs:
+  - name: "led_rssd22_power"
+    type: "led"
+    signal_name: "LED_RSSD22"
+  - name: "RSSD22_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD22_RESET"
+    active_low: true
+  - name: "RSSD22_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD22_POWER_EN"
+  - name: "RSSD22_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD22_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd22_3v3_Enabled"
+  - "rssd22_12v_Enabled"
+

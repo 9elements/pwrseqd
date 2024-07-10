@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD28_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD28_PRESENT"
+          - name: "rssd28_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd28_3v3_On"
+  - RSSD28_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD28_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd28_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd28_12v_On"
+  - RSSD28_Fault_Unit:
+      in:
+        and:
+          - name: "rssd28_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD28_PRESENT"
+        or:
+          - name: "rssd28_3v3_Fault"
+          - name: "rssd28_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd28_FaultKeepOff"
+  - RSSD28_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD28_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd28_12v_Fault"
+            invert: true
+          - name: "rssd28_3v3_Fault"
+            invert: true
+          - name: "rssd28_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd28_12v_PowerGood"
+          - name: "rssd28_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd28_3v3_PowerGood"
+      out:
+        name: "RSSD28_POWER_EN"
+  - RSSD28_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD28_POWER_EN"
+            invert: true
+          - name: "RSSD28_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD28_SMBRST"
+  - RSSD28_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD28_SMBRST"
+          - name: "RSSD28_PRESENT"
+            invert: true
+          - name: "RSSD28_POWER_EN"
+            invert: true
+          - name: "RSSD28_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR1_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD28_RESET"
+  - RSSD28_LED_Unit:
+      in:
+        and:
+          - name: "RSSD28_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD28"
+regulators:
+  - name: "rssd28_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd28_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd28"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD28_PRESENT"
+outputs:
+  - name: "led_rssd28_power"
+    type: "led"
+    signal_name: "LED_RSSD28"
+  - name: "RSSD28_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD28_RESET"
+    active_low: true
+  - name: "RSSD28_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD28_POWER_EN"
+  - name: "RSSD28_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD28_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd28_3v3_Enabled"
+  - "rssd28_12v_Enabled"
+

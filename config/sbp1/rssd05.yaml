@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD05_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD05_PRESENT"
+          - name: "rssd05_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd05_3v3_On"
+  - RSSD05_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD05_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd05_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd05_12v_On"
+  - RSSD05_Fault_Unit:
+      in:
+        and:
+          - name: "rssd05_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD05_PRESENT"
+        or:
+          - name: "rssd05_3v3_Fault"
+          - name: "rssd05_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd05_FaultKeepOff"
+  - RSSD05_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD05_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd05_12v_Fault"
+            invert: true
+          - name: "rssd05_3v3_Fault"
+            invert: true
+          - name: "rssd05_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd05_12v_PowerGood"
+          - name: "rssd05_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd05_3v3_PowerGood"
+      out:
+        name: "RSSD05_POWER_EN"
+  - RSSD05_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD05_POWER_EN"
+            invert: true
+          - name: "RSSD05_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD05_SMBRST"
+  - RSSD05_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD05_SMBRST"
+          - name: "RSSD05_PRESENT"
+            invert: true
+          - name: "RSSD05_POWER_EN"
+            invert: true
+          - name: "RSSD05_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR0_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU3_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD05_RESET"
+  - RSSD05_LED_Unit:
+      in:
+        and:
+          - name: "RSSD05_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD05"
+regulators:
+  - name: "rssd05_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd05_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd05"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD05_PRESENT"
+outputs:
+  - name: "led_rssd05_power"
+    type: "led"
+    signal_name: "LED_RSSD05"
+  - name: "RSSD05_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD05_RESET"
+    active_low: true
+  - name: "RSSD05_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD05_POWER_EN"
+  - name: "RSSD05_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD05_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd05_3v3_Enabled"
+  - "rssd05_12v_Enabled"
+

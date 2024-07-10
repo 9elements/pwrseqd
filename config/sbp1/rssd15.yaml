@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD15_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD15_PRESENT"
+          - name: "rssd15_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd15_3v3_On"
+  - RSSD15_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD15_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd15_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd15_12v_On"
+  - RSSD15_Fault_Unit:
+      in:
+        and:
+          - name: "rssd15_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD15_PRESENT"
+        or:
+          - name: "rssd15_3v3_Fault"
+          - name: "rssd15_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd15_FaultKeepOff"
+  - RSSD15_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD15_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd15_12v_Fault"
+            invert: true
+          - name: "rssd15_3v3_Fault"
+            invert: true
+          - name: "rssd15_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd15_12v_PowerGood"
+          - name: "rssd15_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd15_3v3_PowerGood"
+      out:
+        name: "RSSD15_POWER_EN"
+  - RSSD15_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD15_POWER_EN"
+            invert: true
+          - name: "RSSD15_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD15_SMBRST"
+  - RSSD15_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD15_SMBRST"
+          - name: "RSSD15_PRESENT"
+            invert: true
+          - name: "RSSD15_POWER_EN"
+            invert: true
+          - name: "RSSD15_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR0_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD15_RESET"
+  - RSSD15_LED_Unit:
+      in:
+        and:
+          - name: "RSSD15_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD15"
+regulators:
+  - name: "rssd15_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd15_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd15"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD15_PRESENT"
+outputs:
+  - name: "led_rssd15_power"
+    type: "led"
+    signal_name: "LED_RSSD15"
+  - name: "RSSD15_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD15_RESET"
+    active_low: true
+  - name: "RSSD15_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD15_POWER_EN"
+  - name: "RSSD15_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD15_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd15_3v3_Enabled"
+  - "rssd15_12v_Enabled"
+

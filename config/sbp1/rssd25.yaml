@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD25_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD25_PRESENT"
+          - name: "rssd25_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd25_3v3_On"
+  - RSSD25_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD25_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd25_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd25_12v_On"
+  - RSSD25_Fault_Unit:
+      in:
+        and:
+          - name: "rssd25_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD25_PRESENT"
+        or:
+          - name: "rssd25_3v3_Fault"
+          - name: "rssd25_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd25_FaultKeepOff"
+  - RSSD25_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD25_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd25_12v_Fault"
+            invert: true
+          - name: "rssd25_3v3_Fault"
+            invert: true
+          - name: "rssd25_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd25_12v_PowerGood"
+          - name: "rssd25_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd25_3v3_PowerGood"
+      out:
+        name: "RSSD25_POWER_EN"
+  - RSSD25_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD25_POWER_EN"
+            invert: true
+          - name: "RSSD25_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD25_SMBRST"
+  - RSSD25_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD25_SMBRST"
+          - name: "RSSD25_PRESENT"
+            invert: true
+          - name: "RSSD25_POWER_EN"
+            invert: true
+          - name: "RSSD25_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR1_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD25_RESET"
+  - RSSD25_LED_Unit:
+      in:
+        and:
+          - name: "RSSD25_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD25"
+regulators:
+  - name: "rssd25_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd25_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd25"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD25_PRESENT"
+outputs:
+  - name: "led_rssd25_power"
+    type: "led"
+    signal_name: "LED_RSSD25"
+  - name: "RSSD25_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD25_RESET"
+    active_low: true
+  - name: "RSSD25_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD25_POWER_EN"
+  - name: "RSSD25_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD25_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd25_3v3_Enabled"
+  - "rssd25_12v_Enabled"
+

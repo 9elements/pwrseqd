@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD21_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD21_PRESENT"
+          - name: "rssd21_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd21_3v3_On"
+  - RSSD21_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD21_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd21_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd21_12v_On"
+  - RSSD21_Fault_Unit:
+      in:
+        and:
+          - name: "rssd21_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD21_PRESENT"
+        or:
+          - name: "rssd21_3v3_Fault"
+          - name: "rssd21_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd21_FaultKeepOff"
+  - RSSD21_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD21_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd21_12v_Fault"
+            invert: true
+          - name: "rssd21_3v3_Fault"
+            invert: true
+          - name: "rssd21_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd21_12v_PowerGood"
+          - name: "rssd21_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd21_3v3_PowerGood"
+      out:
+        name: "RSSD21_POWER_EN"
+  - RSSD21_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD21_POWER_EN"
+            invert: true
+          - name: "RSSD21_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD21_SMBRST"
+  - RSSD21_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD21_SMBRST"
+          - name: "RSSD21_PRESENT"
+            invert: true
+          - name: "RSSD21_POWER_EN"
+            invert: true
+          - name: "RSSD21_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR1_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD21_RESET"
+  - RSSD21_LED_Unit:
+      in:
+        and:
+          - name: "RSSD21_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD21"
+regulators:
+  - name: "rssd21_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd21_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd21"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD21_PRESENT"
+outputs:
+  - name: "led_rssd21_power"
+    type: "led"
+    signal_name: "LED_RSSD21"
+  - name: "RSSD21_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD21_RESET"
+    active_low: true
+  - name: "RSSD21_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD21_POWER_EN"
+  - name: "RSSD21_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD21_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd21_3v3_Enabled"
+  - "rssd21_12v_Enabled"
+

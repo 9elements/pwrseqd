@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD26_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD26_PRESENT"
+          - name: "rssd26_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd26_3v3_On"
+  - RSSD26_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD26_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd26_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd26_12v_On"
+  - RSSD26_Fault_Unit:
+      in:
+        and:
+          - name: "rssd26_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD26_PRESENT"
+        or:
+          - name: "rssd26_3v3_Fault"
+          - name: "rssd26_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd26_FaultKeepOff"
+  - RSSD26_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD26_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd26_12v_Fault"
+            invert: true
+          - name: "rssd26_3v3_Fault"
+            invert: true
+          - name: "rssd26_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd26_12v_PowerGood"
+          - name: "rssd26_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd26_3v3_PowerGood"
+      out:
+        name: "RSSD26_POWER_EN"
+  - RSSD26_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD26_POWER_EN"
+            invert: true
+          - name: "RSSD26_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD26_SMBRST"
+  - RSSD26_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD26_SMBRST"
+          - name: "RSSD26_PRESENT"
+            invert: true
+          - name: "RSSD26_POWER_EN"
+            invert: true
+          - name: "RSSD26_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR1_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD26_RESET"
+  - RSSD26_LED_Unit:
+      in:
+        and:
+          - name: "RSSD26_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD26"
+regulators:
+  - name: "rssd26_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd26_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd26"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD26_PRESENT"
+outputs:
+  - name: "led_rssd26_power"
+    type: "led"
+    signal_name: "LED_RSSD26"
+  - name: "RSSD26_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD26_RESET"
+    active_low: true
+  - name: "RSSD26_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD26_POWER_EN"
+  - name: "RSSD26_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD26_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd26_3v3_Enabled"
+  - "rssd26_12v_Enabled"
+

@@ -124,6 +124,38 @@ set(
   ${PROJECT_SOURCE_DIR}/config/sbp1/cpu3_pwr.yaml
   ${PROJECT_SOURCE_DIR}/config/sbp1/rulerdrive.yaml
   ${PROJECT_SOURCE_DIR}/config/sbp1/nic.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd01.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd02.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd03.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd04.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd05.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd06.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd07.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd08.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd09.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd10.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd11.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd12.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd13.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd14.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd15.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd16.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd17.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd18.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd19.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd20.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd21.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd22.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd23.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd24.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd25.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd26.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd27.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd28.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd29.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd30.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd31.yaml
+  ${PROJECT_SOURCE_DIR}/config/sbp1/rssd32.yaml
   )
 
 install(FILES ${SERVICE_FILES} DESTINATION /usr/lib/systemd/system/)

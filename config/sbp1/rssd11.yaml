@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD11_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD11_PRESENT"
+          - name: "rssd11_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd11_3v3_On"
+  - RSSD11_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD11_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd11_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd11_12v_On"
+  - RSSD11_Fault_Unit:
+      in:
+        and:
+          - name: "rssd11_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD11_PRESENT"
+        or:
+          - name: "rssd11_3v3_Fault"
+          - name: "rssd11_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd11_FaultKeepOff"
+  - RSSD11_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD11_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd11_12v_Fault"
+            invert: true
+          - name: "rssd11_3v3_Fault"
+            invert: true
+          - name: "rssd11_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd11_12v_PowerGood"
+          - name: "rssd11_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd11_3v3_PowerGood"
+      out:
+        name: "RSSD11_POWER_EN"
+  - RSSD11_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD11_POWER_EN"
+            invert: true
+          - name: "RSSD11_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD11_SMBRST"
+  - RSSD11_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD11_SMBRST"
+          - name: "RSSD11_PRESENT"
+            invert: true
+          - name: "RSSD11_POWER_EN"
+            invert: true
+          - name: "RSSD11_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR0_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD11_RESET"
+  - RSSD11_LED_Unit:
+      in:
+        and:
+          - name: "RSSD11_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD11"
+regulators:
+  - name: "rssd11_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd11_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd11"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD11_PRESENT"
+outputs:
+  - name: "led_rssd11_power"
+    type: "led"
+    signal_name: "LED_RSSD11"
+  - name: "RSSD11_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD11_RESET"
+    active_low: true
+  - name: "RSSD11_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD11_POWER_EN"
+  - name: "RSSD11_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD11_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd11_3v3_Enabled"
+  - "rssd11_12v_Enabled"
+

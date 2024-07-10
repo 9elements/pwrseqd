@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD24_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD24_PRESENT"
+          - name: "rssd24_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd24_3v3_On"
+  - RSSD24_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD24_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd24_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd24_12v_On"
+  - RSSD24_Fault_Unit:
+      in:
+        and:
+          - name: "rssd24_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD24_PRESENT"
+        or:
+          - name: "rssd24_3v3_Fault"
+          - name: "rssd24_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd24_FaultKeepOff"
+  - RSSD24_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD24_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd24_12v_Fault"
+            invert: true
+          - name: "rssd24_3v3_Fault"
+            invert: true
+          - name: "rssd24_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd24_12v_PowerGood"
+          - name: "rssd24_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd24_3v3_PowerGood"
+      out:
+        name: "RSSD24_POWER_EN"
+  - RSSD24_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD24_POWER_EN"
+            invert: true
+          - name: "RSSD24_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD24_SMBRST"
+  - RSSD24_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD24_SMBRST"
+          - name: "RSSD24_PRESENT"
+            invert: true
+          - name: "RSSD24_POWER_EN"
+            invert: true
+          - name: "RSSD24_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR1_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD24_RESET"
+  - RSSD24_LED_Unit:
+      in:
+        and:
+          - name: "RSSD24_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD24"
+regulators:
+  - name: "rssd24_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd24_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd24"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD24_PRESENT"
+outputs:
+  - name: "led_rssd24_power"
+    type: "led"
+    signal_name: "LED_RSSD24"
+  - name: "RSSD24_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD24_RESET"
+    active_low: true
+  - name: "RSSD24_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD24_POWER_EN"
+  - name: "RSSD24_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD24_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd24_3v3_Enabled"
+  - "rssd24_12v_Enabled"
+

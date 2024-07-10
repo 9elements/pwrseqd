@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD13_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD13_PRESENT"
+          - name: "rssd13_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd13_3v3_On"
+  - RSSD13_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD13_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd13_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd13_12v_On"
+  - RSSD13_Fault_Unit:
+      in:
+        and:
+          - name: "rssd13_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD13_PRESENT"
+        or:
+          - name: "rssd13_3v3_Fault"
+          - name: "rssd13_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd13_FaultKeepOff"
+  - RSSD13_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD13_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd13_12v_Fault"
+            invert: true
+          - name: "rssd13_3v3_Fault"
+            invert: true
+          - name: "rssd13_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd13_12v_PowerGood"
+          - name: "rssd13_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd13_3v3_PowerGood"
+      out:
+        name: "RSSD13_POWER_EN"
+  - RSSD13_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD13_POWER_EN"
+            invert: true
+          - name: "RSSD13_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD13_SMBRST"
+  - RSSD13_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD13_SMBRST"
+          - name: "RSSD13_PRESENT"
+            invert: true
+          - name: "RSSD13_POWER_EN"
+            invert: true
+          - name: "RSSD13_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR0_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD13_RESET"
+  - RSSD13_LED_Unit:
+      in:
+        and:
+          - name: "RSSD13_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD13"
+regulators:
+  - name: "rssd13_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd13_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd13"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD13_PRESENT"
+outputs:
+  - name: "led_rssd13_power"
+    type: "led"
+    signal_name: "LED_RSSD13"
+  - name: "RSSD13_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD13_RESET"
+    active_low: true
+  - name: "RSSD13_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD13_POWER_EN"
+  - name: "RSSD13_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD13_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd13_3v3_Enabled"
+  - "rssd13_12v_Enabled"
+

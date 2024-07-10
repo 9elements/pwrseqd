@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD17_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD17_PRESENT"
+          - name: "rssd17_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd17_3v3_On"
+  - RSSD17_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD17_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd17_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd17_12v_On"
+  - RSSD17_Fault_Unit:
+      in:
+        and:
+          - name: "rssd17_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD17_PRESENT"
+        or:
+          - name: "rssd17_3v3_Fault"
+          - name: "rssd17_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd17_FaultKeepOff"
+  - RSSD17_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD17_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd17_12v_Fault"
+            invert: true
+          - name: "rssd17_3v3_Fault"
+            invert: true
+          - name: "rssd17_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd17_12v_PowerGood"
+          - name: "rssd17_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd17_3v3_PowerGood"
+      out:
+        name: "RSSD17_POWER_EN"
+  - RSSD17_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD17_POWER_EN"
+            invert: true
+          - name: "RSSD17_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD17_SMBRST"
+  - RSSD17_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD17_SMBRST"
+          - name: "RSSD17_PRESENT"
+            invert: true
+          - name: "RSSD17_POWER_EN"
+            invert: true
+          - name: "RSSD17_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR1_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD17_RESET"
+  - RSSD17_LED_Unit:
+      in:
+        and:
+          - name: "RSSD17_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD17"
+regulators:
+  - name: "rssd17_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd17_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd17"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD17_PRESENT"
+outputs:
+  - name: "led_rssd17_power"
+    type: "led"
+    signal_name: "LED_RSSD17"
+  - name: "RSSD17_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD17_RESET"
+    active_low: true
+  - name: "RSSD17_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD17_POWER_EN"
+  - name: "RSSD17_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD17_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd17_3v3_Enabled"
+  - "rssd17_12v_Enabled"
+

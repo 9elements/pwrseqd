@@ -1,0 +1,125 @@
+
+power_sequencer:
+  - RSSD23_3v3_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD23_PRESENT"
+          - name: "rssd23_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd23_3v3_On"
+  - RSSD23_12v_Enable_Unit:
+      in:
+        and:
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD23_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd23_FaultKeepOff"
+            invert: true
+      out:
+        name: "rssd23_12v_On"
+  - RSSD23_Fault_Unit:
+      in:
+        and:
+          - name: "rssd23_FaultKeepOff"
+          - name: "SYS_PWROK"
+            input_stable_usec: 10000
+          - name: "RSSD23_PRESENT"
+        or:
+          - name: "rssd23_3v3_Fault"
+          - name: "rssd23_12v_Fault"
+        and_then_or: true
+      out:
+        name: "rssd23_FaultKeepOff"
+  - RSSD23_Power_En_Unit:
+      in:
+        and:
+          - name: "RSSD23_PRESENT"
+            input_stable_usec: 10000
+          - name: "rssd23_12v_Fault"
+            invert: true
+          - name: "rssd23_3v3_Fault"
+            invert: true
+          - name: "rssd23_12v_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd23_12v_PowerGood"
+          - name: "rssd23_3v3_PowerGood"
+            input_stable_usec: 5000000
+          - name: "rssd23_3v3_PowerGood"
+      out:
+        name: "RSSD23_POWER_EN"
+  - RSSD23_SMBRST_Unit:
+      in:
+        and:
+          - name: "RSSD23_POWER_EN"
+            invert: true
+          - name: "RSSD23_POWER_EN"
+            input_stable_usec: 10000
+            invert: true
+      out:
+        name: "RSSD23_SMBRST"
+  - RSSD23_Reset_Unit:
+      in:
+        or:
+          - name: "PLTRST"
+          - name: "SYS_PWROK"
+            invert: true
+          - name: "RSSD23_SMBRST"
+          - name: "RSSD23_PRESENT"
+            invert: true
+          - name: "RSSD23_POWER_EN"
+            invert: true
+          - name: "RSSD23_POWER_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+          - name: "FM_SSD_CLK_DRVR1_EN"
+            invert: true
+            input_stable_usec: 100000
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
+            invert: true
+            input_stable_usec: 100000
+      out:
+        name: "RSSD23_RESET"
+  - RSSD23_LED_Unit:
+      in:
+        and:
+          - name: "RSSD23_RESET"
+            invert: true
+      out:
+        name: "LED_RSSD23"
+regulators:
+  - name: "rssd23_3v3"
+    allow_faulting: true
+    allow_missing: true
+  - name: "rssd23_12v"
+    allow_faulting: true
+    allow_missing: true
+inputs:
+  - name: "system/chassis/motherboard/rssd23"
+    type: "dbus_presence"
+    pullup: true
+    signal_name: "RSSD23_PRESENT"
+outputs:
+  - name: "led_rssd23_power"
+    type: "led"
+    signal_name: "LED_RSSD23"
+  - name: "RSSD23_RESET_N"
+    type: "gpio"
+    signal_name: "RSSD23_RESET"
+    active_low: true
+  - name: "RSSD23_PWRDIS"
+    type: "gpio"
+    signal_name: "RSSD23_POWER_EN"
+  - name: "RSSD23_SMBRST_N"
+    type: "gpio"
+    signal_name: "RSSD23_SMBRST"
+    active_low: true
+floating_signals:
+  - "rssd23_3v3_Enabled"
+  - "rssd23_12v_Enabled"
+
