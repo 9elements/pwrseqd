@@ -115,6 +115,7 @@ outputs:
   - name: "RSSD28_PWRDIS"
     type: "gpio"
     signal_name: "RSSD28_POWER_EN"
+    active_low: true
   - name: "RSSD28_SMBRST_N"
     type: "gpio"
     signal_name: "RSSD28_SMBRST"

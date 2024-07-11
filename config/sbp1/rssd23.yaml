@@ -115,6 +115,7 @@ outputs:
   - name: "RSSD23_PWRDIS"
     type: "gpio"
     signal_name: "RSSD23_POWER_EN"
+    active_low: true
   - name: "RSSD23_SMBRST_N"
     type: "gpio"
     signal_name: "RSSD23_SMBRST"
