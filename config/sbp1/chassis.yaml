@@ -138,8 +138,10 @@ regulators:
     allow_missing: true
   - name: "p3v3_m2_ssd1"
     allow_missing: true
+    allow_faulting: true
   - name: "p3v3_m2_ssd2"
     allow_missing: true
+    allow_faulting: true
 
 floating_signals:
   - "bcm1_PowerGood"
