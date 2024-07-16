@@ -22,7 +22,7 @@ power_sequencer:
           - name: "RSSD15_PRESENT"
           - name: "RSSD16_PRESENT"
         and:
-          - name: "FM_CK440Q_DEV_EN"
+          - name: "FM_CK440Q_DEV_EN_Enabled"
         and_then_or: false
       out:
         name: "FM_SSD_CLK_DRVR0_EN"
@@ -47,7 +47,7 @@ power_sequencer:
           - name: "RSSD31_PRESENT"
           - name: "RSSD32_PRESENT"
         and:
-          - name: "FM_CK440Q_DEV_EN"
+          - name: "FM_CK440Q_DEV_EN_Enabled"
         and_then_or: false
       out:
         name: "FM_SSD_CLK_DRVR1_EN"

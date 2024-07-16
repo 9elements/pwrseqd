@@ -238,8 +238,7 @@ power_sequencer:
           - name: "CPU0_VR_PWRGD"
           - name: "CPU0_DDR_PWRGD"
         or:
-          - name: "PWRGD_LVC3_CPU0_AB_DRAM_G"
-            input_stable_usec: 10000
+          - name: "PWRGD_LVC3_CPU0_AB_DRAM_G_Enabled"
         and_then_or: true
       out:
         name: "PWRGD_CHA_CPU0_On"
@@ -251,8 +250,7 @@ power_sequencer:
           - name: "CPU0_VR_PWRGD"
           - name: "CPU0_DDR_PWRGD"
         or:
-          - name: "PWRGD_LVC3_CPU0_AB_DRAM_G"
-            input_stable_usec: 10000
+          - name: "PWRGD_LVC3_CPU0_AB_DRAM_G_Enabled"
         and_then_or: true
       out:
         name: "PWRGD_CHB_CPU0_On"
@@ -264,8 +262,7 @@ power_sequencer:
           - name: "CPU0_VR_PWRGD"
           - name: "CPU0_DDR_PWRGD"
         or:
-          - name: "PWRGD_LVC3_CPU0_CD_DRAM_G"
-            input_stable_usec: 10000
+          - name: "PWRGD_LVC3_CPU0_CD_DRAM_G_Enabled"
         and_then_or: true
       out:
         name: "PWRGD_CHC_CPU0_On"
@@ -277,8 +274,7 @@ power_sequencer:
           - name: "CPU0_VR_PWRGD"
           - name: "CPU0_DDR_PWRGD"
         or:
-          - name: "PWRGD_LVC3_CPU0_CD_DRAM_G"
-            input_stable_usec: 10000
+          - name: "PWRGD_LVC3_CPU0_CD_DRAM_G_Enabled"
         and_then_or: true
       out:
         name: "PWRGD_CHD_CPU0_On"
@@ -290,8 +286,7 @@ power_sequencer:
           - name: "CPU0_VR_PWRGD"
           - name: "CPU0_DDR_PWRGD"
         or:
-          - name: "PWRGD_LVC3_CPU0_EF_DRAM_G"
-            input_stable_usec: 10000
+          - name: "PWRGD_LVC3_CPU0_EF_DRAM_G_Enabled"
         and_then_or: true
       out:
         name: "PWRGD_CHE_CPU0_On"
@@ -303,8 +298,7 @@ power_sequencer:
           - name: "CPU0_VR_PWRGD"
           - name: "CPU0_DDR_PWRGD"
         or:
-          - name: "PWRGD_LVC3_CPU0_EF_DRAM_G"
-            input_stable_usec: 10000
+          - name: "PWRGD_LVC3_CPU0_EF_DRAM_G_Enabled"
         and_then_or: true
       out:
         name: "PWRGD_CHF_CPU0_On"
@@ -316,8 +310,7 @@ power_sequencer:
           - name: "CPU0_VR_PWRGD"
           - name: "CPU0_DDR_PWRGD"
         or:
-          - name: "PWRGD_LVC3_CPU0_GH_DRAM_G"
-            input_stable_usec: 10000
+          - name: "PWRGD_LVC3_CPU0_GH_DRAM_G_Enabled"
         and_then_or: true
       out:
         name: "PWRGD_CHG_CPU0_On"
@@ -329,8 +322,7 @@ power_sequencer:
           - name: "CPU0_VR_PWRGD"
           - name: "CPU0_DDR_PWRGD"
         or:
-          - name: "PWRGD_LVC3_CPU0_GH_DRAM_G"
-            input_stable_usec: 10000
+          - name: "PWRGD_LVC3_CPU0_GH_DRAM_G_Enabled"
         and_then_or: true
       out:
         name: "PWRGD_CHH_CPU0_On"
@@ -553,7 +545,7 @@ power_sequencer:
           - name: "pvccin_cpu0_PowerGood"
             input_stable_usec: 1800
           - name: "PWRGD_CPUPWRGD" # signal from PCH (slow)
-          - name: "FM_DB2000_DEV_EN" # Clock buffer enable
+          - name: "FM_DB2000_DEV_EN_Enabled" # Clock buffer enable
             input_stable_usec: 2000 # wait for clocks to be stable
           - name: "FM_CPU0_SKTOCC"
           - name: "CPU0_HBM_Gated_PowerGood"
@@ -718,3 +710,10 @@ regulators:
 floating_signals:
   - "H_LVT3_CPU0_MEMTRIP_OUT_N_Enabled"
   - "H_LVT3_CPU0_THERMTRIP_OUT_N_Enabled"
+  - "H_LVT3_CPU0_PROCHOT_N_Enabled"
+  - "RST_LVC3_CPU0_RESET_N_Enabled"
+  - "PWRGD_PLT_AUX_CPU0_LVT3_Enabled"
+  - "SEL_SMB_DIMM_CPU0_Enabled"
+  - "H_LVT3_CPU0_NMI_Enabled"
+  - "FM_CPU0_DISABLE_COD_N_Enabled"
+  - "CATERR_CPU0_EN_Enabled"

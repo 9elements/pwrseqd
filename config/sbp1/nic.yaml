@@ -7,7 +7,7 @@ power_sequencer:
       in:
         or:
           - name: "NIC_POWER_ENABLE_Hold"
-          - name: "SYS_PWROK"
+          - name: "PWRGD_SYS_PWROK_Enabled"
       out:
         name: "NIC_POWER_ENABLE"
 
@@ -109,10 +109,8 @@ power_sequencer:
   - FM_NIC1_ALLSTANDBY_Unit:
       in:
         or:
-          - name: "FM_NIC1_RST"
-          - name: "FM_NIC1_RST"
-            input_stable_usec: 10000
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_NIC1_RST_N_Enabled"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
             input_stable_usec: 100000
           - name: "PWRGD_LVC3_CPU0_PWRGOOD"
@@ -126,10 +124,8 @@ power_sequencer:
   - FM_NIC2_ALLSTANDBY_Unit:
       in:
         or:
-          - name: "FM_NIC2_RST"
-          - name: "FM_NIC2_RST"
-            input_stable_usec: 10000
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_NIC2_RST_N_Enabled"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
             input_stable_usec: 100000
           - name: "PWRGD_LVC3_CPU0_PWRGOOD"
@@ -143,10 +139,8 @@ power_sequencer:
   - FM_NIC1_PERST0_Unit:
       in:
         or:
-          - name: "FM_NIC1_RST"
-          - name: "FM_NIC1_RST"
-            input_stable_usec: 10000
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_NIC1_RST_N_Enabled"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
             input_stable_usec: 100000
           - name: "PWRGD_LVC3_CPU0_PWRGOOD"
@@ -154,19 +148,16 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU0_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "FM_NIC1_ALLSTANDBY"
-            input_stable_usec: 10000
+          - name: "FM_NIC1_ALLSTANDBY_N_Enabled"
       out:
         name: "FM_NIC1_PERST0"
   - FM_NIC1_PERST1_Unit:
       in:
         or:
-          - name: "FM_NIC1_RST"
-          - name: "FM_NIC1_RST"
-            input_stable_usec: 10000
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_NIC1_RST_N_Enabled"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
             input_stable_usec: 100000
           - name: "PWRGD_LVC3_CPU1_PWRGOOD"
@@ -174,19 +165,16 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU1_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "FM_NIC1_PERST0"
-            input_stable_usec: 10000
+          - name: "FM_NIC1_PERST0_N_Enabled"
       out:
         name: "FM_NIC1_PERST1"
   - FM_NIC1_PERST2_Unit:
       in:
         or:
-          - name: "FM_NIC1_RST"
-          - name: "FM_NIC1_RST"
-            input_stable_usec: 10000
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_NIC1_RST_N_Enabled"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
             input_stable_usec: 100000
           - name: "PWRGD_LVC3_CPU2_PWRGOOD"
@@ -194,19 +182,16 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU2_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "FM_NIC1_PERST1"
-            input_stable_usec: 10000
+          - name: "FM_NIC1_PERST1_N_Enabled"
       out:
         name: "FM_NIC1_PERST2"
   - FM_NIC1_PERST3_Unit:
       in:
         or:
-          - name: "FM_NIC1_RST"
-          - name: "FM_NIC1_RST"
-            input_stable_usec: 10000
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_NIC1_RST_N_Enabled"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
             input_stable_usec: 100000
           - name: "PWRGD_LVC3_CPU3_PWRGOOD"
@@ -214,19 +199,16 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU3_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "FM_NIC1_PERST2"
-            input_stable_usec: 10000
+          - name: "FM_NIC1_PERST2_N_Enabled"
       out:
         name: "FM_NIC1_PERST3"
   - FM_NIC2_PERST0_Unit:
       in:
         or:
-          - name: "FM_NIC2_RST"
-          - name: "FM_NIC2_RST"
-            input_stable_usec: 10000
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_NIC2_RST_N_Enabled"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
             input_stable_usec: 100000
           - name: "PWRGD_LVC3_CPU0_PWRGOOD"
@@ -234,19 +216,16 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU0_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "FM_NIC2_ALLSTANDBY"
-            input_stable_usec: 10000
+          - name: "FM_NIC2_ALLSTANDBY_N_Enabled"
       out:
         name: "FM_NIC2_PERST0"
   - FM_NIC2_PERST1_Unit:
       in:
         or:
-          - name: "FM_NIC2_RST"
-          - name: "FM_NIC2_RST"
-            input_stable_usec: 10000
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_NIC2_RST_N_Enabled"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
             input_stable_usec: 100000
           - name: "PWRGD_LVC3_CPU1_PWRGOOD"
@@ -254,19 +233,16 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU1_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "FM_NIC2_PERST0"
-            input_stable_usec: 10000
+          - name: "FM_NIC2_PERST0_N_Enabled"
       out:
         name: "FM_NIC2_PERST1"
   - FM_NIC2_PERST2_Unit:
       in:
         or:
-          - name: "FM_NIC2_RST"
-          - name: "FM_NIC2_RST"
-            input_stable_usec: 10000
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_NIC2_RST_N_Enabled"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
             input_stable_usec: 100000
           - name: "PWRGD_LVC3_CPU2_PWRGOOD"
@@ -274,19 +250,16 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU2_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "FM_NIC2_PERST1"
-            input_stable_usec: 10000
+          - name: "FM_NIC2_PERST1_N_Enabled"
       out:
         name: "FM_NIC2_PERST2"
   - FM_NIC2_PERST3_Unit:
       in:
         or:
-          - name: "FM_NIC2_RST"
-          - name: "FM_NIC2_RST"
-            input_stable_usec: 10000
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_NIC2_RST_N_Enabled"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
-          - name: "FM_DB2000_DEV_EN"
+          - name: "FM_DB2000_DEV_EN_Enabled"
             invert: true
             input_stable_usec: 100000
           - name: "PWRGD_LVC3_CPU3_PWRGOOD"
@@ -294,8 +267,7 @@ power_sequencer:
           - name: "PWRGD_LVC3_CPU3_PWRGOOD"
             invert: true
             input_stable_usec: 100000
-          - name: "FM_NIC2_PERST2"
-            input_stable_usec: 10000
+          - name: "FM_NIC2_PERST2_N_Enabled"
       out:
         name: "FM_NIC2_PERST3"
 
@@ -355,7 +327,7 @@ power_sequencer:
   - IRQ_NIC2_OVT_SHTDN_Unit:
       in:
         and:
-          - name: "FM_NIC2_RST"
+          - name: "FM_NIC2_RST_N_Enabled"
             invert: true
       out:
         name: "IRQ_NIC2_OVT_SHTDN_On"
@@ -363,7 +335,7 @@ power_sequencer:
   - IRQ_NIC1_OVT_SHTDN_Unit:
       in:
         and:
-          - name: "FM_NIC1_RST"
+          - name: "FM_NIC1_RST_N_Enabled"
             invert: true
       out:
         name: "IRQ_NIC1_OVT_SHTDN_On"
@@ -371,7 +343,7 @@ power_sequencer:
   - IRQ_NIC2_OVT_WRNG_Unit:
       in:
         and:
-          - name: "FM_NIC2_RST"
+          - name: "FM_NIC2_RST_N_Enabled"
             invert: true
       out:
         name: "IRQ_NIC2_OVT_WRNG_On"
@@ -379,7 +351,7 @@ power_sequencer:
   - IRQ_NIC1_OVT_WRNG_Unit:
       in:
         and:
-          - name: "FM_NIC1_RST"
+          - name: "FM_NIC1_RST_N_Enabled"
             invert: true
       out:
         name: "IRQ_NIC1_OVT_WRNG_On"
@@ -531,6 +503,10 @@ floating_signals:
   - "IRQ_NIC1_OVT_SHTDN_Enabled"
   - "IRQ_NIC2_OVT_WRNG_Enabled"
   - "IRQ_NIC1_OVT_WRNG_Enabled"
+  - "FM_NIC1_PERST3_N_Enabled"
+  - "FM_NIC2_PERST3_N_Enabled"
+  - "FM_NIC1_FLASH_PRSNT_Enabled"
+  - "FM_NIC2_FLASH_PRSNT_Enabled"
 
 immutables:
   - signal_name: "FM_NIC1_FLASH_PRSNT_hold"

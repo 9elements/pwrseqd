@@ -33,7 +33,7 @@ power_sequencer:
         and:
           - name: "RSMRST"
             invert: true
-          - name: "PCH_PWROK"
+          - name: "PWRGD_PCH_PWROK_Enabled"
           - name: "CPU0_SYS_PWROK"
           - name: "CPU1_SYS_PWROK"
           - name: "CPU2_SYS_PWROK"

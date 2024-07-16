@@ -212,16 +212,16 @@ power_sequencer:
   - PCH_PWROK_Unit:
       in:
         and:
-          - name: "RSMRST"
+          - name: "RST_PCH_RSMRST_R_N_Enabled"
             invert: true
           - name: "FM_SLPS3"
             invert: true
             input_stable_usec: 1000000 # PCH glitch filter
           - name: "FM_SLPS3"
             invert: true
-          - name: "FM_DB2000_DEV_EN" # Ext clocks are stable
+          - name: "FM_DB2000_DEV_EN_Enabled" # Ext clocks are stable
             input_stable_usec: 10000 # PCH Spec. 1msec after clocks are stable
-          - name: "FM_DB2000_DEV_EN" # Ext clocks are stable
+          - name: "FM_DB2000_DEV_EN_Enabled" # Ext clocks are stable
       out:
         name: "PCH_PWROK"
 
@@ -229,7 +229,7 @@ power_sequencer:
   - DDR_Power_Internal_Unit:
       in:
         and:
-          - name: "PCH_PWROK"
+          - name: "PWRGD_PCH_PWROK_Enabled"
           - name: "FM_SLPS4"
             invert: true
           - name: "STATE_REQ_HOST_ON"
@@ -252,7 +252,7 @@ power_sequencer:
   - CPU_POWER_Unit:
       in:
         and:
-          - name: "PCH_PWROK"
+          - name: "PWRGD_PCH_PWROK_Enabled"
           - name: "STATE_REQ_HOST_ON"
             input_stable_usec: 10000
           - name: "CPU0_VR_Fault_Shutdown"
@@ -279,7 +279,7 @@ power_sequencer:
         and:
           - name: "STATE_REQ_CHASSIS_ON"
           - name: "STATE_REQ_HOST_ON"
-          - name: "PCH_PWROK"
+          - name: "PWRGD_PCH_PWROK_Enabled"
           - name: "CPU0_SYS_PWROK"
           - name: "CPU1_SYS_PWROK"
           - name: "CPU2_SYS_PWROK"
@@ -290,7 +290,7 @@ power_sequencer:
   - PLTRST_Enable_Unit:
       in:
         and:
-          - name: "RSMRST"
+          - name: "RST_PCH_RSMRST_R_N_Enabled"
             invert: true
       out:
         name: "RST_PLTRST_N_On"
@@ -298,7 +298,7 @@ power_sequencer:
   - FM_SLPS3_N_Enable_Unit:
       in:
         and:
-          - name: "RSMRST"
+          - name: "RST_PCH_RSMRST_R_N_Enabled"
             invert: true
       out:
         name: "FM_SLPS3_N_On"
@@ -306,7 +306,7 @@ power_sequencer:
   - FM_SLPS4_N_Enable_Unit:
       in:
         and:
-          - name: "RSMRST"
+          - name: "RST_PCH_RSMRST_R_N_Enabled"
             invert: true
       out:
         name: "FM_SLPS4_N_On"
@@ -314,7 +314,7 @@ power_sequencer:
   - FM_BIOS_POST_CMPLT_N_Enable_Unit:
       in:
         and:
-          - name: "RSMRST"
+          - name: "RST_PCH_RSMRST_R_N_Enabled"
             invert: true
       out:
         name: "FM_BIOS_POST_CMPLT_N_On"
@@ -322,7 +322,7 @@ power_sequencer:
   - PWRGD_CPUPWRGD_Enable_Unit:
       in:
         and:
-          - name: "RSMRST"
+          - name: "RST_PCH_RSMRST_R_N_Enabled"
             invert: true
       out:
         name: "PWRGD_CPUPWRGD_On"
@@ -375,3 +375,5 @@ floating_signals:
   - "FM_SLPS3_N_Enabled"
   - "FM_SLPS4_N_Enabled"
   - "PWRGD_CPUPWRGD_Enabled"
+  - "H_LVT1_THERMTRIP_N_Enabled"
+  - "H_LVT1_MEMTRIP_N_Enabled"

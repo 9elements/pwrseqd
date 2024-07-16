@@ -54,37 +54,33 @@ power_sequencer:
   - RSSD14_SMBRST_Unit:
       in:
         and:
-          - name: "RSSD14_POWER_EN"
+          - name: "RSSD14_PWRDIS_Enabled"
             invert: true
-          - name: "RSSD14_POWER_EN"
+          - name: "RSSD14_PWRDIS_Enabled"
             input_stable_usec: 10000
             invert: true
       out:
         name: "RSSD14_SMBRST"
   - RSSD14_Reset_Unit:
       in:
-        or:
+        and:
           - name: "PLTRST"
+            invert: true
           - name: "SYS_PWROK"
+          - name: "RSSD14_SMBRST_N_Enabled"
             invert: true
-          - name: "RSSD14_SMBRST"
           - name: "RSSD14_PRESENT"
-            invert: true
           - name: "RSSD14_POWER_EN"
-            invert: true
-          - name: "RSSD14_POWER_EN"
-            invert: true
+          - name: "RSSD14_PWRDIS_Enabled"
             input_stable_usec: 100000
-          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
-            invert: true
-          - name: "FM_SSD_CLK_DRVR0_EN"
-            invert: true
-            input_stable_usec: 100000
-          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
-            invert: true
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD_Enabled"
+          - name: "FM_SSD_CLK_DRVR0_EN_Enabled"
+          - name: "FM_SSD_CLK_DRVR0_EN_Enabled"
             input_stable_usec: 100000
       out:
         name: "RSSD14_RESET"
+        active_low: true
+
   - RSSD14_LED_Unit:
       in:
         and:
@@ -123,4 +119,5 @@ outputs:
 floating_signals:
   - "rssd14_3v3_Enabled"
   - "rssd14_12v_Enabled"
+  - "RSSD14_RESET_N_Enabled"
 

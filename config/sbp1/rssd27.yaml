@@ -54,37 +54,32 @@ power_sequencer:
   - RSSD27_SMBRST_Unit:
       in:
         and:
-          - name: "RSSD27_POWER_EN"
+          - name: "RSSD27_PWRDIS_Enabled"
             invert: true
-          - name: "RSSD27_POWER_EN"
+          - name: "RSSD27_PWRDIS_Enabled"
             input_stable_usec: 10000
             invert: true
       out:
         name: "RSSD27_SMBRST"
   - RSSD27_Reset_Unit:
       in:
-        or:
+        and:
           - name: "PLTRST"
+            invert: true
           - name: "SYS_PWROK"
+          - name: "RSSD27_SMBRST_N_Enabled"
             invert: true
-          - name: "RSSD27_SMBRST"
           - name: "RSSD27_PRESENT"
-            invert: true
           - name: "RSSD27_POWER_EN"
-            invert: true
-          - name: "RSSD27_POWER_EN"
-            invert: true
+          - name: "RSSD27_PWRDIS_Enabled"
             input_stable_usec: 100000
-          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
-            invert: true
-          - name: "FM_SSD_CLK_DRVR1_EN"
-            invert: true
-            input_stable_usec: 100000
-          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
-            invert: true
+          - name: "PWRGD_LVC3_CPU1_PWRGOOD_Enabled"
+          - name: "FM_SSD_CLK_DRVR1_EN_Enabled"
+          - name: "FM_SSD_CLK_DRVR1_EN_Enabled"
             input_stable_usec: 100000
       out:
         name: "RSSD27_RESET"
+        active_low: true
   - RSSD27_LED_Unit:
       in:
         and:
@@ -123,4 +118,5 @@ outputs:
 floating_signals:
   - "rssd27_3v3_Enabled"
   - "rssd27_12v_Enabled"
+  - "RSSD27_RESET_N_Enabled"
 

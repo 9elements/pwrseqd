@@ -32,7 +32,7 @@ power_sequencer:
   - M2_SSD1_Unit:
       in:
         and:
-          - name: "SYS_PWROK"
+          - name: "PWRGD_SYS_PWROK_Enabled"
         or:
           - name: "PLUG_DETECT_M2_SSD_CARRIER1"
           - name: "PLUG_DETECT_M2_SSD1"
@@ -43,7 +43,7 @@ power_sequencer:
   - M2_SSD2_Unit:
       in:
         and:
-          - name: "SYS_PWROK"
+          - name: "PWRGD_SYS_PWROK_Enabled"
         or:
           - name: "PLUG_DETECT_M2_SSD_CARRIER2"
           - name: "PLUG_DETECT_M2_SSD2"
@@ -55,7 +55,7 @@ power_sequencer:
       in:
         or:
           - name: "FM_SLPS3"
-          - name: "RSMRST"
+          - name: "RST_PCH_RSMRST_R_N_Enabled"
           - name: "p3v3_m2_ssd1_PowerGood"
             input_stable_usec: 100000  # PCIe spec: 100msec
             invert: true
@@ -69,7 +69,7 @@ power_sequencer:
       in:
         or:
           - name: "FM_SLPS3"
-          - name: "RSMRST"
+          - name: "RST_PCH_RSMRST_R_N_Enabled"
           - name: "p3v3_m2_ssd2_PowerGood"
             input_stable_usec: 100000  # PCIe spec: 100msec
             invert: true
@@ -95,10 +95,10 @@ power_sequencer:
       in:
         or:
           - name: "STATE_REQ_CHASSIS_ON"
-          - name: "RSMRST"
+          - name: "RST_PCH_RSMRST_R_N_Enabled"
             invert: true
             input_stable_usec: 10000
-          - name: "RSMRST"
+          - name: "RST_PCH_RSMRST_R_N_Enabled"
             invert: true
       out:
         name: "FM_CK440Q_DEV_EN"
@@ -157,6 +157,8 @@ floating_signals:
   - "p3v3_m2_ssd2_Enabled"
   - "p3v3_m2_ssd1_Fault"
   - "p3v3_m2_ssd2_Fault"
+  - "RST_M2_SSD1_PERST_N_Enabled"
+  - "RST_M2_SSD2_PERST_N_Enabled"
 
 inputs:
   - name: "PLUG_DETECT_M2_SSD_CARRIER1"

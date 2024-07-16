@@ -59,6 +59,7 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
         {
             GpioOutput* g = new GpioOutput(&IoOutput, &cfg.Outputs[i], prov);
             this->gpioOutputs.push_back(g);
+            prov.AddDriver(g);
             log_debug("using gpio output " + cfg.Outputs[i].SignalName);
         }
         else if (cfg.Outputs[i].OutputType == OUTPUT_TYPE_LED)

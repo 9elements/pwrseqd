@@ -54,37 +54,33 @@ power_sequencer:
   - RSSD13_SMBRST_Unit:
       in:
         and:
-          - name: "RSSD13_POWER_EN"
+          - name: "RSSD13_PWRDIS_Enabled"
             invert: true
-          - name: "RSSD13_POWER_EN"
+          - name: "RSSD13_PWRDIS_Enabled"
             input_stable_usec: 10000
             invert: true
       out:
         name: "RSSD13_SMBRST"
   - RSSD13_Reset_Unit:
       in:
-        or:
+        and:
           - name: "PLTRST"
+            invert: true
           - name: "SYS_PWROK"
+          - name: "RSSD13_SMBRST_N_Enabled"
             invert: true
-          - name: "RSSD13_SMBRST"
           - name: "RSSD13_PRESENT"
-            invert: true
           - name: "RSSD13_POWER_EN"
-            invert: true
-          - name: "RSSD13_POWER_EN"
-            invert: true
+          - name: "RSSD13_PWRDIS_Enabled"
             input_stable_usec: 100000
-          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
-            invert: true
-          - name: "FM_SSD_CLK_DRVR0_EN"
-            invert: true
-            input_stable_usec: 100000
-          - name: "PWRGD_LVC3_CPU0_PWRGOOD"
-            invert: true
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD_Enabled"
+          - name: "FM_SSD_CLK_DRVR0_EN_Enabled"
+          - name: "FM_SSD_CLK_DRVR0_EN_Enabled"
             input_stable_usec: 100000
       out:
         name: "RSSD13_RESET"
+        active_low: true
+
   - RSSD13_LED_Unit:
       in:
         and:
@@ -123,4 +119,5 @@ outputs:
 floating_signals:
   - "rssd13_3v3_Enabled"
   - "rssd13_12v_Enabled"
+  - "RSSD13_RESET_N_Enabled"
 

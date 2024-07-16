@@ -14,7 +14,7 @@ using namespace std;
 class SignalProvider;
 class Signal;
 
-class GpioOutput : SignalReceiver
+class GpioOutput : SignalReceiver, public SignalDriver
 {
   public:
     // Name returns the instance name
@@ -31,11 +31,17 @@ class GpioOutput : SignalReceiver
                SignalProvider& prov);
     ~GpioOutput();
 
+    // SignalDrivers's Signals method to report all driven signals
+    vector<Signal*> Signals(void);
+
   private:
     boost::asio::io_service *ioOutput;
     int level;
     bool activeLow;
     bool DisableGpioOutCheck;
+    // Signal enabled is updated by the IO thread after enable was changed.
+    // Depending on the IO queue length it might take several seconds to be set.
+    Signal* enabled;
     gpiod::line line;
     gpiod::chip chip;
     Signal* in;

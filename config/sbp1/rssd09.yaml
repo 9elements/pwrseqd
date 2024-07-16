@@ -54,35 +54,32 @@ power_sequencer:
   - RSSD09_SMBRST_Unit:
       in:
         and:
-          - name: "RSSD09_POWER_EN"
-          - name: "RSSD09_POWER_EN"
+          - name: "RSSD09_PWRDIS_Enabled"
+            invert: true
+          - name: "RSSD09_PWRDIS_Enabled"
             input_stable_usec: 10000
+            invert: true
       out:
         name: "RSSD09_SMBRST"
   - RSSD09_Reset_Unit:
       in:
-        or:
+        and:
           - name: "PLTRST"
+            invert: true
           - name: "SYS_PWROK"
+          - name: "RSSD09_SMBRST_N_Enabled"
             invert: true
-          - name: "RSSD09_SMBRST"
           - name: "RSSD09_PRESENT"
-            invert: true
           - name: "RSSD09_POWER_EN"
-            invert: true
-          - name: "RSSD09_POWER_EN"
-            invert: true
+          - name: "RSSD09_PWRDIS_Enabled"
             input_stable_usec: 100000
-          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
-            invert: true
-          - name: "FM_SSD_CLK_DRVR1_EN"
-            invert: true
-            input_stable_usec: 100000
-          - name: "PWRGD_LVC3_CPU1_PWRGOOD"
-            invert: true
+          - name: "PWRGD_LVC3_CPU0_PWRGOOD_Enabled"
+          - name: "FM_SSD_CLK_DRVR0_EN_Enabled"
+          - name: "FM_SSD_CLK_DRVR0_EN_Enabled"
             input_stable_usec: 100000
       out:
         name: "RSSD09_RESET"
+        active_low: true
   - RSSD09_LED_Unit:
       in:
         and:
@@ -121,4 +118,5 @@ outputs:
 floating_signals:
   - "rssd09_3v3_Enabled"
   - "rssd09_12v_Enabled"
+  - "RSSD09_RESET_N_Enabled"
 
