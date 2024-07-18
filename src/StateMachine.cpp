@@ -57,7 +57,7 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
     {
         if (cfg.Outputs[i].OutputType == OUTPUT_TYPE_GPIO)
         {
-            GpioOutput* g = new GpioOutput(&IoOutput, &cfg.Outputs[i], prov);
+            GpioOutput* g = new GpioOutput(io, &IoOutput, &cfg.Outputs[i], prov);
             this->gpioOutputs.push_back(g);
             prov.AddDriver(g);
             log_debug("using gpio output " + cfg.Outputs[i].SignalName);

@@ -21,7 +21,9 @@ void GpioOutput::Apply(const int newLevel)
             ((this->level ^ this->activeLow) ? "1" : "0"));
 
         this->line.set_value(this->level);
-        this->enabled->SetLevel(this->level);
+        io->post([this, newLevel]() {
+            this->enabled->SetLevel(newLevel);
+        });
 
         if (!this->DisableGpioOutCheck && this->line.get_value() != newLevel) {
             this->line.update();
@@ -55,8 +57,11 @@ void GpioOutput::Update(void)
     });
 }
 
-GpioOutput::GpioOutput(boost::asio::io_service *IoOutput, struct ConfigOutput* cfg, SignalProvider& prov) :
-        ioOutput(IoOutput), level(-1), activeLow(cfg->ActiveLow), enabled(nullptr)
+GpioOutput::GpioOutput(boost::asio::io_context& Io,
+                       boost::asio::io_service *IoOutput,
+                       struct ConfigOutput* cfg,
+                       SignalProvider& prov) :
+        io(&Io), ioOutput(IoOutput), level(-1), activeLow(cfg->ActiveLow), enabled(nullptr)
 {
     ::std::bitset<32> flags = 0;
 

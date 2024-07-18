@@ -26,7 +26,8 @@ class GpioOutput : SignalReceiver, public SignalDriver
     // SignalReceiver's Update method for signal changes
     void Update(void);
 
-    GpioOutput(boost::asio::io_service *IoOutput,
+    GpioOutput(boost::asio::io_service& Io,
+               boost::asio::io_service *IoOutput,
                struct ConfigOutput* cfg,
                SignalProvider& prov);
     ~GpioOutput();
@@ -35,6 +36,7 @@ class GpioOutput : SignalReceiver, public SignalDriver
     vector<Signal*> Signals(void);
 
   private:
+    boost::asio::io_service *io;
     boost::asio::io_service *ioOutput;
     int level;
     bool activeLow;
