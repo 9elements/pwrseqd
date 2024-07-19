@@ -26,7 +26,6 @@ bool Logic::GetLevelOrInputs(void)
         if (it->GetLevel() > 0)
         {
             intermediate = true;
-            break;
         }
     }
 
@@ -44,7 +43,6 @@ bool Logic::GetLevelAndInputs(void)
         if (it->GetLevel() < 1)
         {
             intermediate = false;
-            break;
         }
     }
 
