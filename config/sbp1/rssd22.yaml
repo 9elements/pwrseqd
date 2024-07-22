@@ -83,8 +83,7 @@ power_sequencer:
   - RSSD22_LED_Unit:
       in:
         and:
-          - name: "RSSD22_RESET"
-            invert: true
+          - name: "RSSD22_POWER_EN"
       out:
         name: "LED_RSSD22"
 regulators:

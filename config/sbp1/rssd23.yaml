@@ -83,8 +83,7 @@ power_sequencer:
   - RSSD23_LED_Unit:
       in:
         and:
-          - name: "RSSD23_RESET"
-            invert: true
+          - name: "RSSD23_POWER_EN"
       out:
         name: "LED_RSSD23"
 regulators:
