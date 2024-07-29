@@ -8,6 +8,9 @@ power_sequencer:
         or:
           - name: "NIC_POWER_ENABLE_Hold"
           - name: "PWRGD_SYS_PWROK_Enabled"
+        and:
+          - name: "NIC_DummyRegulatorPresent"
+            invert: true
       out:
         name: "NIC_POWER_ENABLE"
 
@@ -371,6 +374,17 @@ power_sequencer:
           - name: "p3v3_nic_PowerGood"
       out:
         name: "FM_NIC2_FLASH_PRSNT"
+
+  - NIC_DummyRegulatorPresent_Unit:
+      in:
+        or:
+          - name: "p3v3_nic_IsDummy"
+          - name: "pvcore_nic1_IsDummy"
+          - name: "pvcore_nic2_IsDummy"
+          - name: "p1v2_nic_IsDummy"
+          - name: "p1v8_nic_IsDummy"
+      out:
+        name: "NIC_DummyRegulatorPresent"
 
 regulators:
   - name: "p3v3_nic"

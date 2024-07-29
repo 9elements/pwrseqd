@@ -95,6 +95,7 @@ class VoltageRegulator :
     Signal* enabled;
     Signal* fault;
     Signal* powergood;
+    Signal* dummy;
 
     VoltageRegulatorSysfs control;
     NetlinkRegulatorEvents *netlink;

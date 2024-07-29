@@ -19,6 +19,7 @@ vector<Signal*> NullVoltageRegulator::Signals(void)
     vec.push_back(this->enabled);
     vec.push_back(this->powergood);
     vec.push_back(this->fault);
+    vec.push_back(this->dummy);
 
     return vec;
 }
@@ -39,9 +40,11 @@ NullVoltageRegulator::NullVoltageRegulator(boost::asio::io_context& io,
     this->enabled = prov.FindOrAdd(cfg->Name + "_Enabled");
     this->fault = prov.FindOrAdd(cfg->Name + "_Fault");
     this->powergood = prov.FindOrAdd(cfg->Name + "_PowerGood");
+    this->dummy = prov.FindOrAdd(cfg->Name + "_IsDummy");
 
     // Set initial signal levels
     this->fault->SetLevel(false);
     this->powergood->SetLevel(false);
     this->enabled->SetLevel(false);
+    this->dummy->SetLevel(true);
 }

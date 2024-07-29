@@ -54,6 +54,7 @@ class NullVoltageRegulator :
     Signal* enabled;
     Signal* fault;
     Signal* powergood;
+    Signal* dummy;
 
 #ifdef WITH_GOOGLE_TEST
     FRIEND_TEST(Regulator, EventParsing);

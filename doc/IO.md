@@ -13,6 +13,7 @@ The following output drivers are implemented:
   - GPIO
   - LED (using DBUS xyz.openbmc_project.LED.GroupManager)
   - Voltage regulators fault/power good
+  - Dummy regulator
   - NULL
 
 **Rules:**
@@ -34,6 +35,7 @@ The driver exposes the following signals:
  - `<Name>_Enabled`
  - `<Name>_Fault`
  - `<Name>_PowerGood`
+ - `<Name>_IsDummy`
 
 It reads the `<Name>_On` signal and drives the following signals:
  - `<Name>_Enabled`
@@ -44,6 +46,7 @@ Where:
 
 > PowerGood = `<Name>_Enabled` && !`<Name>_Fault`
 > Fault = `<Name>_Enabled` && "Internal Fault detect"
+> No real regulator was found `<Name>_IsDummy` = true
 
 Writing 0 to `<Name>_On` clears the following signals:
  - `<Name>_Enabled`

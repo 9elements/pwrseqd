@@ -2,30 +2,48 @@
 
 power_sequencer:
   # Enable PSU when Chassis is on or PCH is still powered
-  - BCM1_Unit:
+  - BCM_Unit:
       in:
         or:
           - name: "STATE_REQ_CHASSIS_ON"
           - name: "PCH_VR_Off"
             invert: true
+      out:
+        name: "BCM_ON"
+
+  - BCM1_Unit:
+      in:
+        or:
+          - name: "BCM_ON"
+        and:
+          - name: "BCM_ON"
+            invert: true
+          - name: "bcm0_IsDummy"
+        and_then_or: true
       out:
         name: "bcm1_On"
 
   - BCM2_Unit:
       in:
         or:
-          - name: "STATE_REQ_CHASSIS_ON"
-          - name: "PCH_VR_Off"
+          - name: "BCM_ON"
+        and:
+          - name: "BCM_ON"
             invert: true
+          - name: "bcm1_IsDummy"
+        and_then_or: true
       out:
         name: "bcm2_On"
 
   - BCM3_Unit:
       in:
         or:
-          - name: "STATE_REQ_CHASSIS_ON"
-          - name: "PCH_VR_Off"
+          - name: "BCM_ON"
+        and:
+          - name: "BCM_ON"
             invert: true
+          - name: "bcm2_IsDummy"
+        and_then_or: true
       out:
         name: "bcm3_On"
 
@@ -130,6 +148,8 @@ power_sequencer:
         name: "LED_SSD2"
 
 regulators:
+  - name: "bcm0"
+    allow_missing: true
   - name: "bcm1"
     allow_missing: true
   - name: "bcm2"
@@ -143,7 +163,14 @@ regulators:
     allow_missing: true
     allow_faulting: true
 
+immutables:
+  - signal_name: "bcm0_On"
+    value: true
+
 floating_signals:
+  - "bcm0_PowerGood"
+  - "bcm0_Enabled"
+  - "bcm0_Fault"
   - "bcm1_PowerGood"
   - "bcm1_Enabled"
   - "bcm1_Fault"
@@ -154,11 +181,14 @@ floating_signals:
   - "bcm3_Enabled"
   - "bcm3_Fault"
   - "p3v3_m2_ssd1_Enabled"
+  - "p3v3_m2_ssd1_IsDummy"
   - "p3v3_m2_ssd2_Enabled"
+  - "p3v3_m2_ssd2_IsDummy"
   - "p3v3_m2_ssd1_Fault"
   - "p3v3_m2_ssd2_Fault"
   - "RST_M2_SSD1_PERST_N_Enabled"
   - "RST_M2_SSD2_PERST_N_Enabled"
+  - "bcm3_IsDummy"
 
 inputs:
   - name: "PLUG_DETECT_M2_SSD_CARRIER1"

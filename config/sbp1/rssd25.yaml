@@ -117,5 +117,7 @@ outputs:
 floating_signals:
   - "rssd25_3v3_Enabled"
   - "rssd25_12v_Enabled"
+  - "rssd25_3v3_IsDummy"
+  - "rssd25_12v_IsDummy"
   - "RSSD25_RESET_N_Enabled"
 

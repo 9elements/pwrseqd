@@ -338,6 +338,8 @@ power_sequencer:
           - name: "pvccinfaon_cpu0_Enabled"
         and:
           - name: "FM_CPU0_SKTOCC"
+          - name: "CPU0_DummyRegulatorPresent"
+            invert: true
           - name: "CPU0_VR_Fault_Shutdown"
             invert: true
           - name: "DDR_POWER"
@@ -360,6 +362,8 @@ power_sequencer:
             input_stable_usec: 10000
         and:
           - name: "FM_CPU0_SKTOCC"
+          - name: "CPU0_DummyRegulatorPresent"
+            invert: true
         and_then_or: false
       out:
         name: "SEL_SMB_DIMM_CPU0"
@@ -369,6 +373,8 @@ power_sequencer:
         and:
           - name: "CPU_POWER"
           - name: "FM_CPU0_SKTOCC"
+          - name: "CPU0_DummyRegulatorPresent"
+            invert: true
           - name: "CPU0_VR_Fault_Shutdown"
             invert: true
           - name: "pvccd_hv_cpu0_PowerGood"
@@ -389,6 +395,8 @@ power_sequencer:
         and:
           - name: "CPU_POWER"
           - name: "FM_CPU0_SKTOCC"
+          - name: "CPU0_DummyRegulatorPresent"
+            invert: true
           - name: "CPU0_VR_Fault_Shutdown"
             invert: true
           - name: "pvccd_hv_cpu0_PowerGood"
@@ -409,6 +417,8 @@ power_sequencer:
         and:
           - name: "CPU_POWER"
           - name: "FM_CPU0_SKTOCC"
+          - name: "CPU0_DummyRegulatorPresent"
+            invert: true
           - name: "CPU0_VR_Fault_Shutdown"
             invert: true
           - name: "pvccfa_ehv_fivra_cpu0_PowerGood"
@@ -429,6 +439,8 @@ power_sequencer:
         and:
           - name: "CPU_POWER"
           - name: "FM_CPU0_SKTOCC"
+          - name: "CPU0_DummyRegulatorPresent"
+            invert: true
           - name: "CPU0_VR_Fault_Shutdown"
             invert: true
           - name: "pvccinfaon_cpu0_PowerGood"
@@ -446,6 +458,8 @@ power_sequencer:
         and:
           - name: "CPU_POWER"
           - name: "FM_CPU0_SKTOCC"
+          - name: "CPU0_DummyRegulatorPresent"
+            invert: true
           - name: "CPU0_VR_Fault_Shutdown"
             invert: true
           - name: "pvnn_main_cpu0_PowerGood"
@@ -490,6 +504,8 @@ power_sequencer:
         and:
           - name: "CPU_POWER"
           - name: "FM_CPU0_SKTOCC"
+          - name: "CPU0_DummyRegulatorPresent"
+            invert: true
           - name: "CPU0_HBM_PRESENT"
           - name: "CPU0_VR_Fault_Shutdown"
             invert: true
@@ -548,6 +564,8 @@ power_sequencer:
           - name: "FM_DB2000_DEV_EN_Enabled" # Clock buffer enable
             input_stable_usec: 2000 # wait for clocks to be stable
           - name: "FM_CPU0_SKTOCC"
+          - name: "CPU0_DummyRegulatorPresent"
+            invert: true
           - name: "CPU0_HBM_Gated_PowerGood"
       out:
         name: "PWRGD_LVC3_CPU0_PWRGOOD"
@@ -558,6 +576,8 @@ power_sequencer:
           - name: "CPU0_VR_Fault"
             invert: true
           - name: "FM_CPU0_SKTOCC"
+          - name: "CPU0_DummyRegulatorPresent"
+            invert: true
         or:
           - name: "CPU0_SYS_PWROK" # Release after SYS_PWROK
             input_stable_usec: 100
@@ -584,6 +604,7 @@ power_sequencer:
         or:
           - name: "FM_CPU0_SKTOCC"
             invert: true
+          - name: "CPU0_DummyRegulatorPresent"
         and_then_or: true
       out:
         name: "CPU0_SYS_PWROK"
@@ -638,6 +659,8 @@ power_sequencer:
           - name: "CPU0_THERMTRIP"
         and:
           - name: "FM_CPU0_SKTOCC"
+          - name: "CPU0_DummyRegulatorPresent"
+            invert: true
       out:
         name: "CPU0_VR_Fault"
 
@@ -697,6 +720,19 @@ power_sequencer:
           - name: "pvnn_main_cpu0_PowerGood"
       out:
         name: "H_LVT3_CPU0_MEMTRIP_OUT_N_On"
+
+  - CPU0_DummyRegulatorPresent_Unit:
+      in:
+        or:
+          - name: "pvccd_hv_cpu0_IsDummy"
+          - name: "pvccfa_ehv_cpu0_IsDummy"
+          - name: "pvccfa_ehv_fivra_cpu0_IsDummy"
+          - name: "pvccinfaon_cpu0_IsDummy"
+          - name: "pvnn_main_cpu0_IsDummy"
+          - name: "pvccin_cpu0_IsDummy"
+          - name: "pvpp_hbm_cpu0_IsDummy"
+      out:
+        name: "CPU0_DummyRegulatorPresent"
 
 regulators:
   - name: "pvccd_hv_cpu0"

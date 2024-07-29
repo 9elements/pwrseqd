@@ -117,5 +117,7 @@ outputs:
 floating_signals:
   - "rssd02_3v3_Enabled"
   - "rssd02_12v_Enabled"
+  - "rssd02_3v3_IsDummy"
+  - "rssd02_12v_IsDummy"
   - "RSSD02_RESET_N_Enabled"
 

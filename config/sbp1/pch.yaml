@@ -104,6 +104,8 @@ power_sequencer:
             input_stable_usec: 100  # EGB: min 1 usec
           - name: "PCH_VR_Fault_Shutdown"
             invert: true
+          - name: "PCH_DummyRegulatorPresent"
+            invert: true
         or:
           - name: "p1v8_pch_aux_PowerGood"
             input_stable_usec: 100
@@ -121,6 +123,8 @@ power_sequencer:
           - name: "p3v3_pch_PowerGood"
           - name: "PCH_VR_Fault_Shutdown"
             invert: true
+          - name: "PCH_DummyRegulatorPresent"
+            invert: true
         or:
           - name: "p1v05_pch_aux_PowerGood"
             input_stable_usec: 100
@@ -137,6 +141,8 @@ power_sequencer:
             input_stable_usec: 100  # EGB: min 2 usec
           - name: "p1v8_pch_aux_PowerGood"
           - name: "PCH_VR_Fault_Shutdown"
+            invert: true
+          - name: "PCH_DummyRegulatorPresent"
             invert: true
         or:
           - name: "CPU0_VR_Off" # Wait until all CPUs are turned off before shutting down PCH
@@ -361,6 +367,16 @@ power_sequencer:
             invert: true
       out:
         name: "p5v_On"
+
+  - PCH_DummyRegulatorPresent_Unit:
+      in:
+        or:
+          - name: "p3v3_pch_IsDummy"
+          - name: "p1v8_pch_aux_IsDummy"
+          - name: "p1v05_pch_aux_IsDummy"
+          - name: "p5v_IsDummy"
+      out:
+        name: "PCH_DummyRegulatorPresent"
 
 regulators:
   - name: "p3v3_pch"
