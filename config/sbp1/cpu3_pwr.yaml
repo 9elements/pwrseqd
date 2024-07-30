@@ -741,12 +741,19 @@ power_sequencer:
 
 regulators:
   - name: "pvccd_hv_cpu3"
+    allow_missing: true
   - name: "pvccfa_ehv_cpu3"
+    allow_missing: true
   - name: "pvccfa_ehv_fivra_cpu3"
+    allow_missing: true
   - name: "pvccinfaon_cpu3"
+    allow_missing: true
   - name: "pvnn_main_cpu3"
+    allow_missing: true
   - name: "pvccin_cpu3"
+    allow_missing: true
   - name: "pvpp_hbm_cpu3"
+    allow_missing: true
 
 floating_signals:
   - "H_LVT3_CPU3_MEMTRIP_OUT_N_Enabled"
