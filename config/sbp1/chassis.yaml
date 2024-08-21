@@ -30,6 +30,7 @@ power_sequencer:
         and:
           - name: "BCM_ON"
             invert: true
+          - name: "bcm0_IsDummy"
           - name: "bcm1_IsDummy"
         and_then_or: true
       out:
@@ -42,6 +43,8 @@ power_sequencer:
         and:
           - name: "BCM_ON"
             invert: true
+          - name: "bcm0_IsDummy"
+          - name: "bcm1_IsDummy"
           - name: "bcm2_IsDummy"
         and_then_or: true
       out:
