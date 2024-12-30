@@ -74,6 +74,12 @@ StateMachine::StateMachine(Config& cfg, SignalProvider& prov,
             this->nullOutputs.push_back(n);
             log_debug("using null output " + cfg.Outputs[i].SignalName);
         }
+        else if (cfg.Outputs[i].OutputType == OUTPUT_TYPE_LOGGING)
+        {
+            LogOutput* l = new LogOutput(io, &IoOutput, &cfg.Outputs[i], prov);
+            this->logOutputs.push_back(l);
+            log_debug("using log output " + cfg.Outputs[i].SignalName);
+        }
     }
 
     for (int i = 0; i < cfg.Regulators.size(); i++)

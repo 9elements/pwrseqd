@@ -95,6 +95,10 @@ struct convert<ConfigOutput>
                 {
                     c.OutputType = OUTPUT_TYPE_LED;
                 }
+                else if (nameOfType.compare("logging") == 0)
+                {
+                    c.OutputType = OUTPUT_TYPE_LOGGING;
+                }
                 else if (nameOfType.compare("null") == 0)
                 {
                     c.OutputType = OUTPUT_TYPE_NULL;

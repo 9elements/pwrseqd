@@ -14,6 +14,7 @@
 #include "Validate.hpp"
 #include "VoltageRegulator.hpp"
 #include "NullVoltageRegulator.hpp"
+#include "LogOutput.hpp"
 
 #include <boost/asio.hpp>
 #include <boost/asio/io_service.hpp>
@@ -72,6 +73,7 @@ class StateMachine : Validator
 
     vector<NullOutput*> nullOutputs;
     vector<NullInput*> nullInputs;
+    vector<LogOutput*> logOutputs;
     vector<LED*> ledOutputs;
     vector<ItemPresent*> itemPresenceInputs;
 
