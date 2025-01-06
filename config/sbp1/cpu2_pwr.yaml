@@ -114,6 +114,66 @@ inputs:
 
 
 outputs:
+  - name: "CPU2_THERMTRIP"
+    type: "logging"
+    signal_name: "CPU2_THERMTRIP"
+    active_low: false
+    description: "CPU2 shut down due to overheating condition"
+
+  - name: "CPU2_MEMTRIP"
+    type: "logging"
+    signal_name: "CPU2_MEMTRIP"
+    active_low: false
+    description: "Memory on CPU2 encountered a fatal error"
+
+  - name: "DRAM_CHA_CPU2"
+    type: "logging"
+    signal_name: "PWRGD_CHA_CPU2_FAIL"
+    active_low: false
+    description: "DIMM-A CPU2 reported power failure"
+
+  - name: "DRAM_CHB_CPU2"
+    type: "logging"
+    signal_name: "PWRGD_CHB_CPU2_FAIL"
+    active_low: false
+    description: "DIMM-B CPU2 reported power failure"
+
+  - name: "DRAM_CHC_CPU2"
+    type: "logging"
+    signal_name: "PWRGD_CHC_CPU2_FAIL"
+    active_low: false
+    description: "DIMM-C CPU2 reported power failure"
+
+  - name: "DRAM_CHD_CPU2"
+    type: "logging"
+    signal_name: "PWRGD_CHD_CPU2_FAIL"
+    active_low: false
+    description: "DIMM-D CPU2 reported power failure"
+
+  - name: "DRAM_CHE_CPU2"
+    type: "logging"
+    signal_name: "PWRGD_CHE_CPU2_FAIL"
+    active_low: false
+    description: "DIMM-E CPU2 reported power failure"
+
+  - name: "DRAM_CHF_CPU2"
+    type: "logging"
+    signal_name: "PWRGD_CHF_CPU2_FAIL"
+    active_low: false
+    description: "DIMM-F CPU2 reported power failure"
+
+  - name: "DRAM_CHG_CPU2"
+    type: "logging"
+    signal_name: "PWRGD_CHG_CPU2_FAIL"
+    active_low: false
+    description: "DIMM-G CPU2 reported power failure"
+
+  - name: "DRAM_CHH_CPU2"
+    type: "logging"
+    signal_name: "PWRGD_CHH_CPU2_FAIL"
+    active_low: false
+    description: "DIMM-H CPU2 reported power failure"
+
   - name: "H_LVT3_CPU2_PROCHOT_N"
     type: "gpio"
     signal_name: "H_LVT3_CPU2_PROCHOT"
@@ -214,7 +274,7 @@ power_sequencer:
           - name: "pvccd_hv_cpu2_PowerGood"
       out:
         name: "PWRGD_LVC3_CPU2_CD_DRAM_G"
-  
+
   - PWRGD_LVC3_CPU2_EF_DRAM_G_Unit:
       in:
         and:
@@ -236,6 +296,126 @@ power_sequencer:
           - name: "pvccd_hv_cpu2_PowerGood"
       out:
         name: "PWRGD_LVC3_CPU2_GH_DRAM_G"
+
+  - PWRGD_CHA_CPU2_LOG_Unit:
+      in:
+        and:
+          - name: "PWRGD_CHA_CPU2_Enabled"
+          - name: "PWRGD_CHA_CPU2"
+            invert: true
+          - name: "FM_BIOS_POST_CMPLT"
+          - name: "CPU_POWER"
+          - name: "CPU2_VR_PWRGD"
+          - name: "CPU2_DDR_PWRGD"
+          - name: "PLTRST"
+            invert: true
+      out:
+        name: "PWRGD_CHA_CPU2_FAIL"
+
+  - PWRGD_CHB_CPU2_LOG_Unit:
+      in:
+        and:
+          - name: "PWRGD_CHB_CPU2_Enabled"
+          - name: "PWRGD_CHB_CPU2"
+            invert: true
+          - name: "FM_BIOS_POST_CMPLT"
+          - name: "CPU_POWER"
+          - name: "CPU2_VR_PWRGD"
+          - name: "CPU2_DDR_PWRGD"
+          - name: "PLTRST"
+            invert: true
+      out:
+        name: "PWRGD_CHB_CPU2_FAIL"
+
+  - PWRGD_CHC_CPU2_LOG_Unit:
+      in:
+        and:
+          - name: "PWRGD_CHC_CPU2_Enabled"
+          - name: "PWRGD_CHC_CPU2"
+            invert: true
+          - name: "FM_BIOS_POST_CMPLT"
+          - name: "CPU_POWER"
+          - name: "CPU2_VR_PWRGD"
+          - name: "CPU2_DDR_PWRGD"
+          - name: "PLTRST"
+            invert: true
+      out:
+        name: "PWRGD_CHC_CPU2_FAIL"
+
+  - PWRGD_CHD_CPU2_LOG_Unit:
+      in:
+        and:
+          - name: "PWRGD_CHD_CPU2_Enabled"
+          - name: "PWRGD_CHD_CPU2"
+            invert: true
+          - name: "FM_BIOS_POST_CMPLT"
+          - name: "CPU_POWER"
+          - name: "CPU2_VR_PWRGD"
+          - name: "CPU2_DDR_PWRGD"
+          - name: "PLTRST"
+            invert: true
+      out:
+        name: "PWRGD_CHD_CPU2_FAIL"
+
+  - PWRGD_CHE_CPU2_LOG_Unit:
+      in:
+        and:
+          - name: "PWRGD_CHE_CPU2_Enabled"
+          - name: "PWRGD_CHE_CPU2"
+            invert: true
+          - name: "FM_BIOS_POST_CMPLT"
+          - name: "CPU_POWER"
+          - name: "CPU2_VR_PWRGD"
+          - name: "CPU2_DDR_PWRGD"
+          - name: "PLTRST"
+            invert: true
+      out:
+        name: "PWRGD_CHE_CPU2_FAIL"
+
+  - PWRGD_CHF_CPU2_LOG_Unit:
+      in:
+        and:
+          - name: "PWRGD_CHF_CPU2_Enabled"
+          - name: "PWRGD_CHF_CPU2"
+            invert: true
+          - name: "FM_BIOS_POST_CMPLT"
+          - name: "CPU_POWER"
+          - name: "CPU2_VR_PWRGD"
+          - name: "CPU2_DDR_PWRGD"
+          - name: "PLTRST"
+            invert: true
+      out:
+        name: "PWRGD_CHF_CPU2_FAIL"
+
+  - PWRGD_CHG_CPU2_LOG_Unit:
+      in:
+        and:
+          - name: "PWRGD_CHG_CPU2_Enabled"
+          - name: "PWRGD_CHG_CPU2"
+            invert: true
+          - name: "FM_BIOS_POST_CMPLT"
+          - name: "CPU_POWER"
+          - name: "CPU2_VR_PWRGD"
+          - name: "CPU2_DDR_PWRGD"
+          - name: "PLTRST"
+            invert: true
+      out:
+        name: "PWRGD_CHG_CPU2_FAIL"
+
+  - PWRGD_CHH_CPU2_LOG_Unit:
+      in:
+        and:
+          - name: "PWRGD_CHH_CPU2_Enabled"
+          - name: "PWRGD_CHH_CPU2"
+            invert: true
+          - name: "FM_BIOS_POST_CMPLT"
+          - name: "CPU_POWER"
+          - name: "CPU2_VR_PWRGD"
+          - name: "CPU2_DDR_PWRGD"
+          - name: "PLTRST"
+            invert: true
+      out:
+        name: "PWRGD_CHH_CPU2_FAIL"
 
   - PWRGD_CHA_CPU2_Enable_Unit:
       in:
@@ -394,7 +574,7 @@ power_sequencer:
         and_then_or: true
       out:
         name: "pvccfa_ehv_cpu2_On"
-  
+
   - PVCCFA_EHV_FIVRA_CPU2_Unit:
       in:
         and:
@@ -457,7 +637,7 @@ power_sequencer:
         and_then_or: true
       out:
         name: "pvnn_main_cpu2_On"
-  
+
   - PVCCIN_CPU2_Unit:
       in:
         and:
@@ -613,7 +793,7 @@ power_sequencer:
         and_then_or: true
       out:
         name: "CPU2_SYS_PWROK"
-  
+
   - CPU2_VR_Off_Unit:
       in:
         or:
@@ -641,7 +821,7 @@ power_sequencer:
       out:
         name: "CPU2_DDR_Off"
         active_low: true
-  
+
   - CPU2_VR_Off_Unit:
       in:
         and:
@@ -649,7 +829,7 @@ power_sequencer:
           - name: "CPU2_VR_Off"
       out:
         name: "CPU2_Off"
-    
+
   - CPU2_VR_Fault_Unit:
       in:
         or:
@@ -694,9 +874,9 @@ power_sequencer:
       in:
         and:
           - name: "H_LVT3_CPU2_THERMTRIP"
-          - name: "CPU2_VR_PWRGD" # PDG: Ignore THERMTRIP until power is good
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD" # PDG: Ignore THERMTRIP until power is good
             input_stable_usec: 1500
-          - name: "CPU2_VR_PWRGD"
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
       out:
         name: "CPU2_THERMTRIP"
 
@@ -712,9 +892,9 @@ power_sequencer:
       in:
         and:
           - name: "H_LVT3_CPU2_MEMTRIP"
-          - name: "CPU2_VR_PWRGD" # PDG: Ignore MEMTRIP until power is good
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD" # PDG: Ignore MEMTRIP until power is good
             input_stable_usec: 1500
-          - name: "CPU2_VR_PWRGD"
+          - name: "PWRGD_LVC3_CPU2_PWRGOOD"
       out:
         name: "CPU2_MEMTRIP"
 
