@@ -27,8 +27,11 @@ void LogOutput::Apply(const int newLevel)
         this->level = newLevel;
         log_debug("log " + this->Name() + " changed to " + (real_level ? "1" : "0"));
 
-        if (real_level == 1)
+        if (real_level == 1) {
             log_err("Monitor " + this->Name() + " (" + this->errorString + ") asserted");
+            log_sel("Monitor " + this->Name() + " (" + this->errorString + ") asserted",
+                "/xyz/openbmc_project/inventory/system/chassis/motherboard", false);
+	}
         else
             log_info("Monitor " + this->Name() + " (" + this->errorString + ") de-asserted");
     }
