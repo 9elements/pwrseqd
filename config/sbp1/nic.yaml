@@ -394,6 +394,26 @@ regulators:
   - name: "p1v8_nic"
 
 outputs:
+  - name: "IRQ_NIC1_OVT_WRNG"
+    type: "logging"
+    signal_name: "IRQ_NIC1_OVT_WRNG"
+    active_low: false
+    description: "NIC1 overheating condition detected"
+  - name: "IRQ_NIC1_OVT_SHTDN"
+    type: "logging"
+    signal_name: "IRQ_NIC1_OVT_SHTDN"
+    active_low: false
+    description: "NIC1 shut down due to critical overheating condition"
+  - name: "IRQ_NIC2_OVT_WRNG"
+    type: "logging"
+    signal_name: "IRQ_NIC2_OVT_WRNG"
+    active_low: false
+    description: "NIC2 overheating condition detected"
+  - name: "IRQ_NIC2_OVT_SHTDN"
+    type: "logging"
+    signal_name: "IRQ_NIC2_OVT_SHTDN"
+    active_low: false
+    description: "NIC2 shut down due to critical overheating condition"
   - name: "FM_NIC1_PERST0_N"
     type: "gpio"
     signal_name: "FM_NIC1_PERST0"
@@ -508,10 +528,6 @@ inputs:
     gated_idle_low: true
 
 floating_signals:
-  - "IRQ_NIC1_OVT_WRNG"
-  - "IRQ_NIC2_OVT_WRNG"
-  - "IRQ_NIC1_OVT_SHTDN"
-  - "IRQ_NIC2_OVT_SHTDN"
   - "p3v3_nic_Enabled"
   - "IRQ_NIC2_OVT_SHTDN_Enabled"
   - "IRQ_NIC1_OVT_SHTDN_Enabled"
