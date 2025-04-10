@@ -70,8 +70,9 @@ if(BUILD_TESTS)
 	add_subdirectory(tests)
 endif()
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF) # enforces standard compliance
 
 include_directories(src/ ${YAML_CPP_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${GPIOD_INCLUDE_DIR} extern/inotify-cpp/src/include)# extern/googletest/googletest/include)
 
